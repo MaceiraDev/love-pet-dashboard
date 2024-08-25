@@ -2,6 +2,6 @@
 </script>
 <template>
   <main>
-    <h1 class="bg-red-900">Teste</h1>
+    <h1 class="bg-limao">Teste</h1>
   </main>
 </template>
