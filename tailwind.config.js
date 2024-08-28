@@ -13,6 +13,7 @@ export default {
          azul2: '#0a5483',
          azul3: '#02416d',
          preto: '#000',
+         preto2: '#1a1b1c',
          branco: '#fff',
       }
    },

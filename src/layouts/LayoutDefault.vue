@@ -13,20 +13,26 @@
          <ul class="mt-4">
             <li>
                <router-link to="/" class="block py-2 px-4 rounded text-branco"
-                  :class="{ 'bg-azul1 text-preto font-bold': $route.path === '/' }">
+                  :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/' }">
                   <i class="bi bi-globe-americas"></i> Dashboard
                </router-link>
             </li>
             <li>
                <router-link to="/fichas" class="block py-2 px-4 rounded text-branco"
-                  :class="{ 'bg-azul1 text-preto font-bold': $route.path === '/fichas' }">
+                  :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/fichas' }">
                   <i class="bi bi-clipboard2-fill"></i> Fichas
                </router-link>
             </li>
             <li>
                <router-link to="/pets" class="block py-2 px-4 rounded text-branco"
-                  :class="{ 'bg-azul1 text-preto font-bold': $route.path === '/pets' }">
+                  :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/pets' }">
                   <i class="bi bi-gitlab"></i> Pets
+               </router-link>
+            </li>
+            <li>
+               <router-link to="/usuarios" class="block py-2 px-4 rounded text-branco"
+                  :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/usuarios' }">
+                  <i class="bi bi-people-fill"></i> Usuários
                </router-link>
             </li>
          </ul>
@@ -42,7 +48,6 @@
       </div>
    </div>
 </template>
-
 
 <script setup>
 import BotaoDropHeader from '@/components/BotaoDropHeader.vue';

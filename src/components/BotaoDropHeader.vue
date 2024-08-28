@@ -13,15 +13,14 @@
          </a>
          <div class="submenu">
             <div class="submenu-item">
-               <a href="#" class="submenu-link"> Email </a>
+               <RouterLink to="/" class="submenu-link"> Email </RouterLink>
             </div>
             <div class="submenu-item">
-               <a href="#" class="submenu-link"> Whatsapp </a>
+               <RouterLink to="/" class="submenu-link"> WhatsApp </RouterLink>
             </div>
          </div>
       </div>
    </div>
-
 </template>
 <style scoped>
 @import url('././../assets/base.css');
@@ -131,6 +130,7 @@
 .submenu .submenu-item {
    width: 100%;
    transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+   cursor: pointer;
 }
 
 .submenu .submenu-link {

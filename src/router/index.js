@@ -26,6 +26,16 @@ const routes = [
             path: 'pets',
             name: 'pets',
             component: () => import('../views/pets/Pets.vue')
+         },
+         {
+            path: 'usuarios',
+            name: 'usuarios',
+            component: () => import('../views/usuarios/Usuarios.vue')
+         },
+         {
+            path: 'usuarios/cadastrar-usuario',
+            name: 'cadastrar-usuario',
+            component: () => import('../views/usuarios/Cadastrar-usuario.vue')
          }
       ]
    }
