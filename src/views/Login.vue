@@ -1,6 +1,6 @@
 <template>
    <main>
-      <div class="container">
+      <div class="conteudo">
          <div class="flex justify-center align-middle">
             <div class="card">
                <div>
@@ -28,7 +28,6 @@
                         <span class="label-char" style="--index: 2">n</span>
                         <span class="label-char" style="--index: 3">h</span>
                         <span class="label-char" style="--index: 4">a</span>
-
                      </label>
                   </div>
                   <button type="submit"> Entrar </button>
@@ -45,14 +44,11 @@
 <style scoped>
 @import url("../assets/base.css");
 
-/* From Uiverse.io by AbanoubMagdy1 */
-.container {
+.conteudo {
    height: 100vh;
-   /* ocupa a altura total da tela */
    display: flex;
    justify-content: center;
    align-items: center;
-   /* centraliza verticalmente */
 }
 
 .wave-group {
@@ -68,6 +64,7 @@
    border: none;
    border-bottom: 1px solid #515151;
    background: transparent;
+   color: #000;
 }
 
 .wave-group .input:focus {
@@ -141,6 +138,7 @@ button {
    overflow: hidden;
    z-index: 1;
    box-shadow: 6px 6px 12px #c5c5c5;
+   color: #000;
   }
   
   button::before {
