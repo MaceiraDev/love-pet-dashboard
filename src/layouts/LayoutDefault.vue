@@ -108,3 +108,83 @@ a {
    font-size: 18pt;
 }
 </style>
+
+<style>
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+   width: 100%;
+   padding: 10px 15px;
+   margin: 8px 0;
+   border: 1px solid #1a1b1c;
+   border-radius: 4px;
+   font-size: 16px;
+   box-sizing: border-box;
+   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+   color: #1a1b1c;
+
+}
+
+/* Cor de fundo do input */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+   border-color: #4A90E2;
+   box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+   outline: none;
+}
+
+/* Placeholder estilizado */
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+textarea::placeholder {
+   color: #888;
+   font-style: italic;
+}
+
+select {
+   width: 100%;
+   padding: 10px 15px !important;
+   margin: 8px 0 !important;
+   border: 1px solid #1a1b1c;
+   border-radius: 4px;
+   background-color: #fff;
+   font-size: 16px;
+   color: #1a1b1c !important;
+   appearance: none;
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23333" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>');
+   background-repeat: no-repeat;
+   background-position: right 10px center;
+   background-size: 10px;
+   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+   cursor: pointer;
+}
+
+select:focus {
+   border-color: #4A90E2;
+   box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+   outline: none;
+}
+
+/* Select desabilitado */
+select:disabled {
+   background-color: #f2f2f2;
+   cursor: not-allowed;
+}
+
+/* Select com erro */
+select.error {
+   border-color: #e74c3c;
+   box-shadow: 0 0 8px rgba(231, 76, 60, 0.5);
+}
+
+label {
+   color: #1a1b1c;
+   margin-bottom: 0;
+}
+</style>
