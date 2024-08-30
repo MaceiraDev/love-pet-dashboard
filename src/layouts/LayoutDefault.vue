@@ -112,8 +112,7 @@ a {
 <style>
 input[type="text"],
 input[type="email"],
-input[type="password"],
-textarea {
+input[type="password"] {
    width: 100%;
    padding: 10px 15px;
    margin: 8px 0;
@@ -129,8 +128,7 @@ textarea {
 /* Cor de fundo do input */
 input[type="text"]:focus,
 input[type="email"]:focus,
-input[type="password"]:focus,
-textarea:focus {
+input[type="password"]:focus {
    border-color: #4A90E2;
    box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
    outline: none;
@@ -139,15 +137,16 @@ textarea:focus {
 /* Placeholder estilizado */
 input[type="text"]::placeholder,
 input[type="email"]::placeholder,
-input[type="password"]::placeholder,
-textarea::placeholder {
+input[type="password"]::placeholder {
    color: #888;
    font-style: italic;
 }
+
 input:disabled {
    background-color: #f2f2f2;
    cursor: not-allowed;
 }
+
 select {
    width: 100%;
    padding: 10px 15px !important;
@@ -184,6 +183,36 @@ select:disabled {
 select.error {
    border-color: #e74c3c;
    box-shadow: 0 0 8px rgba(231, 76, 60, 0.5);
+}
+
+textarea {
+   width: 100%;
+   padding: 10px 15px !important;
+   margin: 8px 0;
+   border: 1px solid #1a1b1c;
+   border-radius: 4px;
+   font-size: 16px;
+   box-sizing: border-box;
+   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+   color: #1a1b1c;
+
+}
+
+/* Cor de fundo do input */
+textarea:focus {
+   border-color: #4A90E2;
+   box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+   outline: none;
+}
+
+textarea::placeholder {
+   color: #888;
+   font-style: italic;
+}
+
+textarea:disabled {
+   background-color: #f2f2f2;
+   cursor: not-allowed;
 }
 
 label {

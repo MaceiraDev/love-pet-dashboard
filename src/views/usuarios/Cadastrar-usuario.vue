@@ -90,9 +90,7 @@
       </div>
       <div>
          <label>Notas Adicionais</label>
-         <textarea rows="4">
-
-         </textarea>
+         <textarea placeholder="Digite aqui informações adicionais, as informações deste campo serão mostradas na tela de perfil do usuário." rows="4"></textarea>
       </div>
    </div>
 </template>
