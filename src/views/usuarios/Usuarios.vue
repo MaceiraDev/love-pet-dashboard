@@ -3,7 +3,7 @@
       <h2 class=" text-2xl   font-bold  text-preto2">Usuários</h2>
       <BotaoCreate :link="'/usuarios/cadastrar-usuario'" :titulo="'Cadastrar Usuário'" />
    </div>
-   <DataTable :headers="tableHeaders" :data="tableData" />
+   <DataTable :headers="tableHeaders" :data="tableData"  :numero="3"/>
 </template>
 <script setup>
 import BotaoCreate from '@/components/BotaoCreate.vue';

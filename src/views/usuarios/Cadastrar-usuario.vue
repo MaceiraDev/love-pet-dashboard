@@ -87,14 +87,57 @@
             <label>N° de pets sobre seus cuidados</label>
             <input type="text" disabled>
          </div>
+
+         <div>
+            <label class="form-label">Imagem de Perfil</label>
+            <div class="flex items-center space-x-4">
+               <label class="upload-button">
+                  <i class="bi bi-camera upload-icon"></i>
+                  <span>Selecionar Imagem</span>
+                  <input type="file" @change="adicionarImagem" class="hidden">
+               </label>
+            </div>
+         </div>
+         <div v-if="state.imagem.imagem" class="relative">
+            <img :src="state.imagem.imagem" alt="Imagem do Usuário" class="w-20 h-20 object-cover border-2 border-azul2 rounded-md"/>
+            <button @click="removerImagem" class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 text-xs transform translate-x-1 -translate-y-1 shadow-lg hover:bg-red-600">
+               ✕
+            </button>
+         </div>
+
       </div>
       <div>
          <label>Notas Adicionais</label>
          <textarea placeholder="Digite aqui informações adicionais, as informações deste campo serão mostradas na tela de perfil do usuário." rows="4"></textarea>
       </div>
+      <div class="flex justify-end gap-4 mt-4">
+         <BotaoCancel :link="'/usuarios/cadastrar-usuario'" :titulo="'Cancelar'" />
+         <BotaoSave :link="'/usuarios/cadastrar-usuario'" :titulo="'Salvar'" />
+      </div>
+       
    </div>
 </template>
 <script setup>
+   import { reactive } from 'vue';
+   import BotaoSave from '@/components/BotaoSave.vue';
+   import BotaoCancel from '@/components/BotaoCancel.vue';
+
+   const state = reactive({
+   imagem: {},
+   });
+
+   async function adicionarImagem(event) {
+   const img = event.target.files[0];
+   const objImagem = {};
+   objImagem.file = img;
+   objImagem.imagem = URL.createObjectURL(img);
+   state.imagem = objImagem;
+   }
+
+   async function removerImagem() {
+   state.imagem = {};
+   document.querySelector('input[type="file"]').value = null;
+   }
 </script>
 <style scoped>
 .radio-button-container {
@@ -155,5 +198,54 @@
    transform: scale(1.2);
    border-color: #066699;
    box-shadow: 0 0 20px #06669980;
+}
+
+.upload-button {
+   display: flex;
+   align-items: center;
+   width: 100%;
+   padding: 10px;
+   background-color: #066699;
+   color: white;
+   border-radius: 6px;
+   border: 1px solid #ccc;
+   cursor: pointer;
+   font-size: 14px;
+   font-weight: 500;
+   text-align: center;
+   transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+   background-color: #055a85;
+}
+
+.upload-icon {
+   margin-right: 8px;
+}
+
+.hidden {
+   display: none;
+}
+
+.input-text, select, .upload-button {
+   width: 100%;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 6px;
+   font-size: 14px;
+   transition: border-color 0.2s ease;
+}
+
+.input-text:focus, select:focus, .upload-button:focus {
+   border-color: #066699;
+   outline: none;
+}
+
+.form-label {
+   display: block;
+   margin-bottom: 8px;
+   font-size: 15px;
+   color: #1a1b1c;
 }
 </style>

@@ -12,7 +12,7 @@
                </tr>
             </thead>
             <tbody class="bg-table2 divide-y divide-preto">
-               <tr v-for="(row, index) in data" :key="index" class="hover:bg-limao transition-colors duration-200">
+               <tr v-for="(row, index) in data" :key="index" class="hover:bg-limao2 transition-colors duration-200">
                   <td v-for="(item, key) in row" :key="key" class="px-6 py-4 whitespace-nowrap text-md text-preto2">
                      {{ item }}
                   </td>
