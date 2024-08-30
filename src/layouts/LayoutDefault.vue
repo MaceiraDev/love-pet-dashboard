@@ -144,7 +144,10 @@ textarea::placeholder {
    color: #888;
    font-style: italic;
 }
-
+input:disabled {
+   background-color: #f2f2f2;
+   cursor: not-allowed;
+}
 select {
    width: 100%;
    padding: 10px 15px !important;

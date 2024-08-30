@@ -34,24 +34,24 @@
             </div>
          </div>
       </div>
-      <div class="div_inputs flex gap-4">
-         <div class="w-full md:w-1/3">
+      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+         <div>
             <label>Nome</label>
             <input type="text" placeholder="Digite um nome:">
          </div>
-         <div class="w-full md:w-1/3">
+         <div>
             <label>Sobrenome</label>
             <input type="text" placeholder="Digite um sobrenome:">
          </div>
-         <div class="w-full md:w-1/3">
+         <div>
             <label>Data de Nascimento</label>
-            <input type="text" placeholder="Digite uma data:">
+            <input type="text" placeholder="Digite uma data:" v-mask="'##/##/####'">
          </div>
-         <div class="w-full md:w-1/3">
+         <div>
             <label>CPF</label>
-            <input type="text" placeholder="Digite um CPF:">
+            <input type="text" placeholder="Digite um CPF:" v-mask="'###.###.###-##'">
          </div>
-         <div class="w-full md:w-1/3">
+         <div>
             <label>Sexo</label>
             <select>
                <option selected>Selecione</option>
@@ -60,8 +60,40 @@
                <option value="OUTROS">Outros</option>
             </select>
          </div>
+         <div>
+            <label>Telefone</label>
+            <input type="text" placeholder="Digite um telefone:" v-mask="['(##) ####-####', '(##) #####-####']">
+         </div>
+         <div>
+            <label>WhatsApp</label>
+            <input type="text" placeholder="Digite um número WhatsApp:" v-mask="['(##) ####-####', '(##) #####-####']">
+         </div>
+         <div>
+            <label>Email</label>
+            <input type="email" placeholder="Digite um email:">
+         </div>
+         <div>
+            <label>Senha</label>
+            <input type="password" placeholder="Digite uma senha:">
+         </div>
+         <div>
+            <label>Status</label>
+            <select>
+               <option value="ATIVO">Ativo</option>
+               <option value="INATIVO">Inativo</option>
+            </select>
+         </div>
+         <div>
+            <label>N° de pets sobre seus cuidados</label>
+            <input type="text" disabled>
+         </div>
       </div>
+      <div>
+         <label>Notas Adicionais</label>
+         <textarea rows="4">
 
+         </textarea>
+      </div>
    </div>
 </template>
 <script setup>
