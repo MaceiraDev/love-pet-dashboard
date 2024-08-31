@@ -1,5 +1,5 @@
 <template>
-   <div class="min-h-screen flex">
+   <div class="layout-default min-h-screen flex">
       <aside class="w-64 text-white flex-shrink-0">
          <div class="profile">
             <img id="img" src="./../assets/imagens/dog_ia.jpg" alt="img profile">
@@ -60,8 +60,8 @@
             <h1>Meu Sistema</h1>
             <BotaoDropHeader />
          </header>
-         <main class="flex-grow p-4">
-            <router-view />
+         <main class="flex-grow p-4 layout-main">
+            <router-view class="layout-router-view" />
          </main>
       </div>
    </div>
@@ -128,9 +128,9 @@ a {
 </style>
 
 <style>
-input[type="text"],
-input[type="email"],
-input[type="password"] {
+.layout-default input[type="text"],
+.layout-default input[type="email"],
+.layout-default input[type="password"] {
    width: 100%;
    padding: 10px 15px;
    margin: 8px 0;
@@ -140,32 +140,31 @@ input[type="password"] {
    box-sizing: border-box;
    transition: border-color 0.3s ease, box-shadow 0.3s ease;
    color: #1a1b1c;
-
 }
 
 /* Cor de fundo do input */
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus {
+.layout-default input[type="text"]:focus,
+.layout-default input[type="email"]:focus,
+.layout-default input[type="password"]:focus {
    border-color: #4A90E2;
    box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
    outline: none;
 }
 
 /* Placeholder estilizado */
-input[type="text"]::placeholder,
-input[type="email"]::placeholder,
-input[type="password"]::placeholder {
+.layout-default input[type="text"]::placeholder,
+.layout-default input[type="email"]::placeholder,
+.layout-default input[type="password"]::placeholder {
    color: #888;
    font-style: italic;
 }
 
-input:disabled {
+.layout-default input:disabled {
    background-color: #f2f2f2;
    cursor: not-allowed;
 }
 
-select {
+.layout-default select {
    width: 100%;
    padding: 10px 15px !important;
    margin: 8px 0 !important;
@@ -185,25 +184,25 @@ select {
    cursor: pointer;
 }
 
-select:focus {
+.layout-default select:focus {
    border-color: #4A90E2;
    box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
    outline: none;
 }
 
 /* Select desabilitado */
-select:disabled {
+.layout-default select:disabled {
    background-color: #f2f2f2;
    cursor: not-allowed;
 }
 
 /* Select com erro */
-select.error {
+.layout-default select.error {
    border-color: #e74c3c;
    box-shadow: 0 0 8px rgba(231, 76, 60, 0.5);
 }
 
-textarea {
+.layout-default textarea {
    width: 100%;
    padding: 10px 15px !important;
    margin: 8px 0;
@@ -213,27 +212,26 @@ textarea {
    box-sizing: border-box;
    transition: border-color 0.3s ease, box-shadow 0.3s ease;
    color: #1a1b1c;
-
 }
 
-/* Cor de fundo do input */
-textarea:focus {
+/* Cor de fundo do textarea */
+.layout-default textarea:focus {
    border-color: #4A90E2;
    box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
    outline: none;
 }
 
-textarea::placeholder {
+.layout-default textarea::placeholder {
    color: #888;
    font-style: italic;
 }
 
-textarea:disabled {
+.layout-default textarea:disabled {
    background-color: #f2f2f2;
    cursor: not-allowed;
 }
 
-label {
+.layout-default label {
    color: #1a1b1c;
    margin-bottom: 0;
 }
