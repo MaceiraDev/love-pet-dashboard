@@ -56,9 +56,17 @@
          </ul>
       </aside>
       <div class="flex-1 flex flex-col">
-         <header class="flex justify-between p-4">
-            <h1>Meu Sistema</h1>
-            <BotaoDropHeader />
+         <header class="flex justify-between items-center p-2 bg-gray-100">
+            <div class="w-40">
+               <carousel :items-to-show="1" :autoplay="2000" :wrap-around="true" :mouse-drag="false" class="relative">
+                  <slide v-for="slide in imagens_banner" :key="slide.id">
+                     <img id="imagem_slide" :src="slide.imagem" class="w-full h-auto object-cover" />
+                  </slide>
+               </carousel>
+            </div>
+            <div class="flex items-center">
+               <BotaoDropHeader />
+            </div>
          </header>
          <main class="flex-grow p-4 layout-main">
             <router-view class="layout-router-view" />
@@ -68,13 +76,25 @@
 </template>
 
 <script setup>
+import 'vue3-carousel/dist/carousel.css';
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import BotaoDropHeader from '@/components/BotaoDropHeader.vue';
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router';
+import pubg from '@/assets/imagens/carrosel/pubg.png';
+import dog from '@/assets/imagens/carrosel/dog.png';
+import cat from '@/assets/imagens/carrosel/gato.png';
 
 defineComponent({
    name: 'Default'
 })
+
+const imagens_banner = [
+   { imagem: pubg },
+   { imagem: dog },
+   { imagem: cat },
+
+]
 </script>
 
 <style scoped>
@@ -126,7 +146,6 @@ a {
    font-size: 18pt;
 }
 </style>
-
 <style>
 .layout-default input[type="text"],
 .layout-default input[type="email"],
