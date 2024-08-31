@@ -13,40 +13,31 @@
             </thead>
             <tbody class="bg-table2 divide-y divide-preto">
                <tr v-for="(row, index) in data" :key="index" class="hover:bg-limao2 transition-colors duration-200">
-                  <td v-for="(item, key) in row" :key="key" class="px-6 py-4 whitespace-nowrap text-md text-preto2">
-                     {{ item }}
+                  <td v-for="header in headers" :key="header" class="px-6 py-4 whitespace-nowrap text-md text-preto2">
+                     {{ row[header] }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-branco flex space-x-2">
-                     <button
-                       v-if="numAcoes >= 1"
-                       class="bg-azul1 text-branco px-4 py-2 rounded hover:bg-blue-600 transition duration-500 hover:bg-azul4 hover:text-preto"
-                     >
-                       <i class="bi bi-pencil"></i>
+                     <button v-if="numAcoes >= 1"
+                        class="bg-azul1 text-branco px-4 py-2 rounded hover:bg-blue-600 transition duration-500 hover:bg-azul4 hover:text-preto">
+                        <i class="bi bi-pencil"></i>
                      </button>
-                     <button
-                       v-if="numAcoes >= 2"
-                       class="bg-azul1 text-branco px-4 py-2 rounded hover:bg-red-600 transition duration-500 hover:bg-vermelho hover:text-preto"
-                     >
-                       <i class="bi bi-trash"></i>
+                     <button v-if="numAcoes >= 2"
+                        class="bg-azul1 text-branco px-4 py-2 rounded hover:bg-red-600 transition duration-500 hover:bg-vermelho hover:text-preto">
+                        <i class="bi bi-trash"></i>
                      </button>
-                     <button
-                       v-if="numAcoes >= 3"
-                       class="bg-azul1 text-branco px-4 py-2 rounded hover:bg-green-600 transition duration-500 hover:bg-cinza hover:text-preto"
-                     >
-                       <i class="bi bi-eye"></i>
+                     <button v-if="numAcoes >= 3"
+                        class="bg-azul1 text-branco px-4 py-2 rounded hover:bg-green-600 transition duration-500 hover:bg-cinza hover:text-preto">
+                        <i class="bi bi-eye"></i>
                      </button>
-                   </td>
-                 
+                  </td>
                </tr>
             </tbody>
          </table>
       </div>
    </div>
 </template>
-
 <script setup>
 import { defineProps } from 'vue';
-
 const props = defineProps({
    headers: {
       type: Array,
@@ -57,16 +48,14 @@ const props = defineProps({
       required: true
    },
    numAcoes: {
-    type: Number,
-    default: 3
-  }
+      type: Number,
+      default: 3
+   }
 });
-
-
 </script>
 
 <style scoped>
-.card{
-   background-color:transparent;
+.card {
+   background-color: transparent;
 }
 </style>

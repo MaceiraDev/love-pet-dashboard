@@ -3,12 +3,12 @@
       <div class="conteudo">
          <div class="flex justify-center align-middle">
             <div class="card">
-               <div>
+               <div class="flex justify-center align-middle">
                   <img src="../assets/imagens/logo_sistema.png" alt="Logo do sistema">
                </div>
-               <form action="">
+               <form form @submit.prevent="logarSistema">
                   <div class="wave-group">
-                     <input required="" type="email" class="input">
+                     <input v-model="state.email" required type="email" class="input">
                      <span class="bar"></span>
                      <label class="label">
                         <span class="label-char" style="--index: 0">E</span>
@@ -20,7 +20,7 @@
                      </label>
                   </div>
                   <div class="wave-group">
-                     <input required="" type="password" class="input">
+                     <input v-model="state.senha" required type="password" class="input">
                      <span class="bar"></span>
                      <label class="label">
                         <span class="label-char" style="--index: 0">S</span>
@@ -37,10 +37,33 @@
       </div>
    </main>
 </template>
-
 <script setup>
-</script>
+import services from '@/services';
+import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStorage } from 'vue3-storage';
 
+const storage = useStorage();
+const router = useRouter();
+const state = reactive({
+   email: null,
+   senha: null,
+})
+
+async function logarSistema() {
+   await services.login.login(state.email, state.senha).then((data) => {
+      if (data) {
+         storage.setStorageSync("token", data.response.token);
+         router.push("dashboard");
+      }
+      else {
+         console.log('Erro ao recuperar token ou nome');
+      }
+   }).catch((e) => {
+      console.log(e);
+   });
+}
+</script>
 <style scoped>
 @import url("../assets/base.css");
 
@@ -125,7 +148,7 @@
    width: 50%;
 }
 
-/* From Uiverse.io by xueyuantan */ 
+/* From Uiverse.io by xueyuantan */
 button {
    width: 100%;
    height: 3em;
@@ -138,9 +161,9 @@ button {
    z-index: 1;
    box-shadow: 6px 6px 12px #c5c5c5;
    color: #000;
-  }
-  
-  button::before {
+}
+
+button::before {
    content: '';
    width: 0;
    height: 3em;
@@ -152,9 +175,9 @@ button {
    transition: .5s ease;
    display: block;
    z-index: -1;
-  }
-  
-  button:hover::before {
+}
+
+button:hover::before {
    width: 100%;
-  }
+}
 </style>
