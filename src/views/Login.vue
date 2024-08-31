@@ -59,7 +59,6 @@
 .wave-group .input {
    font-size: 16px;
    padding: 10px 10px 10px 5px;
-   display: block;
    width: 100%;
    border: none;
    border-bottom: 1px solid #515151;

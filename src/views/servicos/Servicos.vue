@@ -1,19 +1,19 @@
 <template>
    <div class="flex justify-between items-center mb-2">
-      <h2 class=" text-2xl   font-bold  text-preto2">Serviços</h2>
+      <h2 class="text-2xl font-bold text-preto2">Serviços</h2>
       <BotaoCreate :link="'/servicos/cadastrar-servico'" :titulo="'Cadastrar Serviço'" />
    </div>
-   <DataTable :headers="tableHeaders" :data="tableData"  :numAcoes="3"/>
+   <DataTable :headers="tableHeaders" :data="tableData" :numAcoes="3"/>
 </template>
+
 <script setup>
 import BotaoCreate from '@/components/BotaoCreate.vue';
 import DataTable from '@/components/TableDefault.vue';
 
-const tableHeaders = ['Nome', 'Espécie', 'Sexo', 'Idade', 'Status'];
+const tableHeaders = ['Serviço', 'Valor'];
 const tableData = [
-   { Nome: 'Batman', Especie: 'Gato', Sexo: 'Macho', Idade: 6, Status: 'São Paulo' },
-   { Nome: 'Mel', Especie: 'Cachorro', Sexo: 'Fêmea',Idade: 2, Status: 'Rio de Janeiro' },
-   { Nome: 'Simba', Especie: 'Gato', Sexo: 'Macho', Idade: 1, Status: 'Belo Horizonte' }
+   { Servico: 'Banho', Valor: 'R$ 50,00' },
+   { Servico: 'Tosa', Valor: 'R$ 70,00' },
+   { Servico: 'Consulta', Valor: 'R$ 100,00' }
 ];
-
 </script>

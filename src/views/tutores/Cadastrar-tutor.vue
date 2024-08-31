@@ -26,7 +26,7 @@
             </div>
             <div>
                <label>CPF</label>
-               <input type="text" placeholder="Digite o CPF" />
+               <input type="text" placeholder="Digite o CPF" v-mask="['###.###.###-##']" />
             </div>
             <div>
                <label>Telefone</label>
@@ -53,7 +53,7 @@
             </div>
             <div>
                <label>Quantidade de Animais</label>
-               <input type="text" placeholder="Digite a quantidade de animais" />
+               <input type="text" placeholder="Digite a quantidade de animais" v-mask="['######']" />
             </div>
             <div>
                <label>CEP</label>
