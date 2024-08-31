@@ -57,24 +57,23 @@
             </div>
             <div>
                <label>CEP</label>
-               <input type="text" v-model="state.cep" placeholder="Digite o CEP"
-                  @blur="buscaCEP(state.cep)" />
+               <input type="text" v-model="state.cep" placeholder="Digite o CEP" @blur="buscaCEP(state.cep)" v-mask="'#####-###'"/>
             </div>
             <div>
                <label>Logradouro</label>
-               <input type="text" v-model="logradouro" placeholder="Digite o logradouro" />
+               <input type="text" v-model="state.logradouro" placeholder="Digite o logradouro" />
             </div>
             <div>
                <label>Número</label>
-               <input type="text" v-model="numero" placeholder="Digite o número" />
+               <input type="text" v-model="state.numero" placeholder="Digite o número" />
             </div>
             <div>
                <label>Bairro</label>
-               <input type="text" v-model="bairro" placeholder="Digite o bairro" />
+               <input type="text" v-model="state.bairro" placeholder="Digite o bairro" />
             </div>
             <div>
                <label>Cidade</label>
-               <input type="text" v-model="cidade" placeholder="Digite a cidade" />
+               <input type="text" v-model="state.cidade" placeholder="Digite a cidade" />
             </div>
          </div>
          <div>
@@ -82,8 +81,6 @@
             <textarea placeholder="Digite notas adicionais" rows="4"></textarea>
          </div>
       </form>
-
-
       <div class="flex justify-end gap-4 mt-4">
          <BotaoCancel :link="'/tutores'" :titulo="'Cancelar'" />
          <BotaoSave :link="'/tutores/cadastrar-tutor'" :titulo="'Salvar'" />
@@ -105,17 +102,17 @@ const state = reactive({
    numero: '',
 })
 
-
 async function buscaCEP(cep) {
-   try{
-      const {response} = await services.cep.bucarCEP(cep)
-      alert(response.response)
-   }  
-   catch(e){
-      console.log(e)
-   }  
+   try {
+      const data = await services.cep.bucarCEP(cep);
+      state.logradouro = data.response.logradouro;
+      state.cidade = data.response.localidade;
+      state.bairro = data.response.bairro;
+   }
+   catch (e) {
+      console.log(e);
+   }
 }
-
-
 </script>
+
 <style scoped></style>
