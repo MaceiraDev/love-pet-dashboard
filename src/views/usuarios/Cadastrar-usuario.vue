@@ -111,7 +111,7 @@
          <textarea placeholder="Digite aqui informações adicionais, as informações deste campo serão mostradas na tela de perfil do usuário." rows="4"></textarea>
       </div>
       <div class="flex justify-end gap-4 mt-4">
-         <BotaoCancel :link="'/usuarios/cadastrar-usuario'" :titulo="'Cancelar'" />
+         <BotaoCancel :link="'/usuarios'" :titulo="'Cancelar'" />
          <BotaoSave :link="'/usuarios/cadastrar-usuario'" :titulo="'Salvar'" />
       </div>
        
@@ -190,16 +190,6 @@
    box-shadow: 0 0 20px #06669980;
 }
 
-.radio-button__input:checked+.radio-button__label {
-   color: #066699;
-}
-
-.radio-button__label:hover .radio-button__custom {
-   transform: scale(1.2);
-   border-color: #066699;
-   box-shadow: 0 0 20px #06669980;
-}
-
 .upload-button {
    display: flex;
    align-items: center;
@@ -228,7 +218,7 @@
    display: none;
 }
 
-.input-text, select, .upload-button {
+.upload-button {
    width: 100%;
    padding: 10px;
    border: 1px solid #ccc;

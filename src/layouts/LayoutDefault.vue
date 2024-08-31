@@ -30,6 +30,24 @@
                </router-link>
             </li>
             <li>
+               <router-link to="/tutores" class="block py-2 px-4 rounded text-branco"
+                  :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/tutores' }">
+                  <i class="bi bi-person-fill"></i> Tutores
+               </router-link>
+            </li>
+            <li>
+               <router-link to="/banho" class="block py-2 px-4 rounded text-branco"
+                  :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/banho' }">
+                  <i class="bi bi-droplet-fill"></i> Banho e tosa
+               </router-link>
+            </li>
+            <li>
+               <router-link to="/servicos" class="block py-2 px-4 rounded text-branco"
+                  :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/servicos' }">
+                  <i class="bi bi-easel-fill"></i> Serviços
+               </router-link>
+            </li>
+            <li>
                <router-link to="/usuarios" class="block py-2 px-4 rounded text-branco"
                   :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/usuarios' }">
                   <i class="bi bi-people-fill"></i> Usuários

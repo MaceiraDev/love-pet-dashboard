@@ -23,9 +23,49 @@ const routes = [
             component: () => import('../views/fichas/Fichas.vue')
          },
          {
+            path: 'fichas/cadastrar-ficha',
+            name: 'cadastrar-ficha',
+            component: () => import('../views/fichas/Cadastrar-ficha.vue')
+         },
+         {
             path: 'pets',
             name: 'pets',
             component: () => import('../views/pets/Pets.vue')
+         },
+         {
+            path: 'pets/cadastrar-pet',
+            name: 'cadastrar-pet',
+            component: () => import('../views/pets/Cadastrar-pet.vue')
+         },
+         {
+            path: 'tutores',
+            name: 'tutores',
+            component: () => import('../views/tutores/Tutores.vue')
+         },
+         {
+            path: 'tutores/cadastrar-tutor',
+            name: 'cadastrar-tutor',
+            component: () => import('../views/tutores/Cadastrar-tutor.vue')
+         },
+         {
+            path: 'banho',
+            name: 'banho',
+            component: () => import('../views/banho/Banho.vue')
+         },
+         {
+            path: 'banho/cadastrar-banho',
+            name: 'cadastrar-banho',
+            component: () => import('../views/banho/Cadastrar-banho.vue')
+         },
+         {
+            path: 'servicos',
+            name: 'servicos',
+            component: () => import('../views/servicos/Servicos.vue')
+         },
+         {
+            path: 'servicos/cadastrar-servico',
+            name: 'cadastrar-servico',
+            component: () => import('../views/servicos/Cadastrar-servico.vue')
          },
          {
             path: 'usuarios',

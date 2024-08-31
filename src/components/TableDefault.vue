@@ -16,20 +16,27 @@
                   <td v-for="(item, key) in row" :key="key" class="px-6 py-4 whitespace-nowrap text-md text-preto2">
                      {{ item }}
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-branco">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-branco flex space-x-2">
                      <button
-                        class="bg-azul1 text-branco px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        Ação
+                       v-if="numAcoes >= 1"
+                       class="bg-azul1 text-branco px-4 py-2 rounded hover:bg-blue-600 transition duration-500 hover:bg-azul4 hover:text-preto"
+                     >
+                       <i class="bi bi-pencil"></i>
                      </button>
                      <button
-                        class="bg-azul1 text-branco px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        Ação
+                       v-if="numAcoes >= 2"
+                       class="bg-azul1 text-branco px-4 py-2 rounded hover:bg-red-600 transition duration-500 hover:bg-vermelho hover:text-preto"
+                     >
+                       <i class="bi bi-trash"></i>
                      </button>
                      <button
-                        class="bg-azul1 text-branco px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        Ação
+                       v-if="numAcoes >= 3"
+                       class="bg-azul1 text-branco px-4 py-2 rounded hover:bg-green-600 transition duration-500 hover:bg-cinza hover:text-preto"
+                     >
+                       <i class="bi bi-eye"></i>
                      </button>
-                  </td>
+                   </td>
+                 
                </tr>
             </tbody>
          </table>
@@ -48,8 +55,14 @@ const props = defineProps({
    data: {
       type: Array,
       required: true
-   }
+   },
+   numAcoes: {
+    type: Number,
+    default: 3
+  }
 });
+
+
 </script>
 
 <style scoped>

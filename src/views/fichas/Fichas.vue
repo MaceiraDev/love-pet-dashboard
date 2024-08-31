@@ -1,10 +1,13 @@
 <template>
-   <div>
-     <DataTable :headers="tableHeaders" :data="tableData" />
+   <div class="flex justify-between items-center mb-2">
+      <h2 class=" text-2xl   font-bold  text-preto2">Fichas</h2>
+      <BotaoCreate :link="'/fichas/cadastrar-ficha'" :titulo="'Cadastrar Ficha'" />
    </div>
+   <DataTable :headers="tableHeaders" :data="tableData"  :numAcoes="3"/>
  </template>
  
  <script setup>
+ import BotaoCreate from '@/components/BotaoCreate.vue';
  import DataTable from '@/components/TableDefault.vue';
  
  const tableHeaders = ['Nome', 'Idade', 'Cidade'];

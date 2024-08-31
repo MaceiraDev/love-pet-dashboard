@@ -13,10 +13,12 @@ export default {
          azul1: '#066699',
          azul2: '#0a5483',
          azul3: '#02416d',
+         azul4: '#2196F3',
+         cinza: '#90A4AE',
          preto: '#000',
          preto2: '#1a1b1c',
          branco: '#fff',
-         vermelho: '#FF0000'
+         vermelho: '#F44336'
       }
    },
    plugins: [],

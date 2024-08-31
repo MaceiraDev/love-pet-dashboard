@@ -1,7 +1,7 @@
 <template>
    <div class="flex justify-between items-center mb-2">
-      <h2 class=" text-2xl   font-bold  text-preto2">Pets</h2>
-      <BotaoCreate :link="'/pets/cadastrar-pet'" :titulo="'Cadastrar Pet'" />
+      <h2 class=" text-2xl   font-bold  text-preto2">Tutores</h2>
+      <BotaoCreate :link="'/tutores/cadastrar-tutor'" :titulo="'Cadastrar Tutor'" />
    </div>
    <DataTable :headers="tableHeaders" :data="tableData"  :numAcoes="3"/>
 </template>
