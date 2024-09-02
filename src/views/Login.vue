@@ -54,7 +54,7 @@ async function logarSistema() {
    await services.login.login(state.email, state.senha).then((data) => {
       if (data) {
          storage.setStorageSync("token", data.response.token);
-         router.push("dashboard");
+         router.push("/");
       }
       else {
          console.log('Erro ao recuperar token ou nome');

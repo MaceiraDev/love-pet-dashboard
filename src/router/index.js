@@ -1,6 +1,7 @@
-// src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
 import LayoutDefault from '@/layouts/LayoutDefault.vue'
+import services from '@/services';
+import { useStorage } from 'vue3-storage';
 
 const routes = [
    {
@@ -20,7 +21,7 @@ const routes = [
          {
             path: 'fichas',
             name: 'fichas',
-            component: () => import('../views/fichas/Fichas.vue')
+            component: () => import('../views/fichas/Fichas.vue'),
          },
          {
             path: 'fichas/cadastrar-ficha',
@@ -80,9 +81,33 @@ const routes = [
       ]
    }
 ]
+
 const router = createRouter({
    history: createWebHistory(import.meta.env.BASE_URL),
    routes,
 })
+
+// Proteção de navegação global
+router.beforeEach(async (to, from, next) => {
+
+   const storage = useStorage();
+   const token = storage.getStorageSync("token");
+
+   if (to.path === '/login') {
+      next();
+      return;
+   }
+   try {
+      const result = await services.auth.verificaToken(token);
+      if (result.response) {
+         next();
+      } else {
+         next('/login');
+      }
+   } catch (error) {
+      next('/login');
+   }
+});
+
 
 export default router

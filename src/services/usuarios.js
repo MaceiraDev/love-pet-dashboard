@@ -1,6 +1,6 @@
 export default HTTPCLIENT => ({
    getAll: async ( token ) => {
-      const headers = { "Authorization": "Bearer " + token }
+      const headers = { "Authorization": "Bearer " + token };
       const response = await HTTPCLIENT.get('/users', { headers });
       return { response: response.data }
    },
