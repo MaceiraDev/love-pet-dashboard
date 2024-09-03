@@ -52,7 +52,7 @@
             <input type="text" placeholder="Digite um CPF:" v-mask="'###.###.###-##'">
          </div>
          <div>
-            <label>Sexo</label>
+            <label>Gênero</label>
             <select>
                <option selected>Selecione</option>
                <option value="MASCULINO">Masculino</option>

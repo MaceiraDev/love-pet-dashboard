@@ -9,7 +9,7 @@
 import BotaoCreate from '@/components/BotaoCreate.vue';
 import DataTable from '@/components/TableDefault.vue';
 
-const tableHeaders = ['Nome', 'Espécie', 'Sexo', 'Idade', 'Status'];
+const tableHeaders = ['Nome', 'Espécie', 'Gênero', 'Idade', 'Status'];
 const tableData = [
    { Nome: 'Batman', Especie: 'Gato', Sexo: 'Macho', Idade: 6, Status: 'São Paulo' },
    { Nome: 'Mel', Especie: 'Cachorro', Sexo: 'Fêmea',Idade: 2, Status: 'Rio de Janeiro' },

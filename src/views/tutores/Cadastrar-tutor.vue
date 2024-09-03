@@ -17,7 +17,7 @@
                <input type="text" placeholder="Digite uma data:" v-mask="'##/##/####'">
             </div>
             <div>
-               <label>Sexo</label>
+               <label>Gênero</label>
                <select>
                   <option value="Masculino">Masculino</option>
                   <option value="Feminino">Feminino</option>
