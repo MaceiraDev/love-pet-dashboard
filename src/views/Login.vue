@@ -1,6 +1,9 @@
 <template>
    <main>
       <div class="conteudo">
+         <div v-if="loading" class="flex justify-center align-middle">
+            <Loader :loading="loading" />
+         </div>
          <div class="flex justify-center align-middle">
             <div class="card">
                <div class="flex justify-center align-middle">
@@ -16,7 +19,6 @@
                         <span class="label-char" style="--index: 2">a</span>
                         <span class="label-char" style="--index: 3">i</span>
                         <span class="label-char" style="--index: 4">l</span>
-
                      </label>
                   </div>
                   <div class="wave-group">
@@ -30,40 +32,48 @@
                         <span class="label-char" style="--index: 4">a</span>
                      </label>
                   </div>
-                  <button type="submit"> Entrar </button>
+                  <button type="submit" :disabled="loading">Entrar</button>
                </form>
             </div>
          </div>
       </div>
    </main>
 </template>
+
 <script setup>
 import services from '@/services';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStorage } from 'vue3-storage';
+import Loader from '@/components/Loader.vue';
 
 const storage = useStorage();
 const router = useRouter();
 const state = reactive({
    email: null,
    senha: null,
-})
+});
+
+const loading = ref(false);
 
 async function logarSistema() {
-   await services.login.login(state.email, state.senha).then((data) => {
+   loading.value = true;
+   try {
+      const data = await services.login.login(state.email, state.senha);
       if (data) {
          storage.setStorageSync("token", data.response.token);
          router.push("/");
-      }
-      else {
+      } else {
          console.log('Erro ao recuperar token ou nome');
       }
-   }).catch((e) => {
+   } catch (e) {
       console.log(e);
-   });
+   } finally {
+      loading.value = false;
+   }
 }
 </script>
+
 <style scoped>
 @import url("../assets/base.css");
 

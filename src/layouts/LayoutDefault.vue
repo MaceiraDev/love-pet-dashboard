@@ -6,7 +6,9 @@
             <div class="overlay">
                <div class="overlay-content">
                   <p>Vitor Inácio</p>
-                  <button><i class="bi bi-power"></i></button>
+                  <button @click="deslogar">    <!-- Aqui coloquei para executar a função deslogar ao clicar-->
+                     <i class="bi bi-power"></i>
+                  </button>
                </div>
             </div>
          </div>
@@ -80,10 +82,21 @@ import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import BotaoDropHeader from '@/components/BotaoDropHeader.vue';
 import { defineComponent } from 'vue'
-import { RouterView } from 'vue-router';
+import { RouterView, useRouter } from 'vue-router';
+import { useStorage } from 'vue3-storage';
 import pubg from '@/assets/imagens/carrosel/pubg.png';
 import dog from '@/assets/imagens/carrosel/dog.png';
 import cat from '@/assets/imagens/carrosel/gato.png';
+
+const storage = useStorage();
+const router = useRouter();
+
+function deslogar() {
+   // Apaga o token
+   storage.removeStorageSync("token");
+   // Redireciona para o login
+   router.push("/login");
+}
 
 defineComponent({
    name: 'Default'
