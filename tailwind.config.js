@@ -18,7 +18,8 @@ export default {
          preto: '#000',
          preto2: '#1a1b1c',
          branco: '#fff',
-         vermelho: '#F44336'
+         vermelho: '#F44336',
+         vermelho2: '#9d3226',
       }
    },
    plugins: [],

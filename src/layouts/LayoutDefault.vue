@@ -68,30 +68,37 @@
          </main>
       </div>
    </div>
+   <ModalLogout :visible="state.modal" @update:visible="state.modal = $event" @confirmar="handleConfirmLogout" />
+   <Loader :loading="loading" />
 </template>
 
 <script setup>
-import BotaoDropHeader from '@/components/BotaoDropHeader.vue';
-import { defineComponent } from 'vue'
-import { RouterView, useRouter } from 'vue-router';
+import { ref, reactive } from 'vue';
+import ModalLogout from '@/components/ModalLogout.vue';
+import Loader from '@/components/Loader.vue';
+import { useRouter } from 'vue-router';
 import { useStorage } from 'vue3-storage';
 
 const storage = useStorage();
-const router = useRouter();
-
-// const token = storage.getStorageSync("token");
 const user_nome = storage.getStorageSync("nome");
+const router = useRouter();
+const state = reactive({
+   modal: false,
+});
+const loading = ref(false);
 
 function deslogar() {
-   // Apaga o token
-   storage.removeStorageSync("token");
-   // Redireciona para o login
-   router.push("/login");
+   state.modal = true;
 }
 
-defineComponent({
-   name: 'Default'
-})
+function handleConfirmLogout() {
+   loading.value = true;
+   setTimeout(() => {
+      storage.removeStorageSync("token"); // Remove o token
+      router.push("/login"); // Redireciona para a página de login
+      loading.value = false;
+   }, 1000); // 3 segundos de delay
+}
 </script>
 
 <style scoped>
