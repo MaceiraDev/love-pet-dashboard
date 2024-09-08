@@ -34,13 +34,13 @@
             <li>
                <router-link to="/tutores" class="block py-2 px-4 rounded text-branco"
                   :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/tutores' }">
-                  <i class="bi bi-person-fill"></i> Tutores
+                  <i class="bi bi-person-raised-hand"></i> Tutores
                </router-link>
             </li>
             <li>
                <router-link to="/banho" class="block py-2 px-4 rounded text-branco"
                   :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/banho' }">
-                  <i class="bi bi-droplet-fill"></i> Banho e tosa
+                  <i class="bi bi-scissors"></i> Banho e tosa
                </router-link>
             </li>
             <li>
@@ -111,18 +111,19 @@ aside {
 
 a {
    font-size: 14pt;
-   display: flex;
-   align-items: center;
 }
 
 .material-icons {
-   margin-right: 5px;
+   font-size: 20px;
+   line-height: 1;  
+   vertical-align: middle; 
+   margin-right: 0; 
 }
 
 .profile {
    position: relative;
    width: 100%;
-   height: 250px;
+   height: 200px;
 }
 
 .profile img {
@@ -141,7 +142,7 @@ a {
 }
 
 .overlay-content {
-   padding: 10px;
+   padding: 5px;
    display: flex;
    justify-content: space-between;
 }
