@@ -5,8 +5,8 @@
             <img id="img" src="./../assets/imagens/dog_ia.jpg" alt="img profile">
             <div class="overlay">
                <div class="overlay-content">
-                  <p>{{ user_nome }}</p>
-                  <button @click="deslogar">
+                  <p>Vitor Inácio</p>
+                  <button @click="deslogar">    <!-- Aqui coloquei para executar a função deslogar ao clicar-->
                      <i class="bi bi-power"></i>
                   </button>
                </div>
@@ -28,7 +28,7 @@
             <li>
                <router-link to="/pets" class="block py-2 px-4 rounded text-branco"
                   :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/pets' }">
-                  <i class="bi bi-gitlab"></i> Pets
+                  <i class="material-icons">pets</i> Pets
                </router-link>
             </li>
             <li>
@@ -58,7 +58,14 @@
          </ul>
       </aside>
       <div class="flex-1 flex flex-col">
-         <header class="flex justify-end items-center p-2 bg-gray-100">
+         <header class="flex justify-between items-center p-2 bg-gray-100">
+            <div class="w-40">
+               <carousel :items-to-show="1" :autoplay="2000" :wrap-around="true" :mouse-drag="false" class="relative">
+                  <slide v-for="slide in imagens_banner" :key="slide.id">
+                     <img id="imagem_slide" :src="slide.imagem" class="w-full h-auto object-cover" />
+                  </slide>
+               </carousel>
+            </div>
             <div class="flex items-center">
                <BotaoDropHeader />
             </div>
@@ -68,37 +75,39 @@
          </main>
       </div>
    </div>
-   <ModalLogout :visible="state.modal" @update:visible="state.modal = $event" @confirmar="handleConfirmLogout" />
-   <Loader :loading="loading" />
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
-import ModalLogout from '@/components/ModalLogout.vue';
-import Loader from '@/components/Loader.vue';
-import { useRouter } from 'vue-router';
+import 'vue3-carousel/dist/carousel.css';
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import BotaoDropHeader from '@/components/BotaoDropHeader.vue';
+import { defineComponent } from 'vue'
+import { RouterView, useRouter } from 'vue-router';
 import { useStorage } from 'vue3-storage';
+import pubg from '@/assets/imagens/carrosel/pubg.png';
+import dog from '@/assets/imagens/carrosel/dog.png';
+import cat from '@/assets/imagens/carrosel/gato.png';
 
 const storage = useStorage();
-const user_nome = storage.getStorageSync("nome");
 const router = useRouter();
-const state = reactive({
-   modal: false,
-});
-const loading = ref(false);
 
 function deslogar() {
-   state.modal = true;
+   // Apaga o token
+   storage.removeStorageSync("token");
+   // Redireciona para o login
+   router.push("/login");
 }
 
-function handleConfirmLogout() {
-   loading.value = true;
-   setTimeout(() => {
-      storage.removeStorageSync("token"); // Remove o token
-      router.push("/login"); // Redireciona para a página de login
-      loading.value = false;
-   }, 1000); // 3 segundos de delay
-}
+defineComponent({
+   name: 'Default'
+})
+
+const imagens_banner = [
+   { imagem: pubg },
+   { imagem: dog },
+   { imagem: cat },
+
+]
 </script>
 
 <style scoped>
@@ -114,6 +123,11 @@ aside {
 
 a {
    font-size: 14pt;
+   display: flex;
+   align-items: center;
+}
+.material-icons {
+   margin-right: 5px;
 }
 
 .profile {
@@ -139,32 +153,17 @@ a {
 
 .overlay-content {
    padding: 10px;
+   color: white;
    display: flex;
    justify-content: space-between;
+   font-weight: 700;
 }
 
 .overlay-content p {
    margin: 0;
    font-size: 18pt;
-   color: white;
-   font-weight: 600;
-}
-
-.overlay-content button {
-   background-color: transparent;
-   font-size: 16pt;
-   padding: 0px 10px;
-   border-radius: 8px;
-   color: white;
-   transition: 0.2s;
-}
-
-.overlay-content button:hover {
-   color: white;
-   background-color: rgba(128, 128, 128, 0.425);
 }
 </style>
-
 <style>
 .layout-default input[type="text"],
 .layout-default input[type="email"],
