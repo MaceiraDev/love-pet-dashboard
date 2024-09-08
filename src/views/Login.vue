@@ -60,6 +60,7 @@ async function logarSistema() {
    loading.value = true;
    try {
       const data = await services.login.login(state.email, state.senha);
+      console.log(data.response)
       if (data) {
          storage.setStorageSync("token", data.response.token);
          router.push("/");

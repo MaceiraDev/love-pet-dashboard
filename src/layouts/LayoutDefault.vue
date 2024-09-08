@@ -5,8 +5,8 @@
             <img id="img" src="./../assets/imagens/dog_ia.jpg" alt="img profile">
             <div class="overlay">
                <div class="overlay-content">
-                  <p>Vitor Inácio</p>
-                  <button @click="deslogar">    <!-- Aqui coloquei para executar a função deslogar ao clicar-->
+                  <p>{{ user_nome }}</p>
+                  <button @click="deslogar">
                      <i class="bi bi-power"></i>
                   </button>
                </div>
@@ -58,14 +58,7 @@
          </ul>
       </aside>
       <div class="flex-1 flex flex-col">
-         <header class="flex justify-between items-center p-2 bg-gray-100">
-            <div class="w-40">
-               <carousel :items-to-show="1" :autoplay="2000" :wrap-around="true" :mouse-drag="false" class="relative">
-                  <slide v-for="slide in imagens_banner" :key="slide.id">
-                     <img id="imagem_slide" :src="slide.imagem" class="w-full h-auto object-cover" />
-                  </slide>
-               </carousel>
-            </div>
+         <header class="flex justify-end items-center p-2 bg-gray-100">
             <div class="flex items-center">
                <BotaoDropHeader />
             </div>
@@ -78,18 +71,16 @@
 </template>
 
 <script setup>
-import 'vue3-carousel/dist/carousel.css';
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import BotaoDropHeader from '@/components/BotaoDropHeader.vue';
 import { defineComponent } from 'vue'
 import { RouterView, useRouter } from 'vue-router';
 import { useStorage } from 'vue3-storage';
-import pubg from '@/assets/imagens/carrosel/pubg.png';
-import dog from '@/assets/imagens/carrosel/dog.png';
-import cat from '@/assets/imagens/carrosel/gato.png';
 
 const storage = useStorage();
 const router = useRouter();
+
+// const token = storage.getStorageSync("token");
+const user_nome = storage.getStorageSync("nome");
 
 function deslogar() {
    // Apaga o token
@@ -101,13 +92,6 @@ function deslogar() {
 defineComponent({
    name: 'Default'
 })
-
-const imagens_banner = [
-   { imagem: pubg },
-   { imagem: dog },
-   { imagem: cat },
-
-]
 </script>
 
 <style scoped>
@@ -148,17 +132,32 @@ a {
 
 .overlay-content {
    padding: 10px;
-   color: white;
    display: flex;
    justify-content: space-between;
-   font-weight: 700;
 }
 
 .overlay-content p {
    margin: 0;
    font-size: 18pt;
+   color: white;
+   font-weight: 600;
+}
+
+.overlay-content button {
+   background-color: transparent;
+   font-size: 16pt;
+   padding: 0px 10px;
+   border-radius: 8px;
+   color: white;
+   transition: 0.2s;
+}
+
+.overlay-content button:hover {
+   color: white;
+   background-color: rgba(128, 128, 128, 0.425);
 }
 </style>
+
 <style>
 .layout-default input[type="text"],
 .layout-default input[type="email"],

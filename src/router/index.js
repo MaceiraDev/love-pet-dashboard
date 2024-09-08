@@ -93,13 +93,18 @@ router.beforeEach(async (to, from, next) => {
    const storage = useStorage();
    const token = storage.getStorageSync("token");
 
+   //Pagina login n é protegida
    if (to.path === '/login') {
       next();
       return;
    }
    try {
       const result = await services.auth.verificaToken(token);
-      if (result.response) {
+      //varifica se existe o token e seta os campos no storage
+      if (result.response.token) {
+         storage.setStorageSync("user_id", result.response.user_id);
+         storage.setStorageSync("nome", result.response.nome);
+         storage.setStorageSync("tipo_usuario", result.response.tipo_usuario);
          next();
       } else {
          next('/login');
@@ -108,6 +113,5 @@ router.beforeEach(async (to, from, next) => {
       next('/login');
    }
 });
-
 
 export default router

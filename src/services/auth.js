@@ -10,7 +10,7 @@ export default HTTPCLIENT => ({
          }
       }
       return {
-         response: response.data.token,
+         response: response.data,
          errors
       }
    },
