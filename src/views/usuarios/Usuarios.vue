@@ -11,18 +11,28 @@ import BotaoCreate from '@/components/BotaoCreate.vue';
 import DataTable from '@/components/TableDefault.vue';
 import services from '@/services';
 import { onMounted, reactive, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { useStorage } from 'vue3-storage';
 
+const storage = useStorage();
+const token = storage.getStorageSync("token");
+const user_tipo = storage.getStorageSync("tipo_usuario");
+const router = useRouter();
+
 onMounted(() => {
-   buscarUsuarios();
+   
+   if (user_tipo === 2 || user_tipo === 3 || user_tipo === 4) {
+      router.push("/"); 
+   } else {
+      buscarUsuarios();
+   }
 });
 
 const state = reactive({
    usuarios: [],
 });
 
-const storage = useStorage();
-const token = storage.getStorageSync("token");
+
 
 async function buscarUsuarios() {
    const { response } = await services.usuarios.getAll(token);

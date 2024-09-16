@@ -49,7 +49,7 @@
                   <i class="bi bi-easel-fill"></i> Serviços
                </router-link>
             </li>
-            <li>
+            <li v-if="user_tipo == 0 || user_tipo == 1"> 
                <router-link to="/usuarios" class="block py-2 px-4 rounded text-branco"
                   :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/usuarios' }">
                   <i class="bi bi-people-fill"></i> Usuários
@@ -79,8 +79,10 @@ import Loader from '@/components/Loader.vue';
 import { useRouter } from 'vue-router';
 import { useStorage } from 'vue3-storage';
 import BotaoDropHeader from '@/components/BotaoDropHeader.vue';
+
 const storage = useStorage();
 const user_nome = storage.getStorageSync("nome");
+const user_tipo = storage.getStorageSync("tipo_usuario");
 const router = useRouter();
 const state = reactive({
    modal: false,

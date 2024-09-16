@@ -127,18 +127,23 @@
          </div>
       </form>
    </div>
+   <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
    <Loader :loading="state.loader" />
 </template>
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import BotaoSave from '@/components/BotaoSave.vue';
 import BotaoCancel from '@/components/BotaoCancel.vue';
 import services from '@/services';
 import { useStorage } from 'vue3-storage';
 import Loader from '@/components/Loader.vue';
+import ModalErro from '@/components/ModalErro.vue';
 
 const storage = useStorage();
 const token = storage.getStorageSync("token");
+const user_tipo = storage.getStorageSync("tipo_usuario");
+
+console.log(user_tipo);
 
 const state = reactive({
    imagem: {},
@@ -156,6 +161,8 @@ const state = reactive({
    senha: '',
    notas_adicionais: '',
    loader: false,
+   modal: false,
+   MensagemErro: "",
 });
 
 async function adicionarImagem(event) {
@@ -184,34 +191,65 @@ function formatarWhatsApp(whatsapp) {
 }
 
 async function novoUsuario() {
+   console.log(user_tipo)
    state.loader = true;
-   try {
-      let cpfFormatado = formatarCPF(state.cpf);
-      let telefoneFormatado = formatarTelefone(state.telefone);
-      let whatsappFormatado = formatarWhatsApp(state.whatsApp);
 
-      let formData = new FormData();
-      formData.append("tipo_usuario", state.tipo_usuario);
-      formData.append("nome", state.nome);
-      formData.append("sobrenome", state.sobrenome);
-      formData.append("sexo", state.sexo);
-      formData.append("cpf", cpfFormatado); // CPF formatado
-      formData.append("telefone", telefoneFormatado); // Telefone formatado
-      formData.append("whatsapp", whatsappFormatado); // WhatsApp formatado
-      formData.append("email", state.email);
-      formData.append("status", state.status);
-      formData.append("n_pets", state.n_pets);
-      formData.append("senha", state.senha);
-      formData.append("notas_adicionais", state.notas_adicionais);
-      formData.append("_method", "POST");
-      if (state.imagem.file != null) {
-         formData.append("imagem", state.imagem.file);
+   if (user_tipo == 0 || user_tipo == 1) {
+      try {
+         let cpfFormatado = formatarCPF(state.cpf);
+         let telefoneFormatado = formatarTelefone(state.telefone);
+         let whatsappFormatado = formatarWhatsApp(state.whatsApp);
+
+         let formData = new FormData();
+         formData.append("tipo_usuario", state.tipo_usuario);
+         formData.append("nome", state.nome);
+         formData.append("sobrenome", state.sobrenome);
+         formData.append("sexo", state.sexo);
+         formData.append("cpf", cpfFormatado); // CPF formatado
+         formData.append("telefone", telefoneFormatado); // Telefone formatado
+         formData.append("whatsapp", whatsappFormatado); // WhatsApp formatado
+         formData.append("email", state.email);
+         formData.append("status", state.status);
+         formData.append("n_pets", state.n_pets);
+         formData.append("senha", state.senha);
+         formData.append("notas_adicionais", state.notas_adicionais);
+         formData.append("_method", "POST");
+         if (state.imagem.file != null) {
+            formData.append("imagem", state.imagem.file);
+         }
+         
+
+         try { // Nota de falecimento
+            console.log("Antes da chamada ao serviço");
+            const response = await services.usuarios.save({ formData, token }); // Essa nojeita não executa
+            console.log("Depois da chamada ao serviço"); // Esse console não executa
+
+            console.log(response); 
+            if (response.status === 200) {
+               window.location.href = "/usuarios";
+            } else {
+               console.log("chegou no else");
+               state.MensagemErro = "Ocorreu um erro ao cadastrar usuário.";
+               state.loader = false;
+               state.modal = true;
+            }
+         } catch (error) {
+            console.error("Erro no cadastro de usuário:", error);
+            state.MensagemErro = "Erro no servidor. Tente novamente mais tarde.";
+            state.modal = true;
+         } finally {
+            state.loader = false;
+         }
+
+      } catch (error) {
+         console.log(error);
+      } finally {
+         state.loader = false;
       }
-      await services.usuarios.save({ formData, token });
-   } catch (error) {
-      console.log(error);
-   } finally {
+   }else { // Mensagem de erro caso o usuário não tenha permissão
+      state.MensagemErro = "Você não tem permissão para cadastrar usuários.";
       state.loader = false;
+      state.modal = true;
    }
 }
 
