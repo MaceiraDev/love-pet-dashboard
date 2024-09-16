@@ -127,6 +127,7 @@
          </div>
       </form>
    </div>
+   <Loader :loading="state.loader" />
 </template>
 <script setup>
 import { reactive } from 'vue';
@@ -134,6 +135,7 @@ import BotaoSave from '@/components/BotaoSave.vue';
 import BotaoCancel from '@/components/BotaoCancel.vue';
 import services from '@/services';
 import { useStorage } from 'vue3-storage';
+import Loader from '@/components/Loader.vue';
 
 const storage = useStorage();
 const token = storage.getStorageSync("token");
@@ -153,6 +155,7 @@ const state = reactive({
    n_pets: '',
    senha: '',
    notas_adicionais: '',
+   loader: false,
 });
 
 async function adicionarImagem(event) {
@@ -181,8 +184,8 @@ function formatarWhatsApp(whatsapp) {
 }
 
 async function novoUsuario() {
+   state.loader = true;
    try {
-
       let cpfFormatado = formatarCPF(state.cpf);
       let telefoneFormatado = formatarTelefone(state.telefone);
       let whatsappFormatado = formatarWhatsApp(state.whatsApp);
@@ -207,6 +210,8 @@ async function novoUsuario() {
       await services.usuarios.save({ formData, token });
    } catch (error) {
       console.log(error);
+   } finally {
+      state.loader = false;
    }
 }
 
