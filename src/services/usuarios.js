@@ -5,7 +5,8 @@ export default HTTPCLIENT => ({
       };
       const response = await HTTPCLIENT.post('/users/cadastrar', formData, { headers });
       return {
-         data: response.data
+         data: response.data,
+         status: response.status
       };
    },
    getAll: async (token) => {
