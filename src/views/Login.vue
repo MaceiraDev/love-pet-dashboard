@@ -46,15 +46,17 @@ import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStorage } from 'vue3-storage';
 import Loader from '@/components/Loader.vue';
+import { useToast } from 'vue-toastification';
 
 const storage = useStorage();
 const router = useRouter();
+const toast = useToast();
+const loading = ref(false);
+
 const state = reactive({
    email: null,
    senha: null,
 });
-
-const loading = ref(false);
 
 async function logarSistema() {
    loading.value = true;
@@ -63,11 +65,12 @@ async function logarSistema() {
       if (data) {
          storage.setStorageSync("token", data.response.token);
          router.push("/");
-      } else {
-         console.log('Erro ao recuperar token ou nome');
       }
    } catch (e) {
-      console.log(e);
+      let msg_erro = e.response.data.message;
+      toast.error(msg_erro, {
+         timeout: 2000
+      });
    } finally {
       loading.value = false;
    }
