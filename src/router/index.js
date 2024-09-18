@@ -89,29 +89,37 @@ const router = createRouter({
 
 // Proteção de navegação global
 router.beforeEach(async (to, from, next) => {
-
    const storage = useStorage();
    const token = storage.getStorageSync("token");
 
-   //Pagina login n é protegida
+   // Página de login não é protegida
    if (to.path === '/login') {
       next();
       return;
    }
+
    try {
       const result = await services.auth.verificaToken(token);
-      //varifica se existe o token e seta os campos no storage
+      const tipo_usuario = result.response.tipo_usuario;
+
+      // Verifica se existe o token e seta os campos no storage
       if (result.response.token) {
          storage.setStorageSync("user_id", result.response.user_id);
          storage.setStorageSync("nome", result.response.nome);
-         storage.setStorageSync("tipo_usuario", result.response.tipo_usuario);
-         next();
+         storage.setStorageSync("tipo_usuario", tipo_usuario);
+         // Verifica o tipo de usuário para as rotas /usuarios e /servicos
+         if ((to.path.startsWith('/usuarios') || to.path.startsWith('/servicos')) && (tipo_usuario != 0 && tipo_usuario != 1)) {
+            next('/');
+         } else {
+            next();
+         }
       } else {
-         next('/login');
+         next('/login'); // Se o token não é válido, redireciona para login
       }
    } catch (error) {
-      next('/login');
+      next('/login'); // Redireciona para login em caso de erro na verificação
    }
 });
+
 
 export default router
