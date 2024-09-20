@@ -3,45 +3,80 @@
       <h2 class="text-2xl font-bold text-preto2">Usuários</h2>
       <BotaoCreate :link="'/usuarios/cadastrar-usuario'" :titulo="'Cadastrar Usuário'" />
    </div>
-   <DataTable :headers="tableHeaders" :data="tableBody" :numero="2" />
+   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm" />
+   <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event"
+      @confirmar="deleteUser" />
+   <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
+   <Loader :loading="loading" />
 </template>
 
 <script setup>
 import BotaoCreate from '@/components/BotaoCreate.vue';
+import Loader from '@/components/Loader.vue';
+import ModalConfirm from '@/components/ModalConfirm.vue';
+import ModalErro from '@/components/ModalErro.vue';
 import DataTable from '@/components/TableDefault.vue';
 import services from '@/services';
-import { onMounted, reactive, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted, reactive, computed, ref } from 'vue';
 import { useStorage } from 'vue3-storage';
 
 const storage = useStorage();
 const token = storage.getStorageSync("token");
 const user_tipo = storage.getStorageSync("tipo_usuario");
-const router = useRouter();
+const loading = ref(false);
 
 onMounted(() => {
-   
-   if (user_tipo === 2 || user_tipo === 3 || user_tipo === 4) {
-      router.push("/"); 
-   } else {
-      buscarUsuarios();
-   }
+   buscarUsuarios();
 });
 
 const state = reactive({
    usuarios: [],
+   visible: false,
+   texto: '',
+   user_id_delete: null,
 });
-
-
 
 async function buscarUsuarios() {
    const { response } = await services.usuarios.getAll(token);
    state.usuarios = response.data;
 }
+
+function openConfirm(user) {
+   if (user_tipo != 0 && user_tipo != 1) {
+      console.log(user_tipo)
+      state.MensagemErro = "Você não tem permissão para cadastrar usuários.";
+      state.loader = false;
+      state.modal = true;
+      return;
+   }
+   state.visible = true;
+   state.texto = 'Você realmente deseja excluir o usuário ' + user.Nome + '?';
+   state.user_id_delete = user.id;
+}
+
+async function deleteUser() {
+   loading.value = true;
+   try {
+      if (state.user_id_delete) {
+         await services.usuarios.delete(state.user_id_delete, token);
+         buscarUsuarios();
+      } else {
+         state.MensagemErro = "Erro ao deletar o usuário.";
+      }
+   } catch (e) {
+      loading.value = false;
+      console.log(e);
+   } finally {
+      loading.value = false;
+   }
+
+}
+
 const tableHeaders = ['Nome', 'whatsapp', 'Email', 'Status'];
 const tableBody = computed(() => {
    return state.usuarios.map(user => {
       return {
+         id: user.id,
          Nome: user.nome,
          whatsapp: user.whatsapp,
          Email: user.email,

@@ -107,19 +107,26 @@ router.beforeEach(async (to, from, next) => {
          storage.setStorageSync("user_id", result.response.user_id);
          storage.setStorageSync("nome", result.response.nome);
          storage.setStorageSync("tipo_usuario", tipo_usuario);
-         // Verifica o tipo de usuário para as rotas /usuarios e /servicos
-         if ((to.path.startsWith('/usuarios') || to.path.startsWith('/servicos')) && (tipo_usuario != 0 && tipo_usuario != 1)) {
+
+         // Verifica se a rota é /usuarios ou /financeiro e bloqueia para usuários diferentes de 0 e 1
+         if ((to.path.startsWith('/usuarios') || to.path.startsWith('/financeiro')) && (tipo_usuario != 0 && tipo_usuario != 1)) {
             next('/');
-         } else {
+         }
+         // Verifica se a rota é /servicos e bloqueia para usuários diferentes de 0, 1, 2, 3
+         else if (to.path.startsWith('/servicos') && (tipo_usuario != 0 && tipo_usuario != 1 && tipo_usuario != 2 && tipo_usuario != 3)) {
+            next('/');
+         }
+         else {
             next();
          }
       } else {
-         next('/login'); // Se o token não é válido, redireciona para login
+         next('/login');
       }
    } catch (error) {
-      next('/login'); // Redireciona para login em caso de erro na verificação
+      next('/login');
    }
 });
+
 
 
 export default router

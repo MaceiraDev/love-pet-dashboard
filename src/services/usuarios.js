@@ -15,7 +15,7 @@ export default HTTPCLIENT => ({
       return { response: response.data }
    },
 
-   delete: async ({ id, token }) => {
+   delete: async (id, token) => {
       const headers = { "Authorization": "Bearer " + token }
       const response = await HTTPCLIENT.delete('/users/' + id, { headers })
       return { response: response }

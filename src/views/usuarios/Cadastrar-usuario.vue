@@ -127,7 +127,8 @@
          </div>
       </form>
    </div>
-   <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
+   <ModalErro :visible="state.modal" :texto="state.MensagemErro" 
+   @update:visible="state.modal = $event" />
    <Loader :loading="state.loader" />
 </template>
 <script setup>

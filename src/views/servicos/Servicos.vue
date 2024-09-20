@@ -3,7 +3,7 @@
       <h2 class="text-2xl font-bold text-preto2">Serviços</h2>
       <BotaoCreate :link="'/servicos/cadastrar-servico'" :titulo="'Cadastrar Serviço'" />
    </div>
-   <DataTable :headers="tableHeaders" :data="tableData" :numAcoes="3"/>
+   <DataTable :headers="tableHeaders" :data="tableData" :numAcoes="[1, 2]"/>
 </template>
 
 <script setup>

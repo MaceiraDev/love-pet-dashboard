@@ -39,7 +39,6 @@
       </div>
    </main>
 </template>
-
 <script setup>
 import services from '@/services';
 import { reactive, ref } from 'vue';

@@ -3,7 +3,7 @@
       <h2 class=" text-2xl   font-bold  text-preto2">Pets</h2>
       <BotaoCreate :link="'/pets/cadastrar-pet'" :titulo="'Cadastrar Pet'" />
    </div>
-   <DataTable :headers="tableHeaders" :data="tableData"  :numAcoes="3"/>
+   <DataTable :headers="tableHeaders" :data="tableData" :numAcoes="[1, 2]"/>
 </template>
 <script setup>
 import BotaoCreate from '@/components/BotaoCreate.vue';

@@ -17,17 +17,17 @@
                      {{ row[header] }}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-branco flex space-x-2">
-                     <button v-if="numAcoes >= 1"
-                        class="bg-azul1 text-branco px-4 py-2 rounded hover:bg-blue-600 transition duration-500 hover:bg-azul4 hover:text-preto">
+                     <button type="button" title="Alterar" v-if="numAcoes.includes(1)"
+                        class="bg-azul1 text-branco px-4 py-2 rounded-md transition duration-500 hover:bg-azul4 hover:text-preto">
                         <i class="bi bi-pencil"></i>
                      </button>
-                     <button v-if="numAcoes >= 2"
+                     <button type="button" title="Visualizar" v-if="numAcoes.includes(3)"
+                        class="bg-azul1 text-branco px-4 py-2 rounded-md transition duration-500 hover:bg-cinza hover:text-preto">
+                        <i class="bi bi-eye"></i>
+                     </button>
+                     <button v-if="numAcoes.includes(2)" @click="$emit('deletar', row)" 
                         class="bg-azul1 text-branco px-4 py-2 rounded hover:bg-red-600 transition duration-500 hover:bg-vermelho hover:text-preto">
                         <i class="bi bi-trash"></i>
-                     </button>
-                     <button v-if="numAcoes >= 3"
-                        class="bg-azul1 text-branco px-4 py-2 rounded hover:bg-green-600 transition duration-500 hover:bg-cinza hover:text-preto">
-                        <i class="bi bi-eye"></i>
                      </button>
                   </td>
                </tr>
@@ -36,8 +36,11 @@
       </div>
    </div>
 </template>
+
+
 <script setup>
 import { defineProps } from 'vue';
+
 const props = defineProps({
    headers: {
       type: Array,
@@ -48,8 +51,8 @@ const props = defineProps({
       required: true
    },
    numAcoes: {
-      type: Number,
-      default: 3
+      type: Array,
+      default: () => []
    }
 });
 </script>

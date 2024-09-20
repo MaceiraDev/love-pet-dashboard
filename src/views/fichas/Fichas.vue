@@ -3,7 +3,7 @@
       <h2 class=" text-2xl   font-bold  text-preto2">Fichas</h2>
       <BotaoCreate :link="'/fichas/cadastrar-ficha'" :titulo="'Cadastrar Ficha'" />
    </div>
-   <DataTable :headers="tableHeaders" :data="tableData"  :numAcoes="3"/>
+   <DataTable :headers="tableHeaders" :data="tableData"  :numAcoes="[1, 2]"/>
  </template>
  
  <script setup>
