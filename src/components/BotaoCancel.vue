@@ -1,7 +1,7 @@
 <template>
    <RouterLink :to="link">
       <button class="bg-azul3 p-3 text-branco rounded transition duration-500 hover:bg-vermelho hover:text-preto">
-         <i class="bi bi-box-arrow-left"></i> {{ titulo }} 
+         {{ titulo }}
       </button>
    </RouterLink>
 </template>
@@ -20,5 +20,4 @@ const props = defineProps({
 });
 </script>
 <style scoped>
-button {}
 </style>

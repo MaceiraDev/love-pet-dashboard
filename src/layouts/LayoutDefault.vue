@@ -14,44 +14,44 @@
          </div>
          <ul class="mt-4">
             <li>
-               <router-link to="/" class="block py-2 px-4 rounded text-branco"
-                  :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/' }">
+               <router-link to="/" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/' }">
                   <i class="bi bi-globe-americas"></i> Dashboard
                </router-link>
             </li>
             <li>
-               <router-link to="/fichas" class="block py-2 px-4 rounded text-branco"
-                  :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/fichas' }">
+               <router-link to="/fichas" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/fichas' }">
                   <i class="bi bi-clipboard2-fill"></i> Fichas
                </router-link>
             </li>
             <li>
-               <router-link to="/pets" class="block py-2 px-4 rounded text-branco"
-                  :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/pets' }">
+               <router-link to="/pets" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/pets' }">
                   <i class="material-icons">pets</i> Pets
                </router-link>
             </li>
             <li>
-               <router-link to="/tutores" class="block py-2 px-4 rounded text-branco"
-                  :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/tutores' }">
+               <router-link to="/tutores" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/tutores' }">
                   <i class="bi bi-person-raised-hand"></i> Tutores
                </router-link>
             </li>
             <li>
-               <router-link to="/banho" class="block py-2 px-4 rounded text-branco"
-                  :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/banho' }">
+               <router-link to="/banho" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/banho' }">
                   <i class="bi bi-scissors"></i> Banho e tosa
                </router-link>
             </li>
             <li>
-               <router-link to="/servicos" class="block py-2 px-4 rounded text-branco"
-                  :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/servicos' }">
+               <router-link to="/servicos" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/servicos' }">
                   <i class="bi bi-easel-fill"></i> Serviços
                </router-link>
             </li>
-            <li v-if="user_tipo == 0 || user_tipo == 1"> 
-               <router-link to="/usuarios" class="block py-2 px-4 rounded text-branco"
-                  :class="{ 'bg-azul1 text-preto font-bold shadow-md': $route.path === '/usuarios' }">
+            <li v-if="user_tipo == 0 || user_tipo == 1">
+               <router-link to="/usuarios" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/usuarios' }">
                   <i class="bi bi-people-fill"></i> Usuários
                </router-link>
             </li>
@@ -94,10 +94,10 @@ function deslogar() {
 function handleConfirmLogout() {
    loading.value = true;
    setTimeout(() => {
-      storage.removeStorageSync("token"); // Remove o token
-      router.push("/login"); // Redireciona para a página de login
+      storage.removeStorageSync("token");
+      router.push("/login");
       loading.value = false;
-   }, 1000); // 3 segundos de delay
+   }, 1000);
 }
 </script>
 <style scoped>
@@ -117,9 +117,9 @@ a {
 
 .material-icons {
    font-size: 20px;
-   line-height: 1;  
-   vertical-align: middle; 
-   margin-right: 0; 
+   line-height: 1;
+   vertical-align: middle;
+   margin-right: 0;
 }
 
 .profile {
@@ -155,7 +155,8 @@ a {
    font-weight: 600;
    color: white;
 }
-.overlay-content button{
+
+.overlay-content button {
    border-radius: 8px;
    background-color: transparent;
    padding: 0px 10px;
@@ -163,10 +164,10 @@ a {
    color: white;
    font-size: 15pt;
 }
-.overlay-content button:hover{
+
+.overlay-content button:hover {
    background-color: rgba(128, 128, 128, 0.5);
 }
-
 </style>
 <style>
 .layout-default input[type="text"],
