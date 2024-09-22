@@ -77,6 +77,11 @@ const routes = [
             path: 'usuarios/cadastrar-usuario',
             name: 'cadastrar-usuario',
             component: () => import('../views/usuarios/Cadastrar-usuario.vue')
+         },
+         {
+            path: 'usuarios/alterar-usuario/:id',
+            name: 'alterar-usuario',
+            component: () => import('../views/usuarios/Alterar-usuario.vue')
          }
       ]
    }

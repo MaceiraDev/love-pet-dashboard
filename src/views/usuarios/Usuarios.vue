@@ -3,7 +3,7 @@
       <h2 class="text-2xl font-bold text-preto2">Usuários</h2>
       <BotaoCreate :link="'/usuarios/cadastrar-usuario'" :titulo="'Cadastrar Usuário'" />
    </div>
-   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm" />
+   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm" :param_url_1="'usuarios'" :param_url_2="'usuario'"/>
    <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event"    @confirmar="deleteUser" />
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
    <Loader :loading="loading" />
