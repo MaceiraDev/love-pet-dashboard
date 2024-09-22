@@ -4,8 +4,7 @@
       <BotaoCreate :link="'/usuarios/cadastrar-usuario'" :titulo="'Cadastrar Usuário'" />
    </div>
    <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm" />
-   <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event"
-      @confirmar="deleteUser" />
+   <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event"    @confirmar="deleteUser" />
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
    <Loader :loading="loading" />
 </template>

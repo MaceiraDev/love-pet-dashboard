@@ -43,7 +43,7 @@
                   <i class="bi bi-scissors"></i> Banho e tosa
                </router-link>
             </li>
-            <li>
+            <li v-if="user_tipo != 4">
                <router-link to="/servicos" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
                   :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/servicos' }">
                   <i class="bi bi-easel-fill"></i> Serviços
