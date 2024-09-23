@@ -103,7 +103,7 @@
             <div v-if="state.imagem.imagem" class="div_img">
                <img :src="state.imagem.imagem" alt="Imagem do Usuário"
                   class="w-28 h-28 object-cover border-2 border-azul4 rounded-full" />
-               <button @click="removerImagem"
+               <button type="button" @click="removerImagem"
                   class="bg-vermelho w-6 h-6 rounded-full text-branco hover:bg-vermelho2 duration-300"
                   title="Remover Imagem">
                   <i class="bi bi-x"></i>
@@ -229,7 +229,7 @@ async function upUsuario() {
    state.loader = true;
 
    if (user_tipo != 0 && user_tipo != 1) {
-      console.log(user_tipo)
+      console.log(user_tipo);
       state.MensagemErro = "Você não tem permissão para atualizar usuários.";
       state.loader = false;
       state.modal = true;
@@ -248,17 +248,22 @@ async function upUsuario() {
    formData.append("nome", state.nome);
    formData.append("sobrenome", state.sobrenome);
    formData.append("sexo", state.sexo);
-   formData.append("cpf", cpfFormatado); // CPF formatado
-   formData.append("telefone", telefoneFormatado); // Telefone formatado
-   formData.append("whatsapp", whatsappFormatado); // WhatsApp formatado
+   formData.append("cpf", cpfFormatado);
+   formData.append("telefone", telefoneFormatado);
+   formData.append("whatsapp", whatsappFormatado);
    formData.append("email", state.email);
    formData.append("status", state.status);
    formData.append("n_pets", state.n_pets);
    formData.append("notas_adicionais", state.notas_adicionais);
    formData.append("_method", "PUT");
 
+   // Verificação da imagem
    if (state.imagem?.file) {
-      formData.append("imagem", state.imagem.file);
+      formData.append("imagem", state.imagem.file); // Enviar arquivo da imagem
+   } else if (typeof state.imagem === "string") {
+      // Se for string (link), não enviar nada
+   } else if (!state.imagem) {
+      formData.append("imagem", null); // Enviar null para deletar a imagem
    }
 
    try {
@@ -268,20 +273,18 @@ async function upUsuario() {
       }
    } catch (error) {
       console.error("Erro no cadastro de usuário:", error);
-      // Verificar se há múltiplos erros de validação e formatá-los de forma mais amigável
       if (error.response && error.response.data && error.response.data.errors) {
          const errors = Object.values(error.response.data.errors).flat();
-         // Usar '\n' para quebrar a linha entre os erros
          state.MensagemErro = errors.length > 1 ? `Ocorreram os seguintes erros:\n${errors.join('\n')}` : `Erro: ${errors[0]}`;
          state.modal = true;
       } else {
-         // Mensagem de erro genérica, menos agressiva
          state.MensagemErro = "Não foi possível concluir o cadastro. Tente novamente mais tarde.";
       }
    } finally {
       state.loader = false;
    }
 }
+
 
 
 
