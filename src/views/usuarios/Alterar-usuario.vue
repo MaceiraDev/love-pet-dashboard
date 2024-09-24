@@ -50,7 +50,7 @@
             </div>
             <div>
                <label>Data de Nascimento</label>
-               <input type="text" placeholder="Digite uma data:" v-mask="'##/##/####'" required>
+               <input type="text" placeholder="Digite uma data:" v-mask="'##/##/####'" required v-model="state.data_nascimento">
             </div>
             <div>
                <label>CPF</label>
@@ -175,7 +175,7 @@ async function buscarUsuarioId(id) {
       state.tipo_usuario = response.tipo_usuario;
       state.nome = response.nome;
       state.sobrenome = response.sobrenome;
-      state.response_nascimento = response.response_nascimento;
+      state.data_nascimento = response.data_nascimento;
       state.sexo = response.sexo;
       state.cpf = response.cpf;
       state.telefone = response.telefone;
@@ -247,6 +247,7 @@ async function upUsuario() {
    formData.append("tipo_usuario", state.tipo_usuario);
    formData.append("nome", state.nome);
    formData.append("sobrenome", state.sobrenome);
+   formData.append("data_nascimento", state.data_nascimento);
    formData.append("sexo", state.sexo);
    formData.append("cpf", cpfFormatado);
    formData.append("telefone", telefoneFormatado);
@@ -257,13 +258,11 @@ async function upUsuario() {
    formData.append("notas_adicionais", state.notas_adicionais);
    formData.append("_method", "PUT");
 
-   // Verificação da imagem
    if (state.imagem?.file) {
-      formData.append("imagem", state.imagem.file); // Enviar arquivo da imagem
+      formData.append("imagem", state.imagem.file); 
    } else if (typeof state.imagem === "string") {
-      // Se for string (link), não enviar nada
    } else if (!state.imagem) {
-      formData.append("imagem", null); // Enviar null para deletar a imagem
+      formData.append("imagem", null); 
    }
 
    try {

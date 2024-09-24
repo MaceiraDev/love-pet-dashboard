@@ -1,7 +1,7 @@
 export default HTTPCLIENT => ({
-   save: async ({ formData, token }) => {
+   save: async ({ dados, token }) => {
       const headers = { "Authorization": "Bearer " + token, "Accept": "application/json"};
-      const response = await HTTPCLIENT.post('/users/cadastrar', formData, { headers });
+      const response = await HTTPCLIENT.post('/servicos/cadastrar', dados, { headers });
       return {
          data: response.data,
          status: response.status

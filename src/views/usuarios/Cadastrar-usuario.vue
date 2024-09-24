@@ -50,7 +50,7 @@
             </div>
             <div>
                <label>Data de Nascimento</label>
-               <input type="text" placeholder="Digite uma data:" v-mask="'##/##/####'" required>
+               <input type="text" placeholder="Digite uma data:" v-mask="'##/##/####'" required v-model="state.data_nascimento">
             </div>
             <div>
                <label>CPF</label>
@@ -210,10 +210,11 @@ async function novoUsuario() {
    formData.append("tipo_usuario", state.tipo_usuario);
    formData.append("nome", state.nome);
    formData.append("sobrenome", state.sobrenome);
+   formData.append("data_nascimento", state.data_nascimento);
    formData.append("sexo", state.sexo);
-   formData.append("cpf", cpfFormatado); // CPF formatado
-   formData.append("telefone", telefoneFormatado); // Telefone formatado
-   formData.append("whatsapp", whatsappFormatado); // WhatsApp formatado
+   formData.append("cpf", cpfFormatado); 
+   formData.append("telefone", telefoneFormatado);
+   formData.append("whatsapp", whatsappFormatado);
    formData.append("email", state.email);
    formData.append("status", state.status);
    formData.append("n_pets", state.n_pets);

@@ -3,7 +3,7 @@ import cepService from "./cep"
 import loginService from "./login";
 import authService from "./auth";
 import usuariosService from "./usuarios";
-import servicosSerice from "./servicos";
+import servicosService from "./servicos";
 
 const API_ENVS = {
    local: 'http://127.0.0.1:8000/api/',
@@ -18,5 +18,5 @@ export default {
    login: loginService(HTTPCLIENT),
    auth: authService(HTTPCLIENT),
    usuarios: usuariosService(HTTPCLIENT),
-   servicos: servicosSerice(HTTPCLIENT),
+   servicos: servicosService(HTTPCLIENT),
 }
