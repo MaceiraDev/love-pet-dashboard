@@ -42,7 +42,6 @@ async function buscarUsuarios() {
 
 function openConfirm(user) {
    if (user_tipo != 0 && user_tipo != 1) {
-      console.log(user_tipo)
       state.MensagemErro = "Você não tem permissão para cadastrar usuários.";
       state.loader = false;
       state.modal = true;
@@ -68,10 +67,10 @@ async function deleteUser() {
    } finally {
       loading.value = false;
    }
-
 }
 
 const tableHeaders = ['Nome', 'whatsapp', 'Email', 'Status'];
+
 const tableBody = computed(() => {
    return state.usuarios.map(user => {
       return {
