@@ -1,6 +1,6 @@
 <template>
    <div class="layout-default min-h-screen flex">
-      <aside class="w-64 text-white flex-shrink-0">
+      <aside class="w-64 text-white flex flex-col">
          <div class="profile">
             <img id="img" src="./../assets/imagens/dog_ia.jpg" alt="img profile">
             <div class="overlay">
@@ -12,53 +12,56 @@
                </div>
             </div>
          </div>
-         <ul class="mt-4">
-            <li>
-               <router-link to="/" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
-                  :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/' }">
-                  <i class="bi bi-globe-americas"></i> Dashboard
-               </router-link>
-            </li>
-            <li>
-               <router-link to="/fichas" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
-                  :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/fichas' }">
-                  <i class="bi bi-clipboard2-fill"></i> Fichas
-               </router-link>
-            </li>
-            <li>
-               <router-link to="/pets" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
-                  :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/pets' }">
-                  <i class="material-icons">pets</i> Pets
-               </router-link>
-            </li>
-            <li>
-               <router-link to="/tutores" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
-                  :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/tutores' }">
-                  <i class="bi bi-person-raised-hand"></i> Tutores
-               </router-link>
-            </li>
-            <li>
-               <router-link to="/banho" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
-                  :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/banho' }">
-                  <i class="bi bi-scissors"></i> Banho e tosa
-               </router-link>
-            </li>
-            <li v-if="user_tipo != 4">
-               <router-link to="/servicos" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
-                  :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/servicos' }">
-                  <i class="bi bi-easel-fill"></i> Serviços
-               </router-link>
-            </li>
-            <li v-if="user_tipo == 0 || user_tipo == 1">
-               <router-link to="/usuarios" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
-                  :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/usuarios' }">
-                  <i class="bi bi-people-fill"></i> Usuários
-               </router-link>
-            </li>
-         </ul>
+         <div class="flex-grow">
+            <ul class="mt-4">
+               <li>
+                  <router-link to="/" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                     :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/' }">
+                     <i class="bi bi-globe-americas"></i> Dashboard
+                  </router-link>
+               </li>
+               <li>
+                  <router-link to="/fichas" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                     :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/fichas' }">
+                     <i class="bi bi-clipboard2-fill"></i> Fichas
+                  </router-link>
+               </li>
+               <li>
+                  <router-link to="/pets" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                     :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/pets' }">
+                     <i class="material-icons">pets</i> Pets
+                  </router-link>
+               </li>
+               <li>
+                  <router-link to="/tutores" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                     :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/tutores' }">
+                     <i class="bi bi-person-raised-hand"></i> Tutores
+                  </router-link>
+               </li>
+               <li>
+                  <router-link to="/banho" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                     :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/banho' }">
+                     <i class="bi bi-scissors"></i> Banho e tosa
+                  </router-link>
+               </li>
+               <li v-if="user_tipo != 4">
+                  <router-link to="/servicos" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                     :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/servicos' }">
+                     <i class="bi bi-easel-fill"></i> Serviços
+                  </router-link>
+               </li>
+               <li v-if="user_tipo == 0 || user_tipo == 1">
+                  <router-link to="/usuarios" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                     :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/usuarios' }">
+                     <i class="bi bi-people-fill"></i> Usuários
+                  </router-link>
+               </li>
+            </ul>
+         </div>
       </aside>
       <div class="flex-1 flex flex-col">
-         <header class="flex justify-end items-center p-2 bg-gray-100">
+         <header class="flex justify-between items-center p-2 bg-gray-100">
+            <img :src="user_image" alt="Imagem Perfil" class="w-12 h-12 rounded-full object-cover">
             <div class="flex items-center">
                <BotaoDropHeader />
             </div>
@@ -72,6 +75,7 @@
    <Loader :loading="loading" />
 </template>
 
+
 <script setup>
 import { ref, reactive } from 'vue';
 import ModalLogout from '@/components/ModalLogout.vue';
@@ -83,6 +87,7 @@ import BotaoDropHeader from '@/components/BotaoDropHeader.vue';
 const storage = useStorage();
 const user_nome = storage.getStorageSync("nome");
 const user_tipo = storage.getStorageSync("tipo_usuario");
+const user_image = storage.getStorageSync("imagem");
 const router = useRouter();
 const state = reactive({
    modal: false,

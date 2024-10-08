@@ -116,6 +116,7 @@ router.beforeEach(async (to, from, next) => {
       if (result.response.token) {
          storage.setStorageSync("user_id", result.response.user_id);
          storage.setStorageSync("nome", result.response.nome);
+         storage.setStorageSync("imagem", result.response.imagem);
          storage.setStorageSync("tipo_usuario", tipo_usuario);
 
          // Verifica se a rota é /usuarios ou /financeiro e bloqueia para usuários diferentes de 0 e 1

@@ -7,6 +7,14 @@ export default HTTPCLIENT => ({
          status: response.status
       };
    },
+   update: async ({ dados, token }) => {
+      const headers = { "Authorization": "Bearer " + token, "Accept": "application/json" };
+      const response = await HTTPCLIENT.put('/servicos/' + dados.id, dados, { headers });
+      return {
+         data: response.data,
+         status: response.status
+      };
+   },
    getAll: async (token) => {
       const headers = { "Authorization": "Bearer " + token };
       const response = await HTTPCLIENT.get('/servicos', { headers });

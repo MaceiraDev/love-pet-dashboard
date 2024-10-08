@@ -50,7 +50,6 @@ const user_tipo = storage.getStorageSync("tipo_usuario");
 const router = useRouter();
 
 const state = reactive({
-
    nome: '',
    tipo_servico: '',
    valor: '',
