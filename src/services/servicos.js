@@ -1,6 +1,6 @@
 export default HTTPCLIENT => ({
    save: async ({ dados, token }) => {
-      const headers = { "Authorization": "Bearer " + token, "Accept": "application/json"};
+      const headers = { "Authorization": "Bearer " + token, "Accept": "application/json" };
       const response = await HTTPCLIENT.post('/servicos/cadastrar', dados, { headers });
       return {
          data: response.data,
@@ -10,6 +10,12 @@ export default HTTPCLIENT => ({
    getAll: async (token) => {
       const headers = { "Authorization": "Bearer " + token };
       const response = await HTTPCLIENT.get('/servicos', { headers });
+      return { response: response.data }
+   },
+
+   getById: async (id, token) => {
+      const headers = { "Authorization": "Bearer " + token };
+      const response = await HTTPCLIENT.get('/servicos/' + id, { headers });
       return { response: response.data }
    },
 

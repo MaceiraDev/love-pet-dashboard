@@ -50,11 +50,12 @@
             </div>
             <div>
                <label>Data de Nascimento</label>
-               <input type="text" placeholder="Digite uma data:" v-mask="'##/##/####'" required v-model="state.data_nascimento">
+               <input type="text" placeholder="Digite uma data:" v-mask-date-br required
+                  v-model="state.data_nascimento">
             </div>
             <div>
                <label>CPF</label>
-               <input type="text" placeholder="Digite um CPF:" v-mask="'###.###.###-##'" required v-model="state.cpf">
+               <input type="text" placeholder="Digite um CPF:" v-mask-cpf required v-model="state.cpf">
             </div>
             <div>
                <label>Gênero</label>
@@ -67,13 +68,12 @@
             </div>
             <div>
                <label>Telefone</label>
-               <input type="text" placeholder="Digite um telefone:" v-mask="['(##) ####-####', '(##) #####-####']"
-                  v-model="state.telefone">
+               <input type="text" placeholder="Digite um telefone:" v-mask-phone.br v-model="state.telefone">
             </div>
             <div>
                <label>WhatsApp</label>
-               <input type="text" placeholder="Digite um número WhatsApp:"
-                  v-mask="['(##) ####-####', '(##) #####-####']" required v-model="state.whatsApp">
+               <input type="text" placeholder="Digite um número WhatsApp:" v-mask-phone.br required
+                  v-model="state.whatsApp">
             </div>
             <div>
                <label>Email</label>
@@ -141,6 +141,7 @@ const token = storage.getStorageSync("token");
 const user_tipo = storage.getStorageSync("tipo_usuario");
 const router = useRouter();
 const route = useRoute();
+
 onMounted(() => {
    const userId = route.params.id;
    if (userId) {
@@ -259,12 +260,12 @@ async function upUsuario() {
    formData.append("_method", "PUT");
 
    if (state.imagem?.file) {
-      formData.append("imagem", state.imagem.file); 
-   } else if (typeof state.imagem === "string") {
-   } else if (!state.imagem) {
-      formData.append("imagem", null); 
+      formData.append("imagem", state.imagem.file);
+   } else if (typeof state.imagem.imagem === "string") {
+      formData.append("imagem", state.imagem.imagem);
+   } else if (!state.imagem.imagem) {
+      formData.append("imagem", null);
    }
-
    try {
       const response = await services.usuarios.update({ id: state.id, formData, token });
       if (response.status === 200 || response.status === 201) {
@@ -284,10 +285,8 @@ async function upUsuario() {
    }
 }
 
-
-
-
 </script>
+
 <style scoped>
 .radio-button-container {
    display: flex;

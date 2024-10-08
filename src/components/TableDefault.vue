@@ -44,7 +44,6 @@
 
 <script setup>
 import { defineProps } from 'vue';
-
 const props = defineProps({
    headers: {
       type: Array,

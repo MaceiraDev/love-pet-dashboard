@@ -17,7 +17,7 @@
             </div>
             <div>
                <label>Valor</label>
-               <input type="text" placeholder="Digite o valor" required v-model="state.valor" v-mask-decimal.br="2" />
+               <input type="text" placeholder="Digite o valor" required v-model="state.valor" v-mask-decimal.br="2"/>
             </div>
          </div>
          <div>
@@ -35,22 +35,22 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { onMounted, reactive } from 'vue';
 import BotaoSave from '@/components/BotaoSave.vue';
 import BotaoCancel from '@/components/BotaoCancel.vue';
 import Loader from '@/components/Loader.vue';
 import ModalErro from '@/components/ModalErro.vue';
 import { useStorage } from 'vue3-storage';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import services from '@/services';
 
 const storage = useStorage();
 const token = storage.getStorageSync("token");
 const user_tipo = storage.getStorageSync("tipo_usuario");
 const router = useRouter();
+const route = useRoute();
 
 const state = reactive({
-
    nome: '',
    tipo_servico: '',
    valor: '',
@@ -58,10 +58,33 @@ const state = reactive({
    loader: false,
    modal: false,
    MensagemErro: "",
-})
+});
+
+onMounted(() => {
+   const servicoId = route.params.id;
+   if (servicoId) {
+      buscarServico(servicoId);
+   }
+});
+
+async function buscarServico(id) {
+   try {
+      const { response } = await services.servicos.getById(id, token);
+      state.id = response.id;
+      state.nome = response.nome;
+      state.tipo_servico = response.tipo_servico;
+      state.valor = response.valor;
+      state.notas_adicionais = response.notas_adicionais;
+   } catch (error) {
+      console.error('Erro ao buscar serviço:', error);
+      state.modal = true;
+      state.MensagemErro = "Erro ao carregar os dados do serviço.";
+   } finally {
+      state.loader = false;
+   }
+}
 
 async function novoServico() {
-   state.loader = true;
 
    if (user_tipo != 0 && user_tipo != 1) {
       console.log(user_tipo)
@@ -71,12 +94,10 @@ async function novoServico() {
       return;
    }
 
-   const valorLimpo = parseFloat(state.valor.replace(',', '.')) || 0;
-
    let dados = {
       nome: state.nome,
       tipo_servico: state.tipo_servico,
-      valor: valorLimpo,
+      valor: state.valor,
       notas_adicionais: state.notas_adicionais,
    }
 
@@ -99,8 +120,8 @@ async function novoServico() {
    } finally {
       state.loader = false;
    }
-}
 
+}
 </script>
 
 <style scoped></style>

@@ -50,11 +50,12 @@
             </div>
             <div>
                <label>Data de Nascimento</label>
-               <input type="text" placeholder="Digite uma data:" v-mask="'##/##/####'" required v-model="state.data_nascimento">
+               <input type="text" placeholder="Digite uma data:" v-mask-date.br required
+                  v-model="state.data_nascimento">
             </div>
             <div>
                <label>CPF</label>
-               <input type="text" placeholder="Digite um CPF:" v-mask="'###.###.###-##'" required v-model="state.cpf">
+               <input type="text" placeholder="Digite um CPF:" v-mask-cpf required v-model="state.cpf">
             </div>
             <div>
                <label>Gênero</label>
@@ -67,13 +68,11 @@
             </div>
             <div>
                <label>Telefone</label>
-               <input type="text" placeholder="Digite um telefone:" v-mask="['(##) ####-####', '(##) #####-####']"
-                  v-model="state.telefone">
+               <input type="text" placeholder="Digite um telefone:" v-mask-phone.br v-model="state.telefone">
             </div>
             <div>
                <label>WhatsApp</label>
-               <input type="text" placeholder="Digite um número WhatsApp:"
-                  v-mask="['(##) ####-####', '(##) #####-####']" required v-model="state.whatsApp">
+               <input type="text" placeholder="Digite um número WhatsApp:" v-mask-phone.br required v-model="state.whatsApp">
             </div>
             <div>
                <label>Email</label>
@@ -127,8 +126,7 @@
          </div>
       </form>
    </div>
-   <ModalErro :visible="state.modal" :texto="state.MensagemErro" 
-   @update:visible="state.modal = $event" />
+   <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
    <Loader :loading="state.loader" />
 </template>
 <script setup>
@@ -212,7 +210,7 @@ async function novoUsuario() {
    formData.append("sobrenome", state.sobrenome);
    formData.append("data_nascimento", state.data_nascimento);
    formData.append("sexo", state.sexo);
-   formData.append("cpf", cpfFormatado); 
+   formData.append("cpf", cpfFormatado);
    formData.append("telefone", telefoneFormatado);
    formData.append("whatsapp", whatsappFormatado);
    formData.append("email", state.email);

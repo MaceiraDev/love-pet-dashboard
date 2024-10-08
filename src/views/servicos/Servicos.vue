@@ -3,12 +3,13 @@
       <h2 class="text-2xl font-bold text-preto2">Serviços</h2>
       <BotaoCreate :link="'/servicos/cadastrar-servico'" :titulo="'Cadastrar Serviço'" />
    </div>
-   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm" />
-   <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event" @confirmar="deleteServico" />
+   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm"
+      :param_url_1="'servicos'" :param_url_2="'servico'" />
+   <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event"
+      @confirmar="deleteServico" />
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
    <Loader :loading="loading" />
 </template>
-
 <script setup>
 import BotaoCreate from '@/components/BotaoCreate.vue';
 import DataTable from '@/components/TableDefault.vue';
@@ -64,17 +65,17 @@ function openConfirm(servico) {
       return;
    }
    state.visible = true;
-   console.log(state.visible)
    state.texto = 'Você realmente deseja excluir o serviço ' + servico.serviço + '?';
    state.servico_id_delete = servico.id;
 }
+
 const tableHeaders = ['serviço', 'valor'];
 const tableBody = computed(() => {
    return state.servicos.map(servico => {
       return {
          id: servico.id,
          serviço: servico.nome,
-         valor: servico.valor,
+         valor: 'R$ ' + servico.valor,
       };
    });
 });
