@@ -5,8 +5,7 @@
    </div>
    <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm"
       :param_url_1="'servicos'" :param_url_2="'servico'" />
-   <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event"
-      @confirmar="deleteServico" />
+   <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event" @confirmar="deleteServico" />
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
    <Loader :loading="loading" />
 </template>
@@ -14,6 +13,7 @@
 import BotaoCreate from '@/components/BotaoCreate.vue';
 import DataTable from '@/components/TableDefault.vue';
 import ModalConfirm from '@/components/ModalConfirm.vue';
+import ModalErro from '@/components/ModalErro.vue';
 import Loader from '@/components/Loader.vue';
 import { onMounted, reactive, computed, ref } from 'vue';
 import { useStorage } from 'vue3-storage';
