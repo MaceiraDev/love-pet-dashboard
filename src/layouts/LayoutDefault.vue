@@ -61,7 +61,9 @@
       </aside>
       <div class="flex-1 flex flex-col">
          <header class="flex justify-between items-center p-2 bg-gray-100">
-            <img :src="user_image" alt="Imagem Perfil" class="w-12 h-12 rounded-full object-cover">
+            <router-link to="/perfil">
+               <img :src="user_image" alt="Imagem Perfil" class="w-12 h-12 rounded-full object-cover">
+            </router-link>
             <div class="flex items-center">
                <BotaoDropHeader />
             </div>

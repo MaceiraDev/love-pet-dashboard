@@ -87,6 +87,11 @@ const routes = [
             path: 'usuarios/alterar-usuario/:id',
             name: 'alterar-usuario',
             component: () => import('../views/usuarios/Alterar-usuario.vue')
+         },
+         {
+            path: 'perfil',
+            name: 'perfil',
+            component: () => import('../views/perfil/perfil.vue')
          }
       ]
    }
