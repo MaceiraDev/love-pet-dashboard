@@ -39,8 +39,6 @@ const state = reactive({
 async function buscarTutores() {
    const { response } = await services.tutores.getAll(token)
    state.tutores = response.data;
-   state.whatsapp = formatarWhatsApp(response.whatsapp);
-
 }
 
 async function deletarTutor() {
