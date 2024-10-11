@@ -3,8 +3,10 @@
       <h2 class="text-2xl font-bold text-preto2">Usuários</h2>
       <BotaoCreate :link="'/usuarios/cadastrar-usuario'" :titulo="'Cadastrar Usuário'" />
    </div>
-   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm" :param_url_1="'usuarios'" :param_url_2="'usuario'"/>
-   <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event"    @confirmar="deleteUser" />
+   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm"
+      :param_url_1="'usuarios'" :param_url_2="'usuario'" />
+   <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event"
+      @confirmar="deleteUser" />
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
    <Loader :loading="loading" />
 </template>
@@ -69,14 +71,22 @@ async function deleteUser() {
    }
 }
 
-const tableHeaders = ['Nome', 'whatsapp', 'Email', 'Status'];
+function formatarWhatsApp(whatsapp) {
+   if (whatsapp.length === 11) {
+      return `(${whatsapp.slice(0, 2)}) ${whatsapp[2]} ${whatsapp.slice(3, 7)}-${whatsapp.slice(7)}`;
+   } else {
+      console.error('Número de WhatsApp inválido:', whatsapp);
+      return whatsapp;
+   }
+}
 
+const tableHeaders = ['Nome', 'whatsapp', 'Email', 'Status'];
 const tableBody = computed(() => {
    return state.usuarios.map(user => {
       return {
          id: user.id,
          Nome: user.nome,
-         whatsapp: user.whatsapp,
+         whatsapp: formatarWhatsApp(user.whatsapp),
          Email: user.email,
          Status: user.status
       };

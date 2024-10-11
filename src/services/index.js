@@ -4,6 +4,7 @@ import loginService from "./login";
 import authService from "./auth";
 import usuariosService from "./usuarios";
 import servicosService from "./servicos";
+import tutoresService from "./tutores";
 
 const API_ENVS = {
    local: 'http://127.0.0.1:8000/api/',
@@ -19,4 +20,5 @@ export default {
    auth: authService(HTTPCLIENT),
    usuarios: usuariosService(HTTPCLIENT),
    servicos: servicosService(HTTPCLIENT),
+   tutores: tutoresService(HTTPCLIENT),
 }
