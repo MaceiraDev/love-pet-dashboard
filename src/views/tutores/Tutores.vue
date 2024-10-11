@@ -4,7 +4,7 @@
       <BotaoCreate :link="'/tutores/cadastrar-tutor'" :titulo="'Cadastrar Tutor'" />
    </div>
    <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm"
-      :param_url_1="'servicos'" :param_url_2="'servico'" />
+      :param_url_1="'tutores'" :param_url_2="'tutor'" />
    <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event"
       @confirmar="deletarTutor" />
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />

@@ -49,6 +49,11 @@ const routes = [
             component: () => import('../views/tutores/Cadastrar-tutor.vue')
          },
          {
+            path: 'tutores/alterar-tutor/:id',
+            name: 'alterar-tutor',
+            component: () => import('../views/tutores/Alterar-tutor.vue')
+         },
+         {
             path: 'banho',
             name: 'banho',
             component: () => import('../views/banho/Banho.vue')
