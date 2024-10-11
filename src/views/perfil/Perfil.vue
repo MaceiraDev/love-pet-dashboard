@@ -4,8 +4,8 @@
       <h1 class="text-3xl font-bold text-preto2 mb-4 text-center">Perfil do Usuário</h1>
       <hr class="bg-azul2 h-0.5 mt-2 mb-4" />
       <div class="flex flex-col items-center mb-6">
-         <img :src="state.imagem" alt="Imagem do Usuário"
-            class="w-36 h-36 md:w-40 md:h-40 rounded-full object-cover mb-4 border-2 border-azul4" />
+         <img :src="state.imagem" class="w-36 h-36 md:w-40 md:h-40 rounded-full object-cover mb-4 border-2 border-azul4" v-if="state.imagem"/>
+         <NoPerfil class="w-36 h-36 md:w-40 md:h-40 rounded-full object-cover mb-4 border-2 border-azul4" v-else/>
          <div class="text-center">
             <h2 class="text-2xl font-bold text-preto2">{{ state.nome }} {{ state.sobrenome }}</h2>
             <p class="text-preto2">{{ tipoUsuario }}</p>
@@ -18,7 +18,8 @@
          <p class="text-preto2">{{ state.notas_adicionais }}</p>
       </div>
       <div class="flex justify-end mt-2">
-         <button class="bg-limao2 text-preto2 font-semibold py-2 px-5 rounded-lg shadow-md hover:bg-azul4 transition-all duration-300 flex items-center">
+         <button
+            class="bg-limao2 text-preto2 font-semibold py-2 px-5 rounded-lg shadow-md hover:bg-azul4 transition-all duration-300 flex items-center">
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                xmlns="http://www.w3.org/2000/svg">
                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 4l4 4-8 8H8v-4l8-8z"></path>
@@ -30,6 +31,7 @@
 </template>
 
 <script setup>
+import NoPerfil from '@/components/NoPerfil.vue';
 import { onMounted, reactive, computed } from 'vue';
 import { useStorage } from 'vue3-storage';
 import services from '@/services';

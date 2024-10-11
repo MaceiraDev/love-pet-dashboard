@@ -79,6 +79,21 @@ const routes = [
             component: () => import('../views/servicos/Alterar-servico.vue')
          },
          {
+            path: 'situacoes-pet',
+            name: 'situacoes',
+            component: () => import('../views/situacoes/Situacoes.vue')
+         },
+         {
+            path: 'situacoes-pet/cadastrar-situacao',
+            name: 'cadastrar-situacao',
+            component: () => import('../views/situacoes/Cadastrar-situacao.vue')
+         },
+         {
+            path: 'situacoes-pet/alterar-situacao/:id',
+            name: 'alterar-situacao',
+            component: () => import('../views/situacoes/Alterar-situacao.vue')
+         },
+         {
             path: 'usuarios',
             name: 'usuarios',
             component: () => import('../views/usuarios/Usuarios.vue')

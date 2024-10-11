@@ -1,7 +1,7 @@
 <template>
    <div class="flex justify-between items-center mb-2">
       <h2 class="text-2xl font-bold text-preto2">Tutores</h2>
-      <BotaoCreate :link="'/tutores/cadastrar-tutor'" :titulo="'Cadastrar Tutor'" />
+      <BotaoCreate :link="'/tutores/cadastrar-tutor'" :titulo="'Cadastrar Tutor'" v-if="user_tipo != 4"/>
    </div>
    <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm"
       :param_url_1="'tutores'" :param_url_2="'tutor'" />

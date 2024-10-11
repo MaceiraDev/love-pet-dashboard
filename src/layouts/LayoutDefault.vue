@@ -50,6 +50,12 @@
                      <i class="bi bi-easel-fill"></i> Serviços
                   </router-link>
                </li>
+               <li>
+                  <router-link to="/situacoes-pet" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                     :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/situacoes-pet' }">
+                     <i class="bi bi-thermometer-low"></i> Situações Pet
+                  </router-link>
+               </li>
                <li v-if="user_tipo == 0 || user_tipo == 1">
                   <router-link to="/usuarios" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/usuarios' }">
@@ -62,7 +68,8 @@
       <div class="flex-1 flex flex-col">
          <header class="flex justify-between items-center p-2 bg-gray-100">
             <router-link to="/perfil">
-               <img :src="user_image" alt="Imagem Perfil" class="w-12 h-12 rounded-full object-cover border-2 border-azul2 hover:border-limao transition-all duration-300">
+               <img :src="user_image" alt="Imagem Perfil" class="w-12 h-12 rounded-full object-cover border-2 border-azul2 hover:border-limao transition-all duration-300" v-if="user_image != ''">
+               <NoPerfil class="w-12 h-12 rounded-full object-cover border-2 border-azul2 hover:border-limao transition-all duration-300" v-else />
             </router-link>
             <div class="flex items-center">
                <BotaoDropHeader />
@@ -83,6 +90,7 @@ import Loader from '@/components/Loader.vue';
 import { useRouter } from 'vue-router';
 import { useStorage } from 'vue3-storage';
 import BotaoDropHeader from '@/components/BotaoDropHeader.vue';
+import NoPerfil from '@/components/NoPerfil.vue';
 
 const storage = useStorage();
 const user_nome = storage.getStorageSync("nome");
@@ -92,6 +100,7 @@ const router = useRouter();
 const state = reactive({
    modal: false,
 });
+console.log(user_image)
 const loading = ref(false);
 function deslogar() {
    state.modal = true;
