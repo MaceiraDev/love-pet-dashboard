@@ -6,7 +6,7 @@
             <div class="overlay">
                <div class="overlay-content">
                   <p>{{ user_nome }}</p>
-                  <button @click="deslogar"> <!-- Aqui coloquei para executar a função deslogar ao clicar-->
+                  <button @click="deslogar">
                      <i class="bi bi-power"></i>
                   </button>
                </div>
@@ -62,7 +62,7 @@
       <div class="flex-1 flex flex-col">
          <header class="flex justify-between items-center p-2 bg-gray-100">
             <router-link to="/perfil">
-               <img :src="user_image" alt="Imagem Perfil" class="w-12 h-12 rounded-full object-cover">
+               <img :src="user_image" alt="Imagem Perfil" class="w-12 h-12 rounded-full object-cover border-2 border-azul2 hover:border-limao transition-all duration-300">
             </router-link>
             <div class="flex items-center">
                <BotaoDropHeader />
@@ -76,8 +76,6 @@
    <ModalLogout :visible="state.modal" @update:visible="state.modal = $event" @confirmar="handleConfirmLogout" />
    <Loader :loading="loading" />
 </template>
-
-
 <script setup>
 import { ref, reactive } from 'vue';
 import ModalLogout from '@/components/ModalLogout.vue';
@@ -107,6 +105,7 @@ function handleConfirmLogout() {
    }, 1000);
 }
 </script>
+
 <style scoped>
 @import url('./../assets/base.css');
 
