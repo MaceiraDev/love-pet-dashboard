@@ -100,7 +100,6 @@ const router = useRouter();
 const state = reactive({
    modal: false,
 });
-console.log(user_image)
 const loading = ref(false);
 function deslogar() {
    state.modal = true;

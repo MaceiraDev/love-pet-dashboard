@@ -10,8 +10,8 @@
             </div>
          </div>
          <div>
-            <label>Descrição</label>
-            <textarea placeholder="Digite a descrição:" rows="4" required v-model="state.descricao"></textarea>
+            <label>Notas Adicionais</label>
+            <textarea placeholder="Digite a descrição:" rows="4" required v-model="state.notas_adicionais"></textarea>
          </div>
          <div class="flex justify-end gap-4 mt-4">
             <BotaoCancel :link="'/situacoes-pet'" :titulo="'Cancelar'" />
@@ -41,31 +41,29 @@ const route = useRoute();
 
 const state = reactive({
    nome: '',
-   descricao: '',
+   notas_adicionais: '',
    loader: false,
    modal: false,
    MensagemErro: "",
 });
 
 onMounted(() => {
-   const servicoId = route.params.id;
-   if (servicoId) {
-      buscarServico(servicoId);
+   const situacaoId = route.params.id;
+   if (situacaoId) {
+      buscarSit(situacaoId);
    }
 });
 
-async function buscarServico(id) {
+async function buscarSit(id) {
    try {
-      const { response } = await services.servicos.getById(id, token);
+      const { response } = await services.situacao_pet.getById(id, token);
       state.id = response.id;
       state.nome = response.nome;
-      state.tipo_servico = response.tipo_servico;
-      state.valor = response.valor;
       state.notas_adicionais = response.notas_adicionais;
    } catch (error) {
       console.error('Erro ao buscar serviço:', error);
       state.modal = true;
-      state.MensagemErro = "Erro ao carregar os dados do serviço.";
+      state.MensagemErro = "Erro ao carregar os dados da situação.";
    } finally {
       state.loader = false;
    }
@@ -84,11 +82,11 @@ async function upSit() {
    let dados = {
       id: state.id,
       nome: state.nome,
-      descricao: state.descricao,
+      notas_adicionais: state.notas_adicionais,
    }
 
    try {
-      const response = await services.servicos.update({ dados, token });
+      const response = await services.situacao_pet.update({ dados, token });
       if (response.status === 200 || response.status === 201) {
          router.push('/situacoes-pet');
       }

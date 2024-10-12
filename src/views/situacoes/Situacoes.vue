@@ -3,8 +3,10 @@
       <h2 class="text-2xl font-bold text-preto2">Situações Pet</h2>
       <BotaoCreate :link="'/situacoes-pet/cadastrar-situacao'" :titulo="'Cadastrar Situação'" />
    </div>
-   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm" :param_url_1="'situacoes-pet'" :param_url_2="'situacao'" />
-   <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event" @confirmar="deleteServico" />
+   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm"
+      :param_url_1="'situacoes-pet'" :param_url_2="'situacao'" />
+   <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event"
+      @confirmar="deletarSit" />
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
    <Loader :loading="loading" />
 </template>
@@ -24,29 +26,29 @@ const user_tipo = storage.getStorageSync("tipo_usuario");
 const loading = ref(false);
 
 onMounted(() => {
-   buscarServicos();
+   buscarSituacao();
 });
 
 const state = reactive({
-   servicos: [],
+   situacoes: [],
    visible: false,
    texto: '',
-   servico_id_delete: null,
+   sit_deletar_id: null,
 });
 
-async function buscarServicos() {
-   const { response } = await services.servicos.getAll(token)
-   state.servicos = response.data;
+async function buscarSituacao() {
+   const { response } = await services.situacao_pet.getAll(token)
+   state.situacoes = response.data;
 }
 
-async function deleteServico() {
+async function deletarSit() {
    loading.value = true;
    try {
-      if (state.servico_id_delete) {
-         await services.servicos.delete(state.servico_id_delete, token);
-         buscarServicos();
+      if (state.sit_deletar_id) {
+         await services.situacao_pet.delete(state.sit_deletar_id, token);
+         buscarSituacao();
       } else {
-         state.MensagemErro = "Erro ao deletar o serviço.";
+         state.MensagemErro = "Erro ao deletar o situação.";
       }
    } catch (e) {
       loading.value = false;
@@ -56,25 +58,24 @@ async function deleteServico() {
    }
 }
 
-function openConfirm(servico) {
-   if (user_tipo != 0 && user_tipo != 1) {
-      state.MensagemErro = "Você não tem permissão para apagar serviços.";
+function openConfirm(situacao) {
+   if (user_tipo != 0 && user_tipo != 1 && user_tipo != 2) {
+      state.MensagemErro = "Você não tem permissão para apagar situações.";
       state.loader = false;
       state.modal = true;
       return;
    }
    state.visible = true;
-   state.texto = 'Você realmente deseja excluir o serviço ' + servico.serviço + '?';
-   state.servico_id_delete = servico.id;
+   state.texto = 'Você realmente deseja excluir a situação ' + situacao.situação + '?';
+   state.sit_deletar_id = situacao.id;
 }
 
-const tableHeaders = ['serviço', 'valor'];
+const tableHeaders = ['situação'];
 const tableBody = computed(() => {
-   return state.servicos.map(servico => {
+   return state.situacoes.map(situacao => {
       return {
-         id: servico.id,
-         serviço: servico.nome,
-         valor: 'R$ ' + servico.valor,
+         id: situacao.id,
+         situação: situacao.nome,
       };
    });
 });

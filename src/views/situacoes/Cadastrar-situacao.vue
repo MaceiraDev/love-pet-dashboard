@@ -10,8 +10,8 @@
             </div>
          </div>
          <div>
-            <label>Descrição</label>
-            <textarea placeholder="Digite a descrição:" rows="4" required v-model="state.descricao"></textarea>
+            <label>Notas Adicionais</label>
+            <textarea placeholder="Digite a descrição:" rows="4" required v-model="state.notas_adicionais"></textarea>
          </div>
          <div class="flex justify-end gap-4 mt-4">
             <BotaoCancel :link="'/situacoes-pet'" :titulo="'Cancelar'" />
@@ -40,7 +40,7 @@ const router = useRouter();
 
 const state = reactive({
    nome: '',
-   descricao: '',
+   notas_adicionais: '',
    loader: false,
    modal: false,
    MensagemErro: "",
@@ -59,13 +59,13 @@ async function novaSit() {
 
    let dados = {
       nome: state.nome,
-      descricao: state.descricao,
+      notas_adicionais: state.notas_adicionais,
    }
 
    try {
-      const response = await services.servicos.save({ dados, token });
+      const response = await services.situacao_pet.save({ dados, token });
       if (response.status === 200 || response.status === 201) {
-         router.push('/servicos');
+         router.push('/situacoes-pet');
       }
    } catch (error) {
       console.error("Erro no cadastro de situação:", error);
