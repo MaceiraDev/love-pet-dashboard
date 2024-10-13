@@ -112,6 +112,11 @@ const routes = [
             path: 'perfil',
             name: 'perfil',
             component: () => import('../views/perfil/Perfil.vue')
+         },
+         {
+            path: 'perfil/alterar-perfil',
+            name: 'alterar-perfil',
+            component: () => import('../views/perfil/Alterar-perfil.vue')
          }
       ]
    }
