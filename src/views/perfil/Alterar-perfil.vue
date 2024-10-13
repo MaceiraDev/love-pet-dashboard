@@ -4,11 +4,13 @@
       <hr class="bg-azul2 h-0.5 mt-2 mb-4" />
       <div class="flex flex-col items-center mb-6">
          <!-- Resolver isso da imagem -->
-         <img :src="state.imagem.imagem" @click="adicionarImagem" class="w-36 h-36 md:w-40 md:h-40 rounded-full object-cover mb-4 border-2 border-azul4 cursor-pointer" v-if="state.imagem.imagem" />
-         
-         <NoPerfil class="w-36 h-36 md:w-40 md:h-40 rounded-full object-cover mb-4 border-2 border-azul4 cursor-pointer" v-else @click="editarImagem"/>
-         
-         <input type="file" @change="adicionarImagem" ref="fileInput" class="hidden">
+         <img :src="state.imagem.imagem" alt=""
+                  class="w-28 h-28 object-cover border-2 border-azul4 rounded-full" />
+               <button type="button" @click="removerImagem"
+                  class="bg-vermelho w-6 h-6 rounded-full text-branco hover:bg-vermelho2 duration-300"
+                  title="Remover Imagem">
+                  <i class="bi bi-x"></i>
+               </button>
          <!-- Resolver isso da imagem -->
          <div class="text-center">
              <h2 class="text-2xl font-bold text-preto2">{{ state.nome }} {{ state.sobrenome }}</h2>
@@ -18,8 +20,7 @@
          </div>
      </div>
 
-      <!-- Grid para organizar os campos 2 por 2 -->
-      <div class="grid grid-cols-2 gap-4 mb-4">
+,,      <div class="grid grid-cols-2 gap-4 mb-4">
          <div>
             <label class="block font-bold text-lg">Nome</label>
             <input type="text" v-model="state.nome" class="border rounded p-2 w-full"/>
@@ -68,6 +69,16 @@
          <div>
             <label class="block font-bold text-lg">Tipo de Usuário</label>
             <input type="text" v-model="tipoUsuarioString" readonly class="border rounded p-2 w-full bg-gray-200"/>
+         </div>
+         <div>
+            <label class="block font-bold text-lg">Imagem de Perfil</label>
+            <div class="flex items-center space-x-4 p-2">
+               <label class="upload-button">
+                  <i class="bi bi-camera upload-icon"></i>
+                  <span>Selecionar Imagem</span>
+                  <input type="file" @change="adicionarImagem" class="hidden">
+               </label>
+            </div>
          </div>
       </div>
       <div>
@@ -177,20 +188,16 @@ async function buscarUsuarioId(id) {
 }
 
 async function adicionarImagem(event) {
-    const img = event.target.files[0];
-    if (img) {
-        const objImagem = {
-            file: img,
-            imagem: URL.createObjectURL(img), // Gerar a URL para exibir a imagem
-        };
-        state.imagem = objImagem;
-    }
+   const img = event.target.files[0];
+   const objImagem = {};
+   objImagem.file = img;
+   objImagem.imagem = URL.createObjectURL(img);
+   state.imagem = objImagem;
 }
 
-function editarImagem() {
-    // Disparar o clique no campo de upload de arquivo
-    const inputFile = this.$refs.fileInput;
-    inputFile.click();
+async function removerImagem() {
+   state.imagem = {};
+   document.querySelector('input[type="file"]').value = null;
 }
 
 function formatarCPF(cpf) {
@@ -256,3 +263,23 @@ async function upUsuario() {
    }
 }
 </script>
+
+<style scoped>
+
+.upload-button {
+   display: flex;
+   align-items: center;
+   width: 100%;
+   padding: 10px;
+   background-color: #066699;
+   color: white;
+   border-radius: 6px;
+   border: 1px solid #ccc;
+   cursor: pointer;
+   font-size: 14px;
+   font-weight: 500;
+   text-align: center;
+   transition: background-color 0.3s ease;
+}
+
+</style>
