@@ -119,10 +119,23 @@ function handleConfirmLogout() {
 
 header {
    background-color: var(--color-default);
+   padding-left: 17rem;
 }
-
 aside {
    background-color: var(--color-default);
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 16rem; /* Largura da sidebar */
+   height: 100vh; /* Faz a aside ocupar a altura total da tela */
+}
+
+.layout-main {
+   padding-left: 17rem; /* Adiciona padding para o conteúdo da main não invadir a aside */
+}
+
+.layout-default {
+   display: flex;
 }
 
 a {
@@ -182,6 +195,7 @@ a {
 .overlay-content button:hover {
    background-color: rgba(128, 128, 128, 0.5);
 }
+
 </style>
 <style>
 .layout-default input[type="text"],
