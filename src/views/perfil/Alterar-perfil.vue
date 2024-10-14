@@ -1,54 +1,56 @@
 <template>
-   <form @submit.prevent="upUsuario" class="bg-background border-solid border-2 border-preto2 rounded-lg shadow-lg shadow-preto2-500/50 p-6 max-w-3xl w-full mx-auto h-auto">
+   <form @submit.prevent="upUsuario"
+      class="bg-background border-solid border-2 border-preto2 rounded-lg shadow-lg shadow-preto2-500/50 p-6 max-w-3xl w-full mx-auto h-auto">
       <h1 class="text-3xl font-bold text-preto2 mb-4 text-center">Editar Perfil do Usuário</h1>
       <hr class="bg-azul2 h-0.5 mt-2 mb-4" />
-      <div class="flex flex-col items-center mb-6">
-         <!-- Resolver isso da imagem -->
-         <img :src="state.imagem.imagem" alt=""
-                  class="w-28 h-28 object-cover border-2 border-azul4 rounded-full" />
-               <button type="button" @click="removerImagem"
-                  class="bg-vermelho w-6 h-6 rounded-full text-branco hover:bg-vermelho2 duration-300"
-                  title="Remover Imagem">
-                  <i class="bi bi-x"></i>
-               </button>
-         <!-- Resolver isso da imagem -->
-         <div class="text-center">
-             <h2 class="text-2xl font-bold text-preto2">{{ state.nome }} {{ state.sobrenome }}</h2>
-             <p class="text-preto2">{{ tipoUsuarioString }}</p>
-             <p class="text-preto2">{{ state.whatsApp }}</p>
-             <p class="text-preto2">{{ state.status }}</p>
+      <div v-if="!state.imagem.imagem">
+         <label class="form-label">Imagem de Perfil</label>
+         <div class="flex items-center space-x-4">
+            <label class="upload-button">
+               <i class="bi bi-camera upload-icon"></i>
+               <span>Selecionar Imagem</span>
+               <input type="file" @change="adicionarImagem" class="hidden">
+            </label>
          </div>
-     </div>
-
-,,      <div class="grid grid-cols-2 gap-4 mb-4">
+      </div>
+      <div v-if="state.imagem.imagem" class="div_img">
+         <img :src="state.imagem.imagem" alt="Imagem do Usuário"
+            class="w-28 h-28 object-cover border-2 border-azul4 rounded-full" />
+         <button type="button" @click="removerImagem"
+            class="bg-vermelho w-6 h-6 rounded-full text-branco hover:bg-vermelho2 duration-300" title="Remover Imagem">
+            <i class="bi bi-x"></i>
+         </button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
          <div>
             <label class="block font-bold text-lg">Nome</label>
-            <input type="text" v-model="state.nome" class="border rounded p-2 w-full"/>
+            <input type="text" v-model="state.nome" class="border rounded p-2 w-full" />
          </div>
          <div>
             <label class="block font-bold text-lg">Sobrenome</label>
-            <input type="text" v-model="state.sobrenome" class="border rounded p-2 w-full"/>
+            <input type="text" v-model="state.sobrenome" class="border rounded p-2 w-full" />
          </div>
          <div>
             <label class="block font-bold text-lg">Telefone</label>
-            <input type="text" v-model="state.telefone" class="border rounded p-2 w-full" v-mask-phone.br/>
+            <input type="text" v-model="state.telefone" class="border rounded p-2 w-full" v-mask-phone.br />
          </div>
          <div>
             <label class="block font-bold text-lg">WhatsApp</label>
-            <input type="text" v-model="state.whatsApp" class="border rounded p-2 w-full" v-mask-phone.br/>
+            <input type="text" v-model="state.whatsApp" class="border rounded p-2 w-full" v-mask-phone.br />
          </div>
          <div>
             <label class="block font-bold text-lg">E-mail</label>
-            <input type="email" v-model="state.email" class="border rounded p-2 w-full"/>
+            <input type="email" v-model="state.email" class="border rounded p-2 w-full" />
          </div>
          <div>
             <label class="block font-bold text-lg">CPF</label>
-            <input type="text" placeholder="Digite um CPF:" v-mask-cpf required v-model="state.cpf" class="border rounded p-2 w-full"/>
+            <input type="text" placeholder="Digite um CPF:" v-mask-cpf required v-model="state.cpf"
+               class="border rounded p-2 w-full" />
          </div>
          <div>
             <label class="block font-bold text-lg">Gênero</label>
             <select v-model="state.sexo" class="border rounded p-2 w-full">
-               <option value="" selected>Selecione</option>
+               <option value="" disabled>Selecione</option>
                <option value="MASCULINO">Masculino</option>
                <option value="FEMININO">Feminino</option>
                <option value="OUTROS">Outros</option>
@@ -56,36 +58,21 @@
          </div>
          <div>
             <label class="block font-bold text-lg">Data de Nascimento</label>
-            <input type="text" v-model="state.data_nascimento" readonly class="border rounded p-2 w-full bg-gray-200"/>
+            <input type="text" v-model="state.data_nascimento" readonly class="border rounded p-2 w-full bg-gray-200" />
          </div>
          <div>
             <label class="block font-bold text-lg">Número de Pets</label>
-            <input type="text" v-model="state.n_pets" readonly class="border rounded p-2 w-full"/>
-         </div>
-         <div>
-            <label class="block font-bold text-lg">Status</label>
-            <input type="text" v-model="state.status" readonly class="border rounded p-2 w-full bg-gray-200"/>
+            <input type="text" v-model="state.n_pets" readonly class="border rounded p-2 w-full" />
          </div>
          <div>
             <label class="block font-bold text-lg">Tipo de Usuário</label>
-            <input type="text" v-model="tipoUsuarioString" readonly class="border rounded p-2 w-full bg-gray-200"/>
-         </div>
-         <div>
-            <label class="block font-bold text-lg">Imagem de Perfil</label>
-            <div class="flex items-center space-x-4 p-2">
-               <label class="upload-button">
-                  <i class="bi bi-camera upload-icon"></i>
-                  <span>Selecionar Imagem</span>
-                  <input type="file" @change="adicionarImagem" class="hidden">
-               </label>
-            </div>
+            <input type="text" v-model="tipoUsuarioString" readonly class="border rounded p-2 w-full bg-gray-200" />
          </div>
       </div>
       <div>
          <label class="block font-bold text-lg">Notas Adicionais</label>
-         <textarea v-model="state.notas_adicionais" class="border rounded p-2 w-full"></textarea>
+         <textarea v-model="state.notas_adicionais" rows="4" class="border rounded p-2 w-full"></textarea>
       </div>
-
       <div class="flex justify-end gap-4 mt-4">
          <BotaoCancel :link="'/perfil'" :titulo="'Cancelar'" />
          <BotaoSave type="submit" :titulo="'Salvar'" />
@@ -95,10 +82,7 @@
    <Loader :loading="state.loader" />
 </template>
 
-
-
 <script setup>
-import NoPerfil from '@/components/NoPerfil.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { onMounted, reactive, computed } from 'vue';
 import BotaoSave from '@/components/BotaoSave.vue';
@@ -265,7 +249,6 @@ async function upUsuario() {
 </script>
 
 <style scoped>
-
 .upload-button {
    display: flex;
    align-items: center;
@@ -282,4 +265,8 @@ async function upUsuario() {
    transition: background-color 0.3s ease;
 }
 
+.div_img {
+   display: flex;
+   justify-content: center;   
+}
 </style>
