@@ -84,7 +84,7 @@ function formatarWhatsApp(whatsapp) {
 
 async function buscarUsuarioId(id) {
    try {
-      const { response } = await services.usuarios.getById(id, token);
+      const { response } = await services.perfil.getPerfil(id, token);
       state.nome = response.nome;
       state.sobrenome = response.sobrenome;
       state.whatsapp = formatarWhatsApp(response.whatsapp);
