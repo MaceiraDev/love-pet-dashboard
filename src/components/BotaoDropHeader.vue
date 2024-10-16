@@ -65,7 +65,6 @@
    left: 0;
    width: 100%;
    height: 100%;
-   background-color: var(--color-background);
    z-index: -1;
    transform: scaleX(0);
    transform-origin: left;

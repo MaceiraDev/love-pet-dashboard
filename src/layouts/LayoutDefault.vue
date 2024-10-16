@@ -51,7 +51,8 @@
                   </router-link>
                </li>
                <li>
-                  <router-link to="/situacoes-pet" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  <router-link to="/situacoes-pet"
+                     class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/situacoes-pet' }">
                      <i class="bi bi-thermometer-low"></i> Situações Pet
                   </router-link>
@@ -68,8 +69,12 @@
       <div class="flex-1 flex flex-col">
          <header class="flex justify-between items-center p-2 bg-gray-100">
             <router-link to="/perfil">
-               <img :src="user_image" alt="Imagem Perfil" class="w-12 h-12 rounded-full object-cover border-2 border-azul2 hover:border-limao transition-all duration-300" v-if="user_image != ''">
-               <NoPerfil class="w-12 h-12 rounded-full object-cover border-2 border-azul2 hover:border-limao transition-all duration-300" v-else />
+               <img :src="user_image" alt="Imagem Perfil"
+                  class="w-12 h-12 rounded-full object-cover border-2 border-azul2 hover:border-limao transition-all duration-300"
+                  v-if="user_image != ''">
+               <NoPerfil
+                  class="w-12 h-12 rounded-full object-cover border-2 border-azul2 hover:border-limao transition-all duration-300"
+                  v-else />
             </router-link>
             <div class="flex items-center">
                <BotaoDropHeader />
@@ -117,25 +122,50 @@ function handleConfirmLogout() {
 <style scoped>
 @import url('./../assets/base.css');
 
-header {
-   background-color: var(--color-default);
+main {
+   margin-top: 60px;
    padding-left: 17rem;
+   padding: 1rem;
+   flex-grow: 1;
+   /* height: calc(100vh - 60px); */
+   overflow-y: auto;
 }
+
+header {
+   position: fixed;
+   top: 0;
+   left: 16rem;
+   right: 0;
+   height: 60px;
+   background-color: var(--color-default);
+   z-index: 1000;
+   display: flex;
+   align-items: center;
+   padding-left: 1rem;
+   padding-right: 1rem;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 aside {
    background-color: var(--color-default);
    position: fixed;
    top: 0;
    left: 0;
-   width: 16rem; /* Largura da sidebar */
-   height: 100vh; /* Faz a aside ocupar a altura total da tela */
+   width: 16rem;
+   height: 100vh;
 }
 
 .layout-main {
-   padding-left: 17rem; /* Adiciona padding para o conteúdo da main não invadir a aside */
+   padding-left: 17rem;
 }
 
 .layout-default {
    display: flex;
+   min-height: 100vh;
+}
+
+.layout-router-view {
+   flex-grow: 1;
 }
 
 a {
@@ -195,7 +225,6 @@ a {
 .overlay-content button:hover {
    background-color: rgba(128, 128, 128, 0.5);
 }
-
 </style>
 <style>
 .layout-default input[type="text"],
