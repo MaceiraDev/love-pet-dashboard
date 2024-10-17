@@ -1,0 +1,107 @@
+.layout-default input[type="text"],
+.layout-default input[type="email"],
+.layout-default input[type="password"] {
+   width: 100%;
+   padding: 10px 15px;
+   margin: 8px 0;
+   border: 1px solid #1a1b1c;
+   border-radius: 4px;
+   font-size: 16px;
+   box-sizing: border-box;
+   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+   color: #1a1b1c;
+}
+
+/* Cor de fundo do input */
+.layout-default input[type="text"]:focus,
+.layout-default input[type="email"]:focus,
+.layout-default input[type="password"]:focus {
+   border-color: #4A90E2;
+   box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+   outline: none;
+}
+
+/* Placeholder estilizado */
+.layout-default input[type="text"]::placeholder,
+.layout-default input[type="email"]::placeholder,
+.layout-default input[type="password"]::placeholder {
+   color: #888;
+   font-style: italic;
+}
+
+.layout-default input:disabled {
+   background-color: #f2f2f2;
+   cursor: not-allowed;
+}
+
+.layout-default select {
+   width: 100%;
+   padding: 10px 15px !important;
+   margin: 8px 0 !important;
+   border: 1px solid #1a1b1c;
+   border-radius: 4px;
+   background-color: #fff;
+   font-size: 16px;
+   color: #1a1b1c !important;
+   appearance: none;
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23333" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>');
+   background-repeat: no-repeat;
+   background-position: right 10px center;
+   background-size: 10px;
+   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+   cursor: pointer;
+}
+
+.layout-default select:focus {
+   border-color: #4A90E2;
+   box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+   outline: none;
+}
+
+/* Select desabilitado */
+.layout-default select:disabled {
+   background-color: #f2f2f2;
+   cursor: not-allowed;
+}
+
+/* Select com erro */
+.layout-default select.error {
+   border-color: #e74c3c;
+   box-shadow: 0 0 8px rgba(231, 76, 60, 0.5);
+}
+
+.layout-default textarea {
+   width: 100%;
+   padding: 10px 15px !important;
+   margin: 8px 0;
+   border: 1px solid #1a1b1c;
+   border-radius: 4px;
+   font-size: 16px;
+   box-sizing: border-box;
+   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+   color: #1a1b1c;
+}
+
+/* Cor de fundo do textarea */
+.layout-default textarea:focus {
+   border-color: #4A90E2;
+   box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+   outline: none;
+}
+
+.layout-default textarea::placeholder {
+   color: #888;
+   font-style: italic;
+}
+
+.layout-default textarea:disabled {
+   background-color: #f2f2f2;
+   cursor: not-allowed;
+}
+
+.layout-default label {
+   color: #1a1b1c;
+   margin-bottom: 0;
+}

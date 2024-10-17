@@ -3,9 +3,9 @@
       class="bg-background border-solid border-2 border-preto2 rounded-lg shadow-lg shadow-preto2-500/50 p-6 max-w-3xl w-full mx-auto h-auto">
       <h1 class="text-3xl font-bold text-preto2 mb-4 text-center">Editar Perfil do Usuário</h1>
       <hr class="bg-azul2 h-0.5 mt-2 mb-4" />
-      <div v-if="!state.imagem.imagem">
+      <div class="text-center mb-2" v-if="!state.imagem.imagem">
          <label class="form-label">Imagem de Perfil</label>
-         <div class="flex items-center space-x-4">
+         <div class="flex justify-center space-x-4 mb-1">
             <label class="upload-button">
                <i class="bi bi-camera upload-icon"></i>
                <span>Selecionar Imagem</span>
@@ -251,7 +251,8 @@ async function upUsuario() {
 .upload-button {
    display: flex;
    align-items: center;
-   width: 100%;
+   justify-content: center;
+   width: 50%;
    padding: 10px;
    background-color: #066699;
    color: white;
@@ -264,8 +265,12 @@ async function upUsuario() {
    transition: background-color 0.3s ease;
 }
 
+.upload-button:hover {
+   background-color: #055a85;
+}
+
 .div_img {
    display: flex;
-   justify-content: center;   
+   justify-content: center;
 }
 </style>
