@@ -61,14 +61,14 @@
                   <router-link to="/especies"
                      class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/especies' }">
-                     <i class="bi bi-thermometer-low"></i> Espécies
+                     <i class="bi bi-1-circle"></i> Espécies
                   </router-link>
                </li>
                <li>
                   <router-link to="/racas"
                      class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/racas' }">
-                     <i class="bi bi-thermometer-low"></i> Raças
+                     <i class="bi bi-2-circle"></i> Raças
                   </router-link>
                </li>
                <li v-if="user_tipo == 0 || user_tipo == 1">
