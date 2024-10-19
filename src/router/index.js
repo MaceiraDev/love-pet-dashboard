@@ -94,6 +94,36 @@ const routes = [
             component: () => import('../views/situacoes/Alterar-situacao.vue')
          },
          {
+            path: 'especies',
+            name: 'especies',
+            component: () => import('../views/especies/Especies.vue')
+         },
+         {
+            path: 'especies/cadastrar-especie',
+            name: 'cadastrar-especie',
+            component: () => import('../views/especies/Cadastrar-especie.vue')
+         },
+         {
+            path: 'especies/alterar-especie/:id',
+            name: 'alterar-especie',
+            component: () => import('../views/especies/Alterar-especie.vue')
+         },
+         {
+            path: 'racas',
+            name: 'racas',
+            component: () => import('../views/racas/Racas.vue')
+         },
+         {
+            path: 'racas/cadastrar-raca',
+            name: 'cadastrar-raca',
+            component: () => import('../views/racas/Cadastrar-raca.vue')
+         },
+         {
+            path: 'racas/alterar-raca/:id',
+            name: 'alterar-raca',
+            component: () => import('../views/racas/Alterar-raca.vue')
+         },
+         {
             path: 'usuarios',
             name: 'usuarios',
             component: () => import('../views/usuarios/Usuarios.vue')
