@@ -1,5 +1,5 @@
 <template>
-   <form @submit.prevent="upUsuario"
+   <form @submit.prevent="upPerfil"
       class="bg-background border-solid border-2 border-preto2 rounded-lg shadow-lg shadow-preto2-500/50 p-6 max-w-3xl w-full mx-auto h-auto">
       <h1 class="text-3xl font-bold text-preto2 mb-4 text-center">Editar Perfil do Usuário</h1>
       <hr class="bg-azul2 h-0.5 mt-2 mb-4" />
@@ -58,7 +58,8 @@
          </div>
          <div>
             <label class="block font-bold text-lg">Data de Nascimento</label>
-            <input type="text" v-model="state.data_nascimento" readonly class="border rounded p-2 w-full bg-gray-200" />
+            <input type="text" v-model="state.data_nascimento" v-mask-date.br required
+               class="border rounded p-2 w-full bg-gray-200" />
          </div>
          <div>
             <label class="block font-bold text-lg">Número de Pets</label>
@@ -195,7 +196,7 @@ function formatarWhatsApp(whatsapp) {
    return whatsapp.replace(/[.\-() ]/g, "");
 }
 
-async function upUsuario() {
+async function upPerfil() {
    state.loader = true;
 
    let telefoneFormatado = "";
@@ -228,7 +229,7 @@ async function upUsuario() {
       formData.append("imagem", null);
    }
    try {
-      const response = await services.usuarios.update({ id: state.id, formData, token });
+      const response = await services.perfil.update({ id: state.id, formData, token });
       if (response.status === 200 || response.status === 201) {
          router.push('/perfil');
       }

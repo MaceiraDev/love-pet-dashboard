@@ -3,7 +3,7 @@
       <h1 class="text-2xl font-bold text-preto2">Cadastrar Espécie</h1>
       <hr class="bg-azul2 h-0.5 mt-2 mb-4" />
       <form @submit.prevent="salvarEspecie">
-         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div>
                <label>Nome da Espécie</label>
                <input type="text" v-model="state.nome" required placeholder="Digite o nome da espécie:" />

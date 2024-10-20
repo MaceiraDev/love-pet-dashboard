@@ -3,7 +3,7 @@
       <h1 class="text-2xl font-bold text-preto2">Editar Raça</h1>
       <hr class="bg-azul2 h-0.5 mt-2 mb-4" />
       <form @submit.prevent="atualizarRaca">
-         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div>
                <label>Nome da Raça</label>
                <input type="text" v-model="state.nome" required placeholder="Digite o nome da raça" />
@@ -46,7 +46,7 @@ const router = useRouter();
 const state = reactive({
    id: null,
    nome: '',
-   especie_id: '', 
+   especie_id: '',
    especies: [],
    loader: false,
    modal: false,
@@ -100,8 +100,8 @@ async function atualizarRaca() {
       console.error('Erro ao atualizar raça:', error);
       if (error.response && error.response.data && error.response.data.errors) {
          const errors = Object.values(error.response.data.errors).flat();
-         state.MensagemErro = errors.length > 1 
-            ? `Ocorreram os seguintes erros:\n${errors.join('\n')}` 
+         state.MensagemErro = errors.length > 1
+            ? `Ocorreram os seguintes erros:\n${errors.join('\n')}`
             : `Erro: ${errors[0]}`;
       } else {
          state.MensagemErro = 'Erro ao salvar as informações. Tente novamente mais tarde.';
