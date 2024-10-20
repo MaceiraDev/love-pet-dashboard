@@ -90,7 +90,7 @@
                <label>N° de pets sobre seus cuidados</label>
                <input type="text" v-model="state.n_pets" />
             </div>
-            <div>
+            <div v-if="!state.imagem.imagem">
                <label class="form-label">Imagem de Perfil</label>
                <div class="flex items-center space-x-4">
                   <label class="upload-button">
@@ -351,7 +351,8 @@ async function upUsuario() {
    font-size: 14px;
    font-weight: 500;
    text-align: center;
-   transition: background-color 0.3s ease;
+   transition:  0.3s;
+   margin-bottom: 10px;
 }
 
 .upload-button:hover {

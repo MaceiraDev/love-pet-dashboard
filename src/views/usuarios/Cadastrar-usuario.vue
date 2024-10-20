@@ -72,7 +72,8 @@
             </div>
             <div>
                <label>WhatsApp</label>
-               <input type="text" placeholder="Digite um número WhatsApp:" v-mask-phone.br required v-model="state.whatsApp">
+               <input type="text" placeholder="Digite um número WhatsApp:" v-mask-phone.br required
+                  v-model="state.whatsApp">
             </div>
             <div>
                <label>Email</label>
@@ -93,7 +94,7 @@
                <label>N° de pets sobre seus cuidados</label>
                <input type="text" disabled v-model="state.n_pets" />
             </div>
-            <div>
+            <div v-if="!state.imagem.imagem">
                <label class="form-label">Imagem de Perfil</label>
                <div class="flex items-center space-x-4">
                   <label class="upload-button">
@@ -314,7 +315,7 @@ async function novoUsuario() {
    font-size: 14px;
    font-weight: 500;
    text-align: center;
-   transition: background-color 0.3s ease;
+   transition: 0.3s;
 }
 
 .upload-button:hover {
@@ -327,29 +328,6 @@ async function novoUsuario() {
 
 .hidden {
    display: none;
-}
-
-.upload-button {
-   width: 100%;
-   padding: 10px;
-   border: 1px solid #ccc;
-   border-radius: 6px;
-   font-size: 14px;
-   transition: border-color 0.2s ease;
-}
-
-.input-text:focus,
-select:focus,
-.upload-button:focus {
-   border-color: #066699;
-   outline: none;
-}
-
-.form-label {
-   display: block;
-   margin-bottom: 8px;
-   font-size: 15px;
-   color: #1a1b1c;
 }
 
 .div_img {
