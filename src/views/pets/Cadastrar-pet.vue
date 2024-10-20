@@ -17,7 +17,7 @@
             </div>
             <div>
                <label>Espécie</label>
-               <select required v-model="state.especie_id">
+               <select required v-model="state.especie_id" @change="buscarRacasByEspecie(state.especie_id)">
                   <option selected disabled value="">Selecione</option>
                   <option v-for="especie in state.especies" :value="especie.id">{{ especie.nome }}</option>
                </select>
@@ -26,8 +26,7 @@
                <label>Raça</label>
                <select required v-model="state.raca_id">
                   <option selected disabled value="">Selecione</option>
-                  <option value="MACHO">Macho</option>
-                  <option value="FEMEA">Fêmea</option>
+                  <option v-for="raca in state.racas" :value="raca.id">{{ raca.nome }}</option>
                </select>
             </div>
             <div>
@@ -159,6 +158,7 @@ const state = reactive({
    alimentacao: '',
    notas_adicionais: '',
    especies: [],
+   racas: [],
    situacoes: [],
    tutores: [],
    imagem: {},
@@ -173,18 +173,25 @@ onMounted(() => {
    buscarTutores();
 });
 
+async function buscarRacasByEspecie(especie_id) {
+   const { response } = await services.racas.getByEspecie(especie_id, token);
+   state.racas = response;
+}
 async function buscarEspecies() {
    const { response } = await services.especies.getAll(token)
    state.especies = response.data;
 }
+
 async function buscarSituacao() {
    const { response } = await services.situacao_pet.getAll(token)
    state.situacoes = response.data;
 }
+
 async function buscarTutores() {
    const { response } = await services.tutores.getAll(token)
    state.tutores = response.data;
 }
+
 async function adicionarImagem(event) {
    const img = event.target.files[0];
    const objImagem = {};
@@ -192,10 +199,12 @@ async function adicionarImagem(event) {
    objImagem.imagem = URL.createObjectURL(img);
    state.imagem = objImagem;
 }
+
 async function removerImagem() {
    state.imagem = {};
    document.querySelector('input[type="file"]').value = null;
 }
+
 async function novoPet() {
    state.loader = true;
 

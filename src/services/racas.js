@@ -34,4 +34,10 @@ export default HTTPCLIENT => ({
       const response = await HTTPCLIENT.delete('/racas/' + id, { headers });
       return { response: response };
    },
+
+   getByEspecie: async (especie_id, token) => {
+      const headers = { "Authorization": "Bearer " + token };
+      const response = await HTTPCLIENT.get('/racas/por-especie/' + especie_id, { headers });
+      return { response: response.data };
+   },
 });
