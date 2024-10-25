@@ -3,8 +3,8 @@
       <h2 class="text-2xl font-bold text-preto2">Raças</h2>
       <BotaoCreate :link="'/racas/cadastrar-raca'" :titulo="'Cadastrar Raça'" v-if="user_tipo != 4" />
    </div>
-   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm"
-      :param_url_1="'racas'" :param_url_2="'raca'" />
+   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm" :param_url_1="'racas'"
+      :param_url_2="'raca'" />
    <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event"
       @confirmar="deletarRaca" />
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
@@ -33,6 +33,7 @@ onMounted(() => {
 
 const state = reactive({
    racas: [],
+   especies: [],
    visible: false,
    texto: '',
    raca_delete_id: null,
@@ -45,7 +46,7 @@ async function buscarRacas() {
 
 async function buscarEspecies() {
    const { response } = await services.especies.getAll(token);
-   state.especies = response.data; 
+   state.especies = response.data;
 }
 
 async function deletarRaca() {
@@ -77,14 +78,14 @@ function openConfirm(raca) {
    state.raca_delete_id = raca.id;
 }
 
-const tableHeaders = ['nome', 'especie'];
+const tableHeaders = ['nome', 'espécie'];
 const tableBody = computed(() => {
    return state.racas.map(raca => {
       const especie = state.especies.find(especie => especie.id === raca.especie_id);
       return {
          id: raca.id,
          nome: raca.nome,
-         especie: especie ? especie.nome : 'Desconhecida',
+         espécie: especie ? especie.nome : 'Desconhecida',
       };
    });
 });

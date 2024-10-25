@@ -6,7 +6,7 @@
          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div>
                <label>Nome da Raça</label>
-               <input type="text" v-model="state.nome" required placeholder="Digite o nome da raça" />
+               <input type="text" v-model="state.nome" required placeholder="Digite o nome da raça:" />
             </div>
             <div>
                <label>Espécie</label>

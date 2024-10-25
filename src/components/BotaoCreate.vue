@@ -19,5 +19,4 @@ const props = defineProps({
 });
 </script>
 <style scoped>
-button {}
 </style>

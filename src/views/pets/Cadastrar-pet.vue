@@ -78,7 +78,7 @@
                <select required v-model="state.deficiencia">
                   <option selected disabled value="">Selecione</option>
                   <option value="SIM">Sim</option>
-                  <option value="NÃO">Não</option>
+                  <option value="NAO">Não</option>
                </select>
             </div>
             <div v-if="state.deficiencia == 'SIM'">
@@ -90,7 +90,7 @@
                <select required v-model="state.microchip">
                   <option selected disabled value="">Selecione</option>
                   <option value="SIM">Sim</option>
-                  <option value="NÃO">Não</option>
+                  <option value="NAO">Não</option>
                </select>
             </div>
             <div v-if="!state.imagem.imagem">
@@ -134,11 +134,13 @@ import BotaoSave from '@/components/BotaoSave.vue';
 import BotaoCancel from '@/components/BotaoCancel.vue';
 import services from '@/services';
 import { useStorage } from 'vue3-storage';
+import ModalErro from '@/components/ModalErro.vue';
 import Loader from '@/components/Loader.vue';
+import { useRouter } from 'vue-router';
 
 const storage = useStorage();
 const token = storage.getStorageSync("token");
-
+const router = useRouter();
 const state = reactive({
    nome: '',
    especie_id: '',

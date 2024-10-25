@@ -20,13 +20,11 @@ export default HTTPCLIENT => ({
       const response = await HTTPCLIENT.get('/servicos', { headers });
       return { response: response.data }
    },
-
    getById: async (id, token) => {
       const headers = { "Authorization": "Bearer " + token };
       const response = await HTTPCLIENT.get('/servicos/' + id, { headers });
       return { response: response.data }
    },
-
    delete: async (id, token) => {
       const headers = { "Authorization": "Bearer " + token }
       const response = await HTTPCLIENT.delete('/servicos/' + id, { headers })
