@@ -39,6 +39,11 @@ const routes = [
             component: () => import('../views/pets/Cadastrar-pet.vue')
          },
          {
+            path: 'pets/alterar-pet/:id',
+            name: 'alterar-pet',
+            component: () => import('../views/pets/Alterar-pet.vue')
+         },
+         {
             path: 'tutores',
             name: 'tutores',
             component: () => import('../views/tutores/Tutores.vue')

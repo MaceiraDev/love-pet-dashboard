@@ -28,7 +28,7 @@
       </div>
    </div>
    <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm"
-      :param_url_1="'tutores'" :param_url_2="'tutor'" />
+      :param_url_1="'pets'" :param_url_2="'pet'" />
    <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event"
       @confirmar="deletarPet" />
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
