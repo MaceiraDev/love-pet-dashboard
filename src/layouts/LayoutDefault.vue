@@ -1,6 +1,7 @@
 <template>
-   <div class="layout-default min-h-screen flex">
-      <aside class="w-64 text-white flex flex-col">
+   <div class="layout-default min-h-screen lg:flex">
+      <aside :class="{ 'translate-x-0': state.asideVisible, '-translate-x-full': !state.asideVisible }"
+         class="flex-col lg:flex transition-transform duration-300 transform fixed h-full">
          <div class="profile">
             <img id="img" src="./../assets/imagens/dog_ia.jpg" alt="img profile">
             <div class="overlay">
@@ -58,15 +59,13 @@
                   </router-link>
                </li>
                <li>
-                  <router-link to="/especies"
-                     class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  <router-link to="/especies" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/especies' }">
                      <i class="bi bi-1-circle"></i> Espécies
                   </router-link>
                </li>
                <li>
-                  <router-link to="/racas"
-                     class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  <router-link to="/racas" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/racas' }">
                      <i class="bi bi-2-circle"></i> Raças
                   </router-link>
@@ -80,8 +79,8 @@
             </ul>
          </div>
       </aside>
-      <div class="flex-1 flex flex-col">
-         <header class="flex justify-between items-center p-2 bg-gray-100">
+      <div class="lg:flex-1 lg:flex lg:flex-col">
+         <header class="flex justify-between items-center p-2">
             <router-link to="/perfil">
                <img :src="user_image" alt="Imagem Perfil"
                   class="w-12 h-12 rounded-full object-cover border-2 border-azul2 hover:border-limao transition-all duration-300"
@@ -91,10 +90,18 @@
                   v-else />
             </router-link>
             <div class="flex items-center">
+               <label class="burger" typeof="button" for="burger">
+                  <button type="button" @click="toggleAside()">
+                     <input type="checkbox" id="burger">
+                     <span></span>
+                     <span></span>
+                     <span></span>
+                  </button>
+               </label>
                <BotaoDropHeader />
             </div>
          </header>
-         <main class="flex-grow p-4 layout-main">
+         <main class="flex-grow layout-main">
             <router-view class="layout-router-view" />
          </main>
       </div>
@@ -103,7 +110,7 @@
    <Loader :loading="loading" />
 </template>
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted, onBeforeMount } from 'vue';
 import ModalLogout from '@/components/ModalLogout.vue';
 import Loader from '@/components/Loader.vue';
 import { useRouter } from 'vue-router';
@@ -118,10 +125,43 @@ const user_image = storage.getStorageSync("imagem");
 const router = useRouter();
 const state = reactive({
    modal: false,
+   asideVisible: false,
 });
 const loading = ref(false);
+
+const checkScreenSize = () => {
+   const isMobile = window.matchMedia("(max-width: 1023px)").matches;
+   state.asideVisible = !isMobile;
+};
+
+function handleClickOutside(event) {
+   const asideElement = document.querySelector('aside');
+   const isMobile = window.innerWidth < 640; // 640px é o breakpoint 'sm'
+
+   if (isMobile && state.asideVisible && asideElement && !asideElement.contains(event.target) && !event.target.closest('.burger')) {
+      state.asideVisible = false;
+   }
+}
+
+
+onMounted(() => {
+   checkScreenSize();
+   window.addEventListener('resize', checkScreenSize);
+   document.addEventListener('click', handleClickOutside);
+   state.asideVisible = window.innerWidth >= 640;
+});
+
+onBeforeMount(() => {
+   window.removeEventListener('resize', checkScreenSize);
+   document.removeEventListener('click', handleClickOutside);
+});
+
 function deslogar() {
    state.modal = true;
+}
+
+function toggleAside() {
+   state.asideVisible = !state.asideVisible;
 }
 function handleConfirmLogout() {
    loading.value = true;
@@ -132,7 +172,6 @@ function handleConfirmLogout() {
    }, 1000);
 }
 </script>
-
 <style scoped>
 @import url('./../assets/base.css');
 
@@ -141,7 +180,6 @@ main {
    padding-left: 17rem;
    padding: 1rem;
    flex-grow: 1;
-   /* height: calc(100vh - 60px); */
    overflow-y: auto;
 }
 
@@ -167,6 +205,7 @@ aside {
    left: 0;
    width: 16rem;
    height: 100vh;
+   overflow-y: auto;
 }
 
 .layout-main {
@@ -174,7 +213,6 @@ aside {
 }
 
 .layout-default {
-   display: flex;
    min-height: 100vh;
 }
 
@@ -238,5 +276,95 @@ a {
 
 .overlay-content button:hover {
    background-color: rgba(128, 128, 128, 0.5);
+}
+
+.burger {
+   position: relative;
+   width: 30px;
+   height: 20px;
+   background: transparent;
+   cursor: pointer;
+   display: none;
+}
+
+.burger input {
+   display: none;
+}
+
+.burger span {
+   display: block;
+   position: absolute;
+   height: 4px;
+   width: 100%;
+   background-color: var(--color-limao);
+   border-radius: 9px;
+   opacity: 1;
+   left: 0;
+   transform: rotate(0deg);
+   transition: .25s ease-in-out;
+}
+
+.burger span:nth-of-type(1) {
+   top: 0px;
+   transform-origin: left center;
+}
+
+.burger span:nth-of-type(2) {
+   top: 50%;
+   transform: translateY(-50%);
+   transform-origin: left center;
+}
+
+.burger span:nth-of-type(3) {
+   top: 100%;
+   transform-origin: left center;
+   transform: translateY(-100%);
+}
+
+.burger input:checked~span:nth-of-type(1) {
+   transform: rotate(45deg);
+   top: 0px;
+   left: 5px;
+}
+
+.burger input:checked~span:nth-of-type(2) {
+   width: 0%;
+   opacity: 0;
+}
+
+.burger input:checked~span:nth-of-type(3) {
+   transform: rotate(-45deg);
+   top: 22px;
+   left: 5px;
+}
+
+@media (max-width: 1023px) {
+   .layout-main {
+      padding-left: 0px;
+   }
+
+   main {
+      padding-left: 0px;
+      padding: 3rem !important;
+   }
+
+   header {
+      width: 100%;
+      left: 0;
+   }
+
+   .burger {
+      display: block;
+   }
+
+   aside {
+      z-index: 2000;
+   }
+}
+
+@media (max-width: 500px) {
+   aside {
+      width: 14rem;
+   }
 }
 </style>
