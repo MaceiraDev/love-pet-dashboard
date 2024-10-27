@@ -136,8 +136,7 @@ const checkScreenSize = () => {
 
 function handleClickOutside(event) {
    const asideElement = document.querySelector('aside');
-   const isMobile = window.innerWidth < 640; // 640px é o breakpoint 'sm'
-
+   const isMobile = window.innerWidth < 640;
    if (isMobile && state.asideVisible && asideElement && !asideElement.contains(event.target) && !event.target.closest('.burger')) {
       state.asideVisible = false;
    }

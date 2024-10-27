@@ -81,7 +81,7 @@
             </div>
             <div>
                <label>Senha</label>
-               <input type="password" placeholder="Digite uma senha:" required v-model="state.senha">
+               <input type="password" placeholder="Digite uma senha:" required v-model="state.senha" readonly>
             </div>
             <div>
                <label>Status</label>
@@ -158,7 +158,7 @@ const state = reactive({
    email: '',
    status: 'ATIVO',
    n_pets: '',
-   senha: '',
+   senha: '123456',
    notas_adicionais: '',
    loader: false,
    modal: false,

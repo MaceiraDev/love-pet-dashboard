@@ -24,4 +24,9 @@ export default HTTPCLIENT => ({
       const response = await HTTPCLIENT.delete('/users/' + id, { headers })
       return { response: response }
    },
+   upSenha: async (dados) => {
+      const headers = { "Accept": "application/json" };
+      const response = await HTTPCLIENT.post('/atualizar-senha', dados, { headers });
+      return { data: response.data, status: response.status };
+   },
 })

@@ -37,6 +37,7 @@
             </div>
          </div>
       </div>
+      <ModalUpSenha :visible="state.visible" @update:visible="state.visible = $event" @save="saveSenha" />
    </main>
 </template>
 <script setup>
@@ -46,6 +47,7 @@ import { useRouter } from 'vue-router';
 import { useStorage } from 'vue3-storage';
 import Loader from '@/components/Loader.vue';
 import { useToast } from 'vue-toastification';
+import ModalUpSenha from '@/components/ModalUpSenha.vue';
 
 const storage = useStorage();
 const router = useRouter();
@@ -55,6 +57,7 @@ const loading = ref(false);
 const state = reactive({
    email: null,
    senha: null,
+   visible: false,
 });
 
 async function logarSistema() {
@@ -67,9 +70,35 @@ async function logarSistema() {
       }
    } catch (e) {
       let msg_erro = e.response.data.message;
-      toast.error(msg_erro, {
-         timeout: 2000
-      });
+      let data_senha = e.response.data.data_vencimento_senha;
+      let status = e.status;
+      toast.error(msg_erro, { timeout: 3000 });
+      if (data_senha == null && status == 403) {
+         state.visible = true;
+      }
+   } finally {
+      loading.value = false;
+   }
+}
+
+async function saveSenha({ email, senha }) {
+   console.log("Email:", email, "Senha:", senha);
+   if (senha.length < 6) {
+      let msg_erro = 'A senhar deve ter 6 ou mais caracteres!';
+      toast.error(msg_erro, { timeout: 3000 });
+      return;
+   }
+   let dados = {
+      email, senha
+   }
+   try {
+      const response = await services.usuarios.upSenha(dados);
+      if (response.status === 200 || response.status === 201) {
+         state.visible = false;
+      }
+   } catch (e) {
+      let msg_erro = e.response.data.error;
+      toast.error(msg_erro, { timeout: 3000 });
    } finally {
       loading.value = false;
    }
