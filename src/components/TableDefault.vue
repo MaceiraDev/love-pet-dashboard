@@ -1,7 +1,7 @@
 <template>
    <div class="card">
       <div class="overflow-x-auto">
-         <table class="min-w-full divide-y-4 divide-limao">
+         <table class="min-w-full max-w-full divide-y-4 divide-limao">
             <thead class="bg-azul3">
                <tr>
                   <th v-for="header in headers" :key="header"
@@ -14,7 +14,7 @@
             <tbody class="bg-table2 divide-y divide-preto">
                <tr v-for="(row, index) in data" :key="index" class="hover:bg-limao2 transition-colors duration-200">
                   <td v-for="header in headers" :key="header" class="px-6 py-4 whitespace-nowrap text-md text-preto2">
-                     {{ row[header] }}
+                     <div class="break-words">{{ row[header] }}</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-branco flex space-x-2">
                      <router-link :to="param_url_1 + '/alterar-' + param_url_2 + '/' + row.id"> 
@@ -40,7 +40,6 @@
       </div>
    </div>
 </template>
-
 
 <script setup>
 import { defineProps } from 'vue';
