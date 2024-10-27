@@ -2,7 +2,7 @@
    <div class="flex justify-between items-center mb-2">
       <h2 class="text-2xl font-bold text-preto2">Pets</h2>
    </div>
-   <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+   <div class="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-4 gap-4">
       <div class="flex justify-between items-center">
          <input type="text" v-model="state.nome_pet" class="border rounded p-2 w-full" placeholder="Buscar pet:" />
          <BotaoSearchFilter @click="buscarPetByNome(state.nome_pet)" class=" sm:ml-1" />
@@ -14,21 +14,20 @@
             <option v-for="especie in state.especies" :value="especie.id">{{ especie.nome }}</option>
          </select>
       </div>
-      <div>
+      <div class="flex justify-start items-center">
          <select required v-model="state.raca_id" @change="buscarPetByRaca(state.raca_id)">
             <option selected disabled value="">Selecione uma raça</option>
             <option v-for="raca in state.racas_filtro" :value="raca.id">{{ raca.nome }}</option>
          </select>
-      </div>
-      <div class="flex justify-start items-center">
-         <BotaoCleanFilter @click="buscarPets()" />
+         <BotaoCleanFilter @click="buscarPets()" class=" sm:ml-1" />
+
       </div>
       <div class="flex justify-end items-center">
          <BotaoCreate :link="'/pets/cadastrar-pet'" :titulo="'Cadastrar Pet'" />
       </div>
    </div>
-   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm"
-      :param_url_1="'pets'" :param_url_2="'pet'" />
+   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm" :param_url_1="'pets'"
+      :param_url_2="'pet'" />
    <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event"
       @confirmar="deletarPet" />
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
