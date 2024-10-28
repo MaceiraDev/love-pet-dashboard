@@ -81,7 +81,7 @@
             </div>
             <div>
                <label>Senha</label>
-               <input type="password" placeholder="Digite uma senha:" required v-model="state.senha" readonly>
+               <input type="password" placeholder="Não é cadastrar uma senha nessa tela" required v-model="state.senha" readonly>
             </div>
             <div>
                <label>Status</label>
@@ -158,7 +158,7 @@ const state = reactive({
    email: '',
    status: 'ATIVO',
    n_pets: '',
-   senha: '123456',
+   senha: '',
    notas_adicionais: '',
    loader: false,
    modal: false,
@@ -217,7 +217,7 @@ async function novoUsuario() {
    formData.append("email", state.email);
    formData.append("status", state.status);
    formData.append("n_pets", state.n_pets);
-   formData.append("senha", state.senha);
+   formData.append("senha", cpfFormatado);
    formData.append("notas_adicionais", state.notas_adicionais);
    formData.append("_method", "POST");
 

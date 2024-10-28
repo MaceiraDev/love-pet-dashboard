@@ -29,4 +29,10 @@ export default HTTPCLIENT => ({
       const response = await HTTPCLIENT.post('/atualizar-senha', dados, { headers });
       return { data: response.data, status: response.status };
    },
+   verificaSenha: async (email, senhaAntiga) => {
+      const headers = { "Accept": "application/json" };
+      const data = { email, senha: senhaAntiga }; // Certifique-se que o objeto tem a mesma estrutura que o esperado no backend
+      const response = await HTTPCLIENT.post('/verificar-senha', data, { headers });
+      return { data: response.data, status: response.status };
+   }
 })

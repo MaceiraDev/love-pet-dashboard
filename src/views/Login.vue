@@ -37,7 +37,12 @@
             </div>
          </div>
       </div>
-      <ModalUpSenha :visible="state.visible" @update:visible="state.visible = $event" @save="saveSenha" />
+      <ModalUpSenha 
+         :visible="state.visible" 
+         :email="state.email" 
+         @update:visible="state.visible = $event" 
+         @save="saveSenha" 
+      />
    </main>
 </template>
 <script setup>
@@ -84,25 +89,29 @@ async function logarSistema() {
 async function saveSenha({ email, senha }) {
    console.log("Email:", email, "Senha:", senha);
    if (senha.length < 6) {
-      let msg_erro = 'A senhar deve ter 6 ou mais caracteres!';
+      let msg_erro = 'A senha deve ter 6 ou mais caracteres!';
       toast.error(msg_erro, { timeout: 3000 });
       return;
    }
    let dados = {
-      email, senha
-   }
+      email,
+      senha
+   };
+   console.log('Dados para atualização:', dados); // Log para verificar os dados enviados
    try {
       const response = await services.usuarios.upSenha(dados);
       if (response.status === 200 || response.status === 201) {
          state.visible = false;
       }
    } catch (e) {
+      console.log('Erro:', e.response.data); // Log para verificar o erro retornado
       let msg_erro = e.response.data.error;
       toast.error(msg_erro, { timeout: 3000 });
    } finally {
       loading.value = false;
    }
 }
+
 </script>
 
 <style scoped>

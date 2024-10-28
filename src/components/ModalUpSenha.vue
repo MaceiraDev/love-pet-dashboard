@@ -6,10 +6,14 @@
             <div>
                <div>
                   <label>Email</label>
-                  <input type="email" placeholder="Digite seu email:" required v-model="state.email">
+                  <input type="email" placeholder="Digite seu email:" required v-model="state.email" readonly>
                </div>
                <div>
-                  <label>Senha</label>
+                  <label>Antiga senha</label>
+                  <input type="password" placeholder="Digite sua atual senha:" required v-model="state.senhaAntiga">
+               </div>
+               <div>
+                  <label>Nova senha</label>
                   <input type="password" placeholder="Digite sua nova senha:" required v-model="state.senha">
                </div>
             </div>
@@ -31,25 +35,52 @@
 </template>
 
 <script setup>
-import { defineProps, reactive } from 'vue';
+import { defineProps, reactive, watch } from 'vue';
+import services from '@/services'; 
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
+
 const props = defineProps({
-   visible: {
-      type: Boolean,
-      required: true
-   }
+  visible: {
+    type: Boolean,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  }
 });
+
 const state = reactive({
-   email: '',
-   senha: '',
+  email: '', 
+  senhaAntiga: '',
+  senha: ''
 });
+
+watch(() => props.email, (newEmail) => {
+   state.email = newEmail;
+});
+
 const emit = defineEmits(['update:visible', 'save']);
 
 const cancel = () => {
    emit('update:visible', false);
 };
 
-const saveSenha = () => {
-   emit('save', { email: state.email, senha: state.senha }); // Emitindo os dados
+const saveSenha = async () => {
+   if (!state.email || !state.senha || !state.senhaAntiga) {
+      throw new Error('Todos os campos são obrigatórios.');
+   }
+   const senhaCorreta = await services.usuarios.verificaSenha(state.email, state.senhaAntiga);
+
+   if (!senhaCorreta) {
+      throw new Error('A senha antiga está incorreta');
+      // let msg_erro = 'A senha antiga está incorreta'
+      // toast.error(msg_erro, { timeout: 3000 });
+   } else {
+      emit('save', { email: state.email, senha: state.senha });
+   }
 };
 </script>
 
