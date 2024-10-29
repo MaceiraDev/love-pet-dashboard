@@ -69,18 +69,31 @@ const cancel = () => {
 };
 
 const saveSenha = async () => {
-   if (!state.email || !state.senha || !state.senhaAntiga) {
-      throw new Error('Todos os campos são obrigatórios.');
-   }
-   const senhaCorreta = await services.usuarios.verificaSenha(state.email, state.senhaAntiga);
+   try {
+      if (!state.email || !state.senha || !state.senhaAntiga) {
+         throw new Error('Todos os campos são obrigatórios.');
+      }
 
-   if (!senhaCorreta) {
-      throw new Error('A senha antiga está incorreta');
-      // let msg_erro = 'A senha antiga está incorreta'
-      // toast.error(msg_erro, { timeout: 3000 });
-   } else {
-      emit('save', { email: state.email, senha: state.senha });
+      const senhaCorreta = await services.usuarios.verificaSenha(state.email, state.senhaAntiga);
+
+      if (senhaCorreta) {
+         emit('save', { email: state.email, senha: state.senha });
+      } 
+
+   } catch (error) {
+      if (error.response && error.response.status === 401) {
+         let msg_erro = 'Credenciais inválidas.';
+         toast.error(msg_erro, { timeout: 3000 });
+      } 
+      else if (error.response && error.response.status === 422) {
+         let msg_erro = 'A senha deve ter no mínimo 6 caracteres.';
+         toast.error(msg_erro, { timeout: 3000 });
+      } 
+      else {
+         let msg_erro = error.message || 'Ocorreu um erro ao tentar atualizar a senha.';
+         toast.error(msg_erro, { timeout: 3000 });
    }
+}
 };
 </script>
 

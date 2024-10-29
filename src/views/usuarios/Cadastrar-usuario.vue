@@ -81,7 +81,7 @@
             </div>
             <div>
                <label>Senha</label>
-               <input type="password" placeholder="Não é cadastrar uma senha nessa tela" required v-model="state.senha" readonly>
+               <input type="password" placeholder="Não é possivel cadastrar uma senha nessa tela" required v-model="state.senha" readonly>
             </div>
             <div>
                <label>Status</label>
