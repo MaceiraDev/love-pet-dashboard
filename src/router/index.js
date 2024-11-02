@@ -154,6 +154,11 @@ const routes = [
             component: () => import('../views/perfil/Alterar-perfil.vue')
          }
       ]
+   },
+   {
+      path: '/:catchAll(.*)',
+      name: '404',
+      component: () => import('../views/404.vue')
    }
 ]
 
