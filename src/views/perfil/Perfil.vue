@@ -4,7 +4,7 @@
       <hr class="bg-azul2 h-0.5 mt-2 mb-4" />
       <div class="flex flex-col items-center mb-6">
          <img :src="state.imagem" class="w-36 h-36 md:w-40 md:h-40 rounded-full object-cover mb-4 border-2 border-azul4" v-if="state.imagem" />
-         <NoPerfil class="w-36 h-36 md:w-40 md:h-40 rounded-full object-cover mb-4 border-2 border-azul4" v-else />
+         <NoPerfil class="w-36 h-36 md:w-40 md:h-40 rounded-full object-cover mb-4 border-2 border-azul4"   v-else/>
          <div class="text-center">
             <h2 class="text-2xl font-bold text-preto2">{{ state.nome }} {{ state.sobrenome }}</h2>
             <p class="text-preto2">{{ tipoUsuario }}</p>

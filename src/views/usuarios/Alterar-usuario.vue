@@ -351,7 +351,7 @@ async function upUsuario() {
    font-size: 14px;
    font-weight: 500;
    text-align: center;
-   transition:  0.3s;
+   transition: 0.3s;
    margin-bottom: 10px;
 }
 
