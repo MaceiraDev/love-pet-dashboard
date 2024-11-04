@@ -34,5 +34,10 @@ export default HTTPCLIENT => ({
       const data = { email, senha: senhaAntiga }; // Certifique-se que o objeto tem a mesma estrutura que o esperado no backend
       const response = await HTTPCLIENT.post('/verificar-senha', data, { headers });
       return { data: response.data, status: response.status };
-   }
-})
+   },
+   getVeterinarios: async (token) => {
+      const headers = { "Authorization": "Bearer " + token };
+      const response = await HTTPCLIENT.get('/users/tipo/vet', { headers });
+      return { response: response.data }
+   },
+}) 

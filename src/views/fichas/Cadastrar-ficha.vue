@@ -25,11 +25,11 @@
          </div>
          <div>
             <label>Data</label>
-            <input type="text" placeholder="Digite uma data:" v-model="state.data" v-mask="'##/##/####'" />
+            <input type="text" placeholder="Digite uma data:" v-model="state.data" v-mask-date.br required />
          </div>
          <div>
             <label>Horário</label>
-            <input type="text" placeholder="Digite o horário:" v-model="state.horario" />
+            <input type="text" placeholder="Digite o horário:" v-model="state.horario" v-mask="'##:##'" maxlength="5"/> 
          </div>
          <div>
             <label>Status</label>
@@ -158,9 +158,8 @@ onMounted(() => {
 });
 
 async function buscarVeterinarios() {
-   const { response } = await services.usuarios.getAll(token);
+   const { response } = await services.usuarios.getVeterinarios(token);
    state.veterinarios = response.data;
-   //     state.veterinarios = response.data.filter(user => user.tipo_usuario === 1);
 }
 
 async function buscarPets() {
