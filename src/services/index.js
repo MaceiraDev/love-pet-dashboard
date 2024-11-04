@@ -10,6 +10,7 @@ import perfilService from "./perfil";
 import especiesService from "./especies"
 import racasService from "./racas"
 import petsService from "./pets";
+import fichasService from "./fichas"
 
 const API_ENVS = {
    local: 'http://127.0.0.1:8000/api/',
@@ -31,4 +32,5 @@ export default {
    especies: especiesService(HTTPCLIENT),
    racas: racasService(HTTPCLIENT),
    pets: petsService(HTTPCLIENT),
+   fichas: fichasService(HTTPCLIENT),
 }
