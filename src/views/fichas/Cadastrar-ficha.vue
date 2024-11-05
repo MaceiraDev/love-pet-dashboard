@@ -4,106 +4,115 @@
       <hr class="bg-azul2 h-0.5 mt-2 mb-4" />
       <Loader v-if="state.loader" />
       <ModalErro v-if="state.modal" :mensagem="state.MensagemErro" />
-      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 gap-4">
-         <div>
-            <label>Veterinário Responsável</label>
-            <select v-model="state.veterinario_id">
-               <option v-for="vet in state.veterinarios" :key="vet.id" :value="vet.id">{{ vet.nome }}</option>
-            </select>
+      <form @submit.prevent="salvarFicha">
+         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 gap-4">
+            <div>
+               <label>Veterinário Responsável</label>
+               <select v-model="state.veterinario_id" required>
+                  <option selected disabled value="">Selecione</option>
+                  <option v-for="vet in state.veterinarios" :key="vet.id" :value="vet.id">{{ vet.nome }}</option>
+               </select>
+            </div>
+            <div>
+               <label>Animal</label>
+               <select v-model="state.pet_id" required>
+                  <option selected disabled value="">Selecione</option>
+                  <option v-for="pet in state.pets" :key="pet.id" :value="pet.id">{{ pet.nome }}</option>
+               </select>
+            </div>
+            <div>
+               <label>Tutor</label>
+               <select v-model="state.tutor_id" required>
+                  <option selected disabled value="">Selecione</option>
+                  <option v-for="tutor in state.tutores" :key="tutor.id" :value="tutor.id">{{ tutor.nome }}</option>
+               </select>
+            </div>
+            <div>
+               <label>Data</label>
+               <input type="text" placeholder="Digite uma data:" v-model="state.data" v-mask-date.br required />
+            </div>
+            <div>
+               <label>Horário</label>
+               <input type="text" placeholder="Digite o horário:" v-model="state.horario" v-mask="'##:##'" maxlength="5" required/> 
+            </div>
+            <div>
+               <label>Status</label>
+               <select v-model="state.status" required>
+                  <option selected disabled value="">Selecione</option>
+                  <option value="PENDENTE">Pendente</option>
+                  <option value="ANDAMENTO">Em Andamento</option>
+                  <option value="CONCLUIDO">Concluído</option>
+                  <option value="CANCELADO">Cancelado</option>
+               </select>
+            </div>
+            <div>
+               <label>Serviço</label>
+               <select v-model="state.servico_id" required>
+                  <option selected disabled value="">Selecione</option>
+                  <option v-for="servico in state.servicos" :key="servico.id" :value="servico.id">{{ servico.nome }}</option>
+               </select>
+            </div>
+            <div>
+               <label>Situação do Animal</label>
+               <select v-model="state.situacao_id" required>
+                  <option selected disabled value="">Selecione</option>
+                  <option v-for="situacao in state.situacoes" :key="situacao.id" :value="situacao.id">{{ situacao.nome }}</option>
+               </select>
+            </div>
+            <div>
+               <label>Comportamento do Animal</label>
+               <input type="text" placeholder="Descreva o comportamento:" v-model="state.comportamento_animal" required />
+            </div>
          </div>
-         <div>
-            <label>Animal</label>
-            <select v-model="state.pet_id">
-               <option v-for="pet in state.pets" :key="pet.id" :value="pet.id">{{ pet.nome }}</option>
-            </select>
+         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 gap-4">
+            <div>
+               <label>Motivo da Consulta</label>
+               <textarea placeholder="Digite o motivo da consulta" rows="4" v-model="state.motivo" required></textarea>
+            </div>
+            <div>
+               <label>Sintomas Apresentados</label>
+               <textarea placeholder="Descreva os sintomas apresentados" rows="4" v-model="state.sintomas" required></textarea>
+            </div>
+            <div>
+               <label>Diagnóstico Preliminar</label>
+               <textarea placeholder="Descreva o diagnóstico preliminar" rows="4" v-model="state.diagnostico_pre" required></textarea>
+            </div>
+            <div>
+               <label>Diagnóstico Final</label>
+               <textarea placeholder="Descreva o diagnóstico final" rows="4" v-model="state.diagnostico_final"></textarea>
+            </div>
+            <div>
+               <label>Exames Realizados</label>
+               <textarea placeholder="Digite os exames realizados" rows="4" v-model="state.exames_realizados"></textarea>
+            </div>
+            <div>
+               <label>Resultado dos Exames</label>
+               <textarea placeholder="Descreva o resultado dos exames" rows="4" v-model="state.resultado_exames"></textarea>
+            </div>
+            <div>
+               <label>Prescrição de Medicamentos</label>
+               <textarea placeholder="Digite a prescrição de medicamentos" rows="4" v-model="state.prescricao"></textarea>
+            </div>
+            <div>
+               <label>Próximos Passos</label>
+               <textarea placeholder="Descreva os próximos passos" rows="4" v-model="state.proximos_passos"></textarea>
+            </div>
+            <div>
+               <label>Instruções para o Tutor</label>
+               <textarea placeholder="Digite as instruções para o tutor" rows="4" v-model="state.instrucoes"></textarea>
+            </div>
+            <div>
+               <label>Notas Adicionais</label>
+               <textarea placeholder="Digite notas adicionais" rows="4" v-model="state.notas_adicionais"></textarea>
+            </div>
          </div>
-         <div>
-            <label>Tutor</label>
-            <select v-model="state.tutor_id">
-               <option v-for="tutor in state.tutores" :key="tutor.id" :value="tutor.id">{{ tutor.nome }}</option>
-            </select>
+         <div class="flex justify-end gap-4 mt-4">
+            <BotaoCancel :link="'/fichas'" :titulo="'Cancelar'" />
+            <BotaoSave :titulo="'Salvar'" />
          </div>
-         <div>
-            <label>Data</label>
-            <input type="text" placeholder="Digite uma data:" v-model="state.data" v-mask-date.br required />
-         </div>
-         <div>
-            <label>Horário</label>
-            <input type="text" placeholder="Digite o horário:" v-model="state.horario" v-mask="'##:##'" maxlength="5"/> 
-         </div>
-         <div>
-            <label>Status</label>
-            <select v-model="state.status">
-               <option value="PENDENTE">Pendente</option>
-               <option value="ANDAMENTO">Em Andamento</option>
-               <option value="CONCLUIDO">Concluído</option>
-               <option value="CANCELADO">Cancelado</option>
-            </select>
-         </div>
-         <div>
-            <label>Serviço</label>
-            <select v-model="state.servico_id">
-               <option v-for="servico in state.servicos" :key="servico.id" :value="servico.id">{{ servico.nome }}</option>
-            </select>
-         </div>
-         <div>
-            <label>Situação do Animal</label>
-            <select v-model="state.situacao_id">
-               <option v-for="situacao in state.situacoes" :key="situacao.id" :value="situacao.id">{{ situacao.nome }}</option>
-            </select>
-         </div>
-         <div>
-            <label>Comportamento do Animal</label>
-            <input type="text" placeholder="Descreva o comportamento:" v-model="state.comportamento_animal" />
-         </div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 gap-4">
-         <div>
-            <label>Motivo da Consulta</label>
-            <textarea placeholder="Digite o motivo da consulta" rows="4" v-model="state.motivo"></textarea>
-         </div>
-         <div>
-            <label>Sintomas Apresentados</label>
-            <textarea placeholder="Descreva os sintomas apresentados" rows="4" v-model="state.sintomas"></textarea>
-         </div>
-         <div>
-            <label>Diagnóstico Preliminar</label>
-            <textarea placeholder="Descreva o diagnóstico preliminar" rows="4" v-model="state.diagnostico_pre"></textarea>
-         </div>
-         <div>
-            <label>Diagnóstico Final</label>
-            <textarea placeholder="Descreva o diagnóstico final" rows="4" v-model="state.diagnostico_final"></textarea>
-         </div>
-         <div>
-            <label>Exames Realizados</label>
-            <textarea placeholder="Digite os exames realizados" rows="4" v-model="state.exames_realizados"></textarea>
-         </div>
-         <div>
-            <label>Resultado dos Exames</label>
-            <textarea placeholder="Descreva o resultado dos exames" rows="4" v-model="state.resultado_exames"></textarea>
-         </div>
-         <div>
-            <label>Prescrição de Medicamentos</label>
-            <textarea placeholder="Digite a prescrição de medicamentos" rows="4" v-model="state.prescricao"></textarea>
-         </div>
-         <div>
-            <label>Próximos Passos</label>
-            <textarea placeholder="Descreva os próximos passos" rows="4" v-model="state.proximos_passos"></textarea>
-         </div>
-         <div>
-            <label>Instruções para o Tutor</label>
-            <textarea placeholder="Digite as instruções para o tutor" rows="4" v-model="state.instrucoes"></textarea>
-         </div>
-         <div>
-            <label>Notas Adicionais</label>
-            <textarea placeholder="Digite notas adicionais" rows="4" v-model="state.notas_adicionais"></textarea>
-         </div>
-      </div>
-      <div class="flex justify-end gap-4 mt-4">
-         <BotaoCancel :link="'/fichas'" :titulo="'Cancelar'" />
-         <BotaoSave :titulo="'Salvar'" @click="salvarFicha" />
-      </div>
+      </form>
    </div>
+      
 </template>
 
 <script setup>

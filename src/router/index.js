@@ -29,6 +29,11 @@ const routes = [
             component: () => import('../views/fichas/Cadastrar-ficha.vue')
          },
          {
+            path: 'fichas/alterar-ficha/:id',
+            name: 'alterar-ficha',
+            component: () => import('../views/fichas/Alterar-ficha.vue')
+         },
+         {
             path: 'pets',
             name: 'pets',
             component: () => import('../views/pets/Pets.vue')
