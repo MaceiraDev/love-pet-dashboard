@@ -17,7 +17,8 @@
                <label>Tutor</label>
                <select v-model="state.tutor_id" required @change="buscarPets(state.tutor_id)">
                   <option selected disabled value="">Selecione</option>
-                  <option v-for="tutor in state.tutores" :key="tutor.id" :value="tutor.id">{{ tutor.nome }} {{tutor.sobrenome }}</option>
+                  <option v-for="tutor in state.tutores" :key="tutor.id" :value="tutor.id">{{ tutor.nome }}
+                     {{ tutor.sobrenome }}</option>
                </select>
             </div>
             <div>
@@ -33,7 +34,8 @@
             </div>
             <div>
                <label>Horário</label>
-               <input type="text" placeholder="Digite o horário:" v-model="state.horario" v-mask="'##:##'" maxlength="5" required />
+               <input type="text" placeholder="Digite o horário:" v-model="state.horario" v-mask="'##:##'" maxlength="5"
+                  required />
             </div>
             <div>
                <label>Status</label>
@@ -63,55 +65,57 @@
             </div>
             <div>
                <label>Comportamento do Animal</label>
-               <input type="text" placeholder="Descreva o comportamento:" v-model="state.comportamento_animal" required />
+               <input type="text" placeholder="Descreva o comportamento:" v-model="state.comportamento_animal"
+                  required />
             </div>
          </div>
          <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 gap-4">
             <div>
                <label>Motivo da Consulta</label>
-               <textarea placeholder="Digite o motivo da consulta" rows="4" v-model="state.motivo" required></textarea>
+               <textarea placeholder="Digite o motivo da consulta:" rows="4" v-model="state.motivo" required></textarea>
             </div>
             <div>
                <label>Sintomas Apresentados</label>
-               <textarea placeholder="Descreva os sintomas apresentados" rows="4" v-model="state.sintomas"
+               <textarea placeholder="Descreva os sintomas apresentados:" rows="4" v-model="state.sintomas"
                   required></textarea>
             </div>
             <div>
                <label>Diagnóstico Preliminar</label>
-               <textarea placeholder="Descreva o diagnóstico preliminar" rows="4" v-model="state.diagnostico_pre"
+               <textarea placeholder="Descreva o diagnóstico preliminar:" rows="4" v-model="state.diagnostico_pre"
                   required></textarea>
             </div>
             <div>
                <label>Diagnóstico Final</label>
-               <textarea placeholder="Descreva o diagnóstico final" rows="4"
+               <textarea placeholder="Descreva o diagnóstico final:" rows="4"
                   v-model="state.diagnostico_final"></textarea>
             </div>
             <div>
                <label>Exames Realizados</label>
-               <textarea placeholder="Digite os exames realizados" rows="4"
+               <textarea placeholder="Digite os exames realizados:" rows="4"
                   v-model="state.exames_realizados"></textarea>
             </div>
             <div>
                <label>Resultado dos Exames</label>
-               <textarea placeholder="Descreva o resultado dos exames" rows="4"
+               <textarea placeholder="Descreva o resultado dos exames:" rows="4"
                   v-model="state.resultado_exames"></textarea>
             </div>
             <div>
                <label>Prescrição de Medicamentos</label>
-               <textarea placeholder="Digite a prescrição de medicamentos" rows="4"
+               <textarea placeholder="Digite a prescrição de medicamentos:" rows="4"
                   v-model="state.prescricao"></textarea>
             </div>
             <div>
                <label>Próximos Passos</label>
-               <textarea placeholder="Descreva os próximos passos" rows="4" v-model="state.proximos_passos"></textarea>
+               <textarea placeholder="Descreva os próximos passos:" rows="4" v-model="state.proximos_passos"></textarea>
             </div>
             <div>
                <label>Instruções para o Tutor</label>
-               <textarea placeholder="Digite as instruções para o tutor" rows="4" v-model="state.instrucoes"></textarea>
+               <textarea placeholder="Digite as instruções para o tutor:" rows="4"
+                  v-model="state.instrucoes"></textarea>
             </div>
             <div>
                <label>Notas Adicionais</label>
-               <textarea placeholder="Digite notas adicionais" rows="4" v-model="state.notas_adicionais"></textarea>
+               <textarea placeholder="Digite notas adicionais:" rows="4" v-model="state.notas_adicionais"></textarea>
             </div>
          </div>
          <div class="flex justify-end gap-4 mt-4">
@@ -189,7 +193,7 @@ async function buscarTutores() {
 }
 
 async function buscarServicos() {
-   const { response } = await services.servicos.getAll(token);
+   const { response } = await services.servicos.getServicoByTipo('CLINICO', token);
    state.servicos = response.data;
 }
 

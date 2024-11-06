@@ -30,4 +30,9 @@ export default HTTPCLIENT => ({
       const response = await HTTPCLIENT.delete('/servicos/' + id, { headers })
       return { response: response }
    },
+   getServicoByTipo: async (tipo_servico, token) => {
+      const headers = { "Authorization": "Bearer " + token };
+      const response = await HTTPCLIENT.get('/servicos/por-tipo/' + tipo_servico, { headers });
+      return { response: response.data };
+   },
 })
