@@ -14,17 +14,17 @@
                </select>
             </div>
             <div>
+               <label>Tutor</label>
+               <select v-model="state.tutor_id" required @change="buscarPets(state.tutor_id)">
+                  <option selected disabled value="">Selecione</option>
+                  <option v-for="tutor in state.tutores" :key="tutor.id" :value="tutor.id">{{ tutor.nome }} {{tutor.sobrenome }}</option>
+               </select>
+            </div>
+            <div>
                <label>Animal</label>
                <select v-model="state.pet_id" required>
                   <option selected disabled value="">Selecione</option>
                   <option v-for="pet in state.pets" :key="pet.id" :value="pet.id">{{ pet.nome }}</option>
-               </select>
-            </div>
-            <div>
-               <label>Tutor</label>
-               <select v-model="state.tutor_id" required>
-                  <option selected disabled value="">Selecione</option>
-                  <option v-for="tutor in state.tutores" :key="tutor.id" :value="tutor.id">{{ tutor.nome }}</option>
                </select>
             </div>
             <div>
@@ -33,7 +33,7 @@
             </div>
             <div>
                <label>Horário</label>
-               <input type="text" placeholder="Digite o horário:" v-model="state.horario" v-mask="'##:##'" maxlength="5" required/> 
+               <input type="text" placeholder="Digite o horário:" v-model="state.horario" v-mask="'##:##'" maxlength="5" required />
             </div>
             <div>
                <label>Status</label>
@@ -49,14 +49,16 @@
                <label>Serviço</label>
                <select v-model="state.servico_id" required>
                   <option selected disabled value="">Selecione</option>
-                  <option v-for="servico in state.servicos" :key="servico.id" :value="servico.id">{{ servico.nome }}</option>
+                  <option v-for="servico in state.servicos" :key="servico.id" :value="servico.id">{{ servico.nome }}
+                  </option>
                </select>
             </div>
             <div>
                <label>Situação do Animal</label>
                <select v-model="state.situacao_id" required>
                   <option selected disabled value="">Selecione</option>
-                  <option v-for="situacao in state.situacoes" :key="situacao.id" :value="situacao.id">{{ situacao.nome }}</option>
+                  <option v-for="situacao in state.situacoes" :key="situacao.id" :value="situacao.id">{{ situacao.nome
+                     }}</option>
                </select>
             </div>
             <div>
@@ -71,27 +73,33 @@
             </div>
             <div>
                <label>Sintomas Apresentados</label>
-               <textarea placeholder="Descreva os sintomas apresentados" rows="4" v-model="state.sintomas" required></textarea>
+               <textarea placeholder="Descreva os sintomas apresentados" rows="4" v-model="state.sintomas"
+                  required></textarea>
             </div>
             <div>
                <label>Diagnóstico Preliminar</label>
-               <textarea placeholder="Descreva o diagnóstico preliminar" rows="4" v-model="state.diagnostico_pre" required></textarea>
+               <textarea placeholder="Descreva o diagnóstico preliminar" rows="4" v-model="state.diagnostico_pre"
+                  required></textarea>
             </div>
             <div>
                <label>Diagnóstico Final</label>
-               <textarea placeholder="Descreva o diagnóstico final" rows="4" v-model="state.diagnostico_final"></textarea>
+               <textarea placeholder="Descreva o diagnóstico final" rows="4"
+                  v-model="state.diagnostico_final"></textarea>
             </div>
             <div>
                <label>Exames Realizados</label>
-               <textarea placeholder="Digite os exames realizados" rows="4" v-model="state.exames_realizados"></textarea>
+               <textarea placeholder="Digite os exames realizados" rows="4"
+                  v-model="state.exames_realizados"></textarea>
             </div>
             <div>
                <label>Resultado dos Exames</label>
-               <textarea placeholder="Descreva o resultado dos exames" rows="4" v-model="state.resultado_exames"></textarea>
+               <textarea placeholder="Descreva o resultado dos exames" rows="4"
+                  v-model="state.resultado_exames"></textarea>
             </div>
             <div>
                <label>Prescrição de Medicamentos</label>
-               <textarea placeholder="Digite a prescrição de medicamentos" rows="4" v-model="state.prescricao"></textarea>
+               <textarea placeholder="Digite a prescrição de medicamentos" rows="4"
+                  v-model="state.prescricao"></textarea>
             </div>
             <div>
                <label>Próximos Passos</label>
@@ -112,7 +120,7 @@
          </div>
       </form>
    </div>
-      
+
 </template>
 
 <script setup>
@@ -160,7 +168,6 @@ const state = reactive({
 
 onMounted(() => {
    buscarVeterinarios();
-   buscarPets();
    buscarTutores();
    buscarServicos();
    buscarSituacoes();
@@ -171,8 +178,8 @@ async function buscarVeterinarios() {
    state.veterinarios = response.data;
 }
 
-async function buscarPets() {
-   const { response } = await services.pets.getAll(token);
+async function buscarPets(tutor_id) {
+   const { response } = await services.pets.getByTutorId(tutor_id, token);
    state.pets = response.data;
 }
 
@@ -236,5 +243,4 @@ async function salvarFicha() {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

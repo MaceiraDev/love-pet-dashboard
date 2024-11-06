@@ -39,4 +39,9 @@ export default HTTPCLIENT => ({
       const response = await HTTPCLIENT.get('/pets/por-nome/' + nome, { headers });
       return { response: response.data };
    },
+   getByTutorId: async (tutor_id, token) => {
+      const headers = { "Authorization": "Bearer " + token };
+      const response = await HTTPCLIENT.get('/pets/por-tutor/' + tutor_id, { headers });
+      return { response: response.data };
+   },
 })
