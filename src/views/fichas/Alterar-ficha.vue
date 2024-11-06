@@ -14,17 +14,18 @@
                </select>
             </div>
             <div>
+               <label>Tutor</label>
+               <select v-model="state.tutor_id" required @change="buscarPets(state.tutor_id)">
+                  <option selected disabled value="">Selecione</option>
+                  <option v-for="tutor in state.tutores" :key="tutor.id" :value="tutor.id">{{ tutor.nome }}
+                     {{ tutor.sobrenome }}</option>
+               </select>
+            </div>
+            <div>
                <label>Animal</label>
                <select v-model="state.pet_id" required>
                   <option selected disabled value="">Selecione</option>
                   <option v-for="pet in state.pets" :key="pet.id" :value="pet.id">{{ pet.nome }}</option>
-               </select>
-            </div>
-            <div>
-               <label>Tutor</label>
-               <select v-model="state.tutor_id" required>
-                  <option selected disabled value="">Selecione</option>
-                  <option v-for="tutor in state.tutores" :key="tutor.id" :value="tutor.id">{{ tutor.nome }}</option>
                </select>
             </div>
             <div>
@@ -169,7 +170,6 @@ const state = reactive({
 onMounted(() => {
    buscarFicha();
    buscarVeterinarios();
-   buscarPets();
    buscarTutores();
    buscarServicos();
    buscarSituacoes();
@@ -199,8 +199,8 @@ async function buscarVeterinarios() {
    state.veterinarios = response.data;
 }
 
-async function buscarPets() {
-   const { response } = await services.pets.getAll(token);
+async function buscarPets(tutor_id) {
+   const { response } = await services.pets.getByTutorId(tutor_id, token);
    state.pets = response.data;
 }
 
@@ -210,10 +210,9 @@ async function buscarTutores() {
 }
 
 async function buscarServicos() {
-   const { response } = await services.servicos.getAll(token);
+   const { response } = await services.servicos.getServicoByTipo('CLINICO', token);
    state.servicos = response.data;
 }
-
 async function buscarSituacoes() {
    const { response } = await services.situacao_pet.getAll(token);
    state.situacoes = response.data;
