@@ -24,4 +24,18 @@ export default HTTPCLIENT => ({
       const response = await HTTPCLIENT.delete('/fichas/' + id, { headers })
       return { response: response }
    },
+   getFichasCustom: async (token, params = {}) => {
+      const headers = { "Authorization": "Bearer " + token };
+    
+      // Construir a query string usando URLSearchParams
+      const queryString = new URLSearchParams(params).toString();
+    
+      // Concatenar a query string na URL
+      const url = `/fichas/filtrar${queryString ? `?${queryString}` : ''}`;
+    
+      // Realizar a requisição
+      const response = await HTTPCLIENT.get(url, { headers });
+      return { response: response.data };
+    },
+    
 })

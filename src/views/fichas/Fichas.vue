@@ -3,16 +3,53 @@
       <h2 class=" text-2xl   font-bold  text-preto2">Fichas</h2>
       <BotaoCreate :link="'/fichas/cadastrar-ficha'" :titulo="'Cadastrar Ficha'" />
    </div>
-   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm" :param_url_1="'fichas'"
-      :param_url_2="'ficha'" />
+   <div class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2  gap-2">
+      <div class="flex justify-start items-center">
+         <select v-model="state.veterinario_id">
+            <option selected disabled value="">Selecione um veterinário</option>
+            <option v-for="vet in state.veterinarios" :value="vet.id">{{ vet.nome }}</option>
+         </select>
+      </div>
+      <div class="flex justify-start items-center">
+         <select v-model="state.tutor_id" @change="buscarPetsTutor(state.tutor_id)">
+            <option selected disabled value="">Selecione um Tutor</option>
+            <option v-for="tutor in state.tutores" :key="tutor.id" :value="tutor.id">{{ tutor.nome }}
+               {{ tutor.sobrenome }}</option>
+         </select>
+      </div>
+      <div class="flex justify-start items-center">
+         <select v-model="state.pet_id">
+            <option selected disabled value="">Selecione um pet</option>
+            <option v-for="pet in state.pets_tutor" :value="pet.id">{{ pet.nome }}</option>
+         </select>
+      </div>
+      <div class="flex justify-start items-center">
+         <select v-model="state.status">
+            <option selected disabled value="">Selecione um status</option>
+            <option value="PENDENTE">Pendente</option>
+            <option value="ANDAMENTO">Em Andamento</option>
+            <option value="CONCLUIDO">Concluído</option>
+            <option value="CANCELADO">Cancelado</option>
+         </select>
+      </div>
+      <div class="flex justify-start items-center">
+         <input type="date" placeholder="Digite uma data:" v-model="state.date" />
+         <BotaoSearchFilter @click="filtrarFichas" class="sm:ml-1" />
+         <BotaoCleanFilter @click="buscarFichas()" class=" sm:ml-1" />
+      </div>
+   </div>
+   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm"
+      :param_url_1="'fichas'" :param_url_2="'ficha'" />
    <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event"
       @confirmar="deletarFicha" />
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
    <Loader :loading="loading" />
- </template>
- 
- <script setup>
+</template>
+
+<script setup>
+import BotaoCleanFilter from '@/components/BotaoCleanFilter.vue';
 import BotaoCreate from '@/components/BotaoCreate.vue';
+import BotaoSearchFilter from '@/components/BotaoSearchFilter.vue';
 import Loader from '@/components/Loader.vue';
 import ModalConfirm from '@/components/ModalConfirm.vue';
 import ModalErro from '@/components/ModalErro.vue';
@@ -29,6 +66,7 @@ const loading = ref(false);
 onMounted(() => {
    buscarFichas();
    buscarPets();
+   buscarTutores();
    buscarEspecies();
    buscarVeterinarios();
    buscarSituacoes();
@@ -37,36 +75,27 @@ onMounted(() => {
 const state = reactive({
    fichas: [],
    pets: [],
+   pets_tutor: [],
    especies: [],
    veterinarios: [],
    situacoes: [],
    visible: false,
    texto: '',
    ficha_id_delete: null,
+   veterinario_id: '',
+   pet_id: '',
+   tutor_id: '',
+   status: '',
+   date: '',
 });
 
-async function buscarPets() {
-   const { response } = await services.pets.getAll(token);
-   state.pets = response.data;
-}
-
-async function buscarEspecies() {
-   const { response } = await services.especies.getAll(token);
-   state.especies = response.data;
-}
-
-async function buscarVeterinarios() {
-   const { response } = await services.usuarios.getAll(token);
-   state.veterinarios = response.data; 
-}
-
-async function buscarSituacoes() {
-   const { response } = await services.situacao_pet.getAll(token);
-   state.situacoes = response.data;
-}
-
 async function buscarFichas() {
-   loading.value = true;
+   state.tutor_id = '',
+      state.pet_id = '',
+      state.veterinario_id = '',
+      state.date = '',
+      state.status = '',
+      loading.value = true;
    try {
       const { response } = await services.fichas.getAll(token);
       state.fichas = response.data;
@@ -75,6 +104,36 @@ async function buscarFichas() {
    } finally {
       loading.value = false;
    }
+}
+
+async function buscarPets() {
+   const { response } = await services.pets.getAll(token);
+   state.pets = response.data;
+}
+
+async function buscarPetsTutor(tutor_id) {
+   const { response } = await services.pets.getByTutorId(tutor_id, token);
+   state.pets_tutor = response.data;
+}
+
+async function buscarEspecies() {
+   const { response } = await services.especies.getAll(token);
+   state.especies = response.data;
+}
+
+async function buscarVeterinarios() {
+   const { response } = await services.usuarios.getVeterinarios(token);
+   state.veterinarios = response.data;
+}
+
+async function buscarSituacoes() {
+   const { response } = await services.situacao_pet.getAll(token);
+   state.situacoes = response.data;
+}
+
+async function buscarTutores() {
+   const { response } = await services.tutores.getAll(token);
+   state.tutores = response.data;
 }
 
 function openConfirm(ficha) {
@@ -106,7 +165,32 @@ async function deletarFicha() {
    }
 }
 
-const tableHeaders = ['pet', 'espécie', 'veterinário', 'data', 'situação'];
+async function filtrarFichas() {
+   loading.value = true;
+   try {
+
+      // Construir os parâmetros dinamicamente com base nos valores selecionados
+      const params = {};
+
+      //verfica se o valor existe se sim add ele como param
+      if (state.pet_id) params.pet_id = state.pet_id;
+      if (state.veterinario_id) params.veterinario_id = state.veterinario_id;
+      if (state.status) params.status = state.status;
+      if (state.tutor_id) params.tutor_id = state.tutor_id;
+      if (state.date) params.data = state.date;
+
+      // Chamar a função de busca passando os parâmetros
+      const { response } = await services.fichas.getFichasCustom(token, params);
+      state.fichas = response.data;
+   } catch (error) {
+      console.log(error);
+      loading.value = false;
+   } finally {
+      loading.value = false;
+   }
+}
+
+const tableHeaders = ['veterinário', 'pet', 'espécie', 'data', 'situação (consulta)', 'status'];
 const tableBody = computed(() => {
    return state.fichas.map(ficha => {
       // Busca o pet pelo id
@@ -127,14 +211,13 @@ const tableBody = computed(() => {
 
       return {
          id: ficha.id,
+         veterinário: nomeVeterinario,
          pet: nomePet,
          espécie: nomeEspecie,
-         veterinário: nomeVeterinario,
          data: ficha.data,
-         situação: nomeSituacao,
+         'situação (consulta)': nomeSituacao,
          status: ficha.status
       };
    });
 });
- </script>
- 
+</script>

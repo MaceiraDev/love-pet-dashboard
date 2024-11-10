@@ -39,7 +39,8 @@
             </div>
             <div>
                <label>Data de Nascimento</label>
-               <input type="text" placeholder="Digite uma data:" v-mask-date.br required v-model="state.data_nascimento">
+               <input type="text" placeholder="Digite uma data:" v-mask-date.br required
+                  v-model="state.data_nascimento">
             </div>
             <div>
                <label>Situação</label>
@@ -92,6 +93,11 @@
                   <option value="NAO">Não</option>
                </select>
             </div>
+            <div v-if="state.data_ultima_consulta != null">
+               <label>Data Última Consulta</label>
+               <input type="text" placeholder="" v-mask-date.br v-model="state.data_ultima_consulta" readonly>
+            </div>
+
             <div v-if="!state.imagem.imagem">
                <label class="form-label">Imagem de Perfil</label>
                <div class="flex items-center space-x-4">
@@ -103,15 +109,19 @@
                </div>
             </div>
             <div v-if="state.imagem.imagem" class="div_img">
-               <img :src="state.imagem.imagem" alt="Imagem do Usuário" class="w-28 h-28 object-cover border-2 border-azul4 rounded-full" />
-               <button @click="removerImagem" class="bg-vermelho w-6 h-6 rounded-full text-branco hover:bg-vermelho2 duration-300" title="Remover Imagem">
+               <img :src="state.imagem.imagem" alt="Imagem do Usuário"
+                  class="w-28 h-28 object-cover border-2 border-azul4 rounded-full" />
+               <button @click="removerImagem"
+                  class="bg-vermelho w-6 h-6 rounded-full text-branco hover:bg-vermelho2 duration-300"
+                  title="Remover Imagem">
                   <i class="bi bi-x"></i>
                </button>
             </div>
          </div>
          <div>
             <label>Notas Adicionais</label>
-            <textarea placeholder="Digite aqui informações adicionais e detalhes sobre o pet:" rows="4" v-model="state.notas_adicionais"></textarea>
+            <textarea placeholder="Digite aqui informações adicionais e detalhes sobre o pet:" rows="4"
+               v-model="state.notas_adicionais"></textarea>
          </div>
          <div class="flex justify-end gap-4 mt-4">
             <BotaoCancel :link="'/pets'" :titulo="'Cancelar'" />
@@ -176,6 +186,7 @@ const state = reactive({
    loader: false,
    modal: false,
    MensagemErro: '',
+   data_ultima_consulta: '',
 });
 
 async function buscarPet(id) {
@@ -240,7 +251,7 @@ async function atualizarPet() {
    }
 
 
-   let formData = new FormData(); 
+   let formData = new FormData();
    formData.append("id", state.id);
    formData.append("nome", state.nome);
    formData.append("tutor_id", state.tutor_id);
@@ -248,7 +259,7 @@ async function atualizarPet() {
    formData.append("raca_id", state.raca_id);
    formData.append("sexo", state.sexo);
    formData.append("data_nascimento", state.data_nascimento);
-   formData.append("situacao_id", state.situacao_id);
+   formData.append("situacao_pet_id", state.situacao_id);
    formData.append("peso", state.peso);
    formData.append("comprimento", state.comprimento);
    formData.append("largura", state.largura);

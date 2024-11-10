@@ -1,6 +1,7 @@
 .layout-default input[type="text"],
 .layout-default input[type="email"],
-.layout-default input[type="password"] {
+.layout-default input[type="password"],
+.layout-default input[type="date"] {
    width: 100%;
    padding: 10px 15px;
    margin: 8px 0;
@@ -15,7 +16,8 @@
 /* Cor de fundo do input */
 .layout-default input[type="text"]:focus,
 .layout-default input[type="email"]:focus,
-.layout-default input[type="password"]:focus {
+.layout-default input[type="password"]:focus,
+.layout-default input[type="date"]:focus {
    border-color: #4A90E2;
    box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
    outline: none;
@@ -24,7 +26,8 @@
 /* Placeholder estilizado */
 .layout-default input[type="text"]::placeholder,
 .layout-default input[type="email"]::placeholder,
-.layout-default input[type="password"]::placeholder {
+.layout-default input[type="password"]::placeholder,
+.layout-default input[type="date"]::placeholder {
    color: #888;
    font-style: italic;
 }

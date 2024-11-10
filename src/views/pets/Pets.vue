@@ -20,7 +20,6 @@
             <option v-for="raca in state.racas_filtro" :value="raca.id">{{ raca.nome }}</option>
          </select>
          <BotaoCleanFilter @click="buscarPets()" class=" sm:ml-1" />
-
       </div>
       <div class="flex justify-end items-center">
          <BotaoCreate :link="'/pets/cadastrar-pet'" :titulo="'Cadastrar Pet'" />

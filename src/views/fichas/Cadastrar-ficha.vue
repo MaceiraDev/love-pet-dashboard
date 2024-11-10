@@ -146,7 +146,7 @@ const state = reactive({
    tutor_id: '',
    data: '',
    horario: '',
-   status: '',
+   status: 'PENDENTE',
    servico_id: '',
    situacao_id: '',
    comportamento_animal: '',
