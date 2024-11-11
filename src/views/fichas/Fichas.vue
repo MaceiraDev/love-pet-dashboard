@@ -90,7 +90,7 @@ const state = reactive({
 });
 
 async function buscarFichas() {
-   state.tutor_id = '',
+      state.tutor_id = '',
       state.pet_id = '',
       state.veterinario_id = '',
       state.date = '',
