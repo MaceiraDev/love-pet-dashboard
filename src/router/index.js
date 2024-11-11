@@ -64,14 +64,19 @@ const routes = [
             component: () => import('../views/tutores/Alterar-tutor.vue')
          },
          {
-            path: 'banho',
-            name: 'banho',
+            path: 'banhos',
+            name: 'banhos',
             component: () => import('../views/banho/Banho.vue')
          },
          {
-            path: 'banho/cadastrar-banho',
+            path: 'banhos/cadastrar-banho',
             name: 'cadastrar-banho',
             component: () => import('../views/banho/Cadastrar-banho.vue')
+         },
+         {
+            path: 'banhos/alterar-banho/:id',
+            name: 'alterar-banho',
+            component: () => import('../views/banho/Alterar-banho.vue')
          },
          {
             path: 'servicos',

@@ -42,7 +42,6 @@ const state = reactive({
 
 async function salvarEspecie() {
    state.loader = true;
-
    if (user_tipo >= 4) {
       state.MensagemErro = "Você não tem permissão para cadastrar espécies.";
       state.loader = false;

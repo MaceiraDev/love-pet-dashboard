@@ -208,7 +208,7 @@ const tableBody = computed(() => {
       // Busca a situação pelo id
       const situacao = state.situacoes.find(s => s.id === ficha.situacao_id);
       const nomeSituacao = situacao ? situacao.nome : 'Desconhecido';
-
+      
       return {
          id: ficha.id,
          veterinário: nomeVeterinario,
