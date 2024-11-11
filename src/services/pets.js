@@ -29,19 +29,32 @@ export default HTTPCLIENT => ({
       const response = await HTTPCLIENT.get('/pets/por-especie/' + especie_id, { headers });
       return { response: response.data };
    },
-   getByRaca: async (raca_id, token) => {
+   // getByRaca: async (raca_id, token) => {
+   //    const headers = { "Authorization": "Bearer " + token };
+   //    const response = await HTTPCLIENT.get('/pets/por-raca/' + raca_id, { headers });
+   //    return { response: response.data };
+   // },
+   // getByNome: async (nome, token) => {
+   //    const headers = { "Authorization": "Bearer " + token };
+   //    const response = await HTTPCLIENT.get('/pets/por-nome/' + nome, { headers });
+   //    return { response: response.data };
+   // },
+   // getByTutorId: async (tutor_id, token) => {
+   //    const headers = { "Authorization": "Bearer " + token };
+   //    const response = await HTTPCLIENT.get('/pets/por-tutor/' + tutor_id, { headers });
+   //    return { response: response.data };
+   // },
+   getPetsCustom: async (params, token = {}) => {
       const headers = { "Authorization": "Bearer " + token };
-      const response = await HTTPCLIENT.get('/pets/por-raca/' + raca_id, { headers });
+    
+      // Construir a query string usando URLSearchParams
+      const queryString = new URLSearchParams(params).toString();
+    
+      // Concatenar a query string na URL
+      const url = `/pets/filtrar${queryString ? `?${queryString}` : ''}`;
+    
+      // Realizar a requisição
+      const response = await HTTPCLIENT.get(url, { headers });
       return { response: response.data };
-   },
-   getByNome: async (nome, token) => {
-      const headers = { "Authorization": "Bearer " + token };
-      const response = await HTTPCLIENT.get('/pets/por-nome/' + nome, { headers });
-      return { response: response.data };
-   },
-   getByTutorId: async (tutor_id, token) => {
-      const headers = { "Authorization": "Bearer " + token };
-      const response = await HTTPCLIENT.get('/pets/por-tutor/' + tutor_id, { headers });
-      return { response: response.data };
-   },
+    },
 })

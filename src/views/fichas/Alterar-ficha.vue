@@ -199,8 +199,11 @@ async function buscarVeterinarios() {
    state.veterinarios = response.data;
 }
 
-async function buscarPets(tutor_id) {
-   const { response } = await services.pets.getByTutorId(tutor_id, token);
+async function buscarPets() {
+   const params = {};
+   params.tutor_id = state.tutor_id;
+
+   const { response } = await services.pets.getPetsCustom(params, token);
    state.pets = response.data;
 }
 

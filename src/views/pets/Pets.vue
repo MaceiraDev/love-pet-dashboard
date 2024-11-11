@@ -122,42 +122,59 @@ async function buscarRacasByEspecie(especie_id) {
 }
 
 async function buscarPetByEspecie(especie_id) {
-   loading.value = true;
-   try {
-      const { response } = await services.pets.getByEspecie(especie_id, token);
-      state.pets = response.data;
-   } catch (error) {
-      console.log(error);
-   } finally {
-      await delay(2000);
-      loading.value = false;
-   }
+   const params = {};
+   params.especie_id = especie_id;
+
+   const { response } = await services.pets.getPetsCustom(params, token);
+   state.pets = response.data;
+
+   // loading.value = true;
+   // try {
+   //    const { response } = await services.pets.getByEspecie(especie_id, token);
+   //    state.pets = response.data;
+   // } catch (error) {
+   //    console.log(error);
+   // } finally {
+   //    await delay(2000);
+   //    loading.value = false;
+   // }
 }
 
 async function buscarPetByRaca(raca_id) {
-   loading.value = true;
-   try {
-      const { response } = await services.pets.getByRaca(raca_id, token);
-      state.pets = response.data;
-   } catch (error) {
-      console.log(error);
-   } finally {
-      await delay(1000);
-      loading.value = false;
-   }
+   const params = {};
+   params.raca_id = raca_id;
+
+   const { response } = await services.pets.getPetsCustom(params, token);
+   state.pets = response.data;
+
+   // loading.value = true;
+   // try {
+   //    const { response } = await services.pets.getByRaca(raca_id, token);
+   //    state.pets = response.data;
+   // } catch (error) {
+   //    console.log(error);
+   // } finally {
+   //    await delay(1000);
+   //    loading.value = false;
+   // }
 }
 
 async function buscarPetByNome(nome) {
-   loading.value = true;
-   try {
-      const { response } = await services.pets.getByNome(nome, token);
-      state.pets = response.data;
-   } catch (error) {
-      console.log(error);
-   } finally {
-      await delay(1000);
-      loading.value = false;
-   }
+   // loading.value = true;
+   const params = {};
+   params.nome = nome
+
+   const { response } = await services.pets.getPetsCustom(params, token);
+   state.pets = response.data;
+   // try {
+   //    const { response } = await services.pets.getByNome(nome, token);
+   //    state.pets = response.data;
+   // } catch (error) {
+   //    console.log(error);
+   // } finally {
+   //    await delay(1000);
+   //    loading.value = false;
+   // }
 }
 
 //confirmação e delete de pet

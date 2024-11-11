@@ -110,7 +110,7 @@ async function buscarBanho() {
       state.status = response.status;
       state.servico_id = response.servico_id;
       state.notas_adicionais = response.notas_adicionais;
-      await buscarPets(state.tutor_id);
+      await buscarPets();
    } catch (error) {
       console.error('Erro ao buscar banho:', error);
       state.modal = true;
@@ -121,8 +121,11 @@ async function buscarBanho() {
 
 }
 
-async function buscarPets(tutor_id) {
-   const { response } = await services.pets.getByTutorId(tutor_id, token);
+async function buscarPets() {
+   const params = {};
+   params.tutor_id = state.tutor_id;
+
+   const { response } = await services.pets.getPetsCustom(params, token);
    state.pets = response.data;
 }
 

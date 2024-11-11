@@ -95,6 +95,7 @@ async function buscarFichas() {
       state.veterinario_id = '',
       state.date = '',
       state.status = '',
+      state.pets_tutor = [],
       loading.value = true;
    try {
       const { response } = await services.fichas.getAll(token);
@@ -112,7 +113,10 @@ async function buscarPets() {
 }
 
 async function buscarPetsTutor(tutor_id) {
-   const { response } = await services.pets.getByTutorId(tutor_id, token);
+   const params = {};
+   params.tutor_id = tutor_id;
+
+   const { response } = await services.pets.getPetsCustom(params, token);
    state.pets_tutor = response.data;
 }
 
