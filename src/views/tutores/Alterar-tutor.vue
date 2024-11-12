@@ -87,7 +87,7 @@
          </div>
          <div>
             <label>Notas Adicionais</label>
-            <textarea v-model="state.notas_adicionais" placeholder="Digite notas adicionais" rows="4"></textarea>
+            <textarea v-model="state.notas_adicionais" placeholder="Digite notas adicionais:" rows="4"></textarea>
          </div>
          <div class="flex justify-end gap-4 mt-4">
             <BotaoCancel :link="'/tutores'" :titulo="'Cancelar'" />
