@@ -26,7 +26,7 @@
             </div>
             <div>
                <label>CPF</label>
-               <input type="text" v-model="state.cpf" required placeholder="Digite o CPF" v-mask-cpf />
+               <input type="text" v-model="state.cpf" required placeholder="Digite o CPF:" v-mask-cpf />
             </div>
             <div>
                <label>Telefone</label>
@@ -87,7 +87,7 @@
          </div>
          <div>
             <label>Notas Adicionais</label>
-            <textarea v-model="state.notas_adicionais" placeholder="Digite notas adicionais" rows="4"></textarea>
+            <textarea v-model="state.notas_adicionais" placeholder="Digite notas adicionais:" rows="4"></textarea>
          </div>
          <div class="flex justify-end gap-4 mt-4">
             <BotaoCancel :link="'/tutores'" :titulo="'Cancelar'" />

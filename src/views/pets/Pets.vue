@@ -5,20 +5,20 @@
    <div class="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-4 gap-4">
       <div class="flex justify-between items-center">
          <input type="text" v-model="state.nome_pet" class="border rounded p-2 w-full" placeholder="Buscar pet:" />
-         <BotaoSearchFilter @click="buscarPetByNome(state.nome_pet)" class=" sm:ml-1" />
       </div>
       <div>
          <select required v-model="state.especie_id"
-            @change="buscarRacasByEspecie(state.especie_id), buscarPetByEspecie(state.especie_id)">
+            @change="buscarRacasByEspecie(state.especie_id)">
             <option selected disabled value="">Selecione uma epécie</option>
             <option v-for="especie in state.especies" :value="especie.id">{{ especie.nome }}</option>
          </select>
       </div>
       <div class="flex justify-start items-center">
-         <select required v-model="state.raca_id" @change="buscarPetByRaca(state.raca_id)">
+         <select required v-model="state.raca_id">
             <option selected disabled value="">Selecione uma raça</option>
             <option v-for="raca in state.racas_filtro" :value="raca.id">{{ raca.nome }}</option>
          </select>
+         <BotaoSearchFilter @click="filtrarPets()" class=" sm:ml-1" />
          <BotaoCleanFilter @click="buscarPets()" class=" sm:ml-1" />
       </div>
       <div class="flex justify-end items-center">
@@ -94,6 +94,7 @@ async function buscarPets() {
    state.especie_id = "";
    state.raca_id = "";
    state.nome_pet = "";
+   state.racas_filtro = [];
    try {
       const { response } = await services.pets.getAll(token);
       state.pets = response.data;
@@ -117,64 +118,30 @@ async function delay(ms) {
 
 //filtros
 async function buscarRacasByEspecie(especie_id) {
+   state.racas_filtro = [];
+   state.raca_id = "";
    const { response } = await services.racas.getByEspecie(especie_id, token);
    state.racas_filtro = response;
 }
 
-async function buscarPetByEspecie(especie_id) {
-   const params = {};
-   params.especie_id = especie_id;
+async function filtrarPets() {
+   loading.value = true
 
-   const { response } = await services.pets.getPetsCustom(params, token);
-   state.pets = response.data;
+   try {
+      const params = {};
 
-   // loading.value = true;
-   // try {
-   //    const { response } = await services.pets.getByEspecie(especie_id, token);
-   //    state.pets = response.data;
-   // } catch (error) {
-   //    console.log(error);
-   // } finally {
-   //    await delay(2000);
-   //    loading.value = false;
-   // }
-}
+      if (state.nome) params.nome = state.nome;
+      if (state.especie_id) params.especie_id = state.especie_id;
+      if (state.raca_id) params.raca_id = state.raca_id;
 
-async function buscarPetByRaca(raca_id) {
-   const params = {};
-   params.raca_id = raca_id;
-
-   const { response } = await services.pets.getPetsCustom(params, token);
-   state.pets = response.data;
-
-   // loading.value = true;
-   // try {
-   //    const { response } = await services.pets.getByRaca(raca_id, token);
-   //    state.pets = response.data;
-   // } catch (error) {
-   //    console.log(error);
-   // } finally {
-   //    await delay(1000);
-   //    loading.value = false;
-   // }
-}
-
-async function buscarPetByNome(nome) {
-   // loading.value = true;
-   const params = {};
-   params.nome = nome
-
-   const { response } = await services.pets.getPetsCustom(params, token);
-   state.pets = response.data;
-   // try {
-   //    const { response } = await services.pets.getByNome(nome, token);
-   //    state.pets = response.data;
-   // } catch (error) {
-   //    console.log(error);
-   // } finally {
-   //    await delay(1000);
-   //    loading.value = false;
-   // }
+      const { response } = await services.pets.getPetsCustom(params, token);
+      state.pets = response.data;
+   } catch (error) {
+      console.log(error);
+      loading.value = false;
+   } finally {
+      loading.value = false;
+   }
 }
 
 //confirmação e delete de pet

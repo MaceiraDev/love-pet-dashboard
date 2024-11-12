@@ -113,6 +113,8 @@ async function buscarPets() {
 }
 
 async function buscarPetsTutor(tutor_id) {
+   state.pet_id = "";
+   state.pets_tutor = [];
    const params = {};
    params.tutor_id = tutor_id;
 

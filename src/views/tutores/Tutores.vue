@@ -2,9 +2,12 @@
    <div class="flex justify-between items-center mb-2">
       <h2 class="text-2xl font-bold text-preto2">Tutores</h2>
    </div>
-   <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-4 gap-4">
+   <div class="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-4 gap-4">
       <div class="flex justify-between items-center">
          <input type="text" v-model="state.nome_tutor" class="border rounded p-2 w-full" placeholder="Buscar tutor:" />
+      </div>
+      <div class="flex justify-between items-center">
+         <input type="text" v-model="state.sobrenome_tutor" class="border rounded p-2 w-full" placeholder="Buscar sobrenome:" />
       </div>
       <div class="flex justify-start items-center">
          <select required v-model="state.status" @change="buscarPetByRaca(state.raca_id)">
@@ -53,12 +56,14 @@ const state = reactive({
    texto: '',
    status: '',
    nome_tutor: '',
+   sobrenome_tutor: '',
    tutor_delete_id: null,
 });
 
 async function buscarTutores() {
    state.status = '';
    state.nome_tutor = '';
+   state.sobrenome_tutor = '';
    const { response } = await services.tutores.getAll(token)
    state.tutores = response.data;
 }
@@ -111,6 +116,7 @@ async function filtrarTutores() {
       const params = {};
       //verfica se o valor existe se sim add ele como param
       if (state.nome_tutor) params.nome = state.nome_tutor;
+      if (state.sobrenome_tutor) params.sobrenome = state.sobrenome_tutor;
       if (state.status) params.status = state.status;
       // Chamar a função de busca passando os parâmetros
       const { response } = await services.tutores.getTutoresCustom(token, params);
