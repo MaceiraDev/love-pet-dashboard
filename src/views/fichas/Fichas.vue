@@ -172,7 +172,6 @@ async function deletarFicha() {
 async function filtrarFichas() {
    loading.value = true;
    try {
-
       // Construir os parâmetros dinamicamente com base nos valores selecionados
       const params = {};
 
