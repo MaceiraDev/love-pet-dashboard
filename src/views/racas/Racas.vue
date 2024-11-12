@@ -60,7 +60,10 @@ async function deletarRaca() {
       }
    } catch (e) {
       loading.value = false;
-      console.log(e);
+      state.MensagemErro = e.response.data.error;
+      state.modal = true;
+      console.log(e.response.data.error);
+      return;
    } finally {
       loading.value = false;
    }
