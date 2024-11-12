@@ -1,7 +1,7 @@
 <template>
    <div class="flex justify-between items-center mb-2">
       <h2 class="text-2xl font-bold text-preto2">Espécies</h2>
-      <BotaoCreate :link="'/especies/cadastrar-especie'" :titulo="'Cadastrar Espécie'" v-if="user_tipo != 4"/>
+      <BotaoCreate :link="'/especies/cadastrar-especie'" :titulo="'Cadastrar Espécie'" v-if="user_tipo != 4" />
    </div>
    <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm"
       :param_url_1="'especies'" :param_url_2="'especie'" />
@@ -34,6 +34,7 @@ const state = reactive({
    especies: [],
    visible: false,
    texto: '',
+   modal: false,
    especie_delete_id: null,
 });
 
@@ -50,10 +51,16 @@ async function deletarEspecie() {
          buscarEspecies();
       } else {
          state.MensagemErro = "Erro ao deletar a espécie.";
+         state.modal = true;
+         return;
       }
    } catch (e) {
       loading.value = false;
-      console.log(e);
+      state.MensagemErro = e.response.data.error;
+      state.modal = true;
+      console.log(e.response.data.error);
+      return;
+
    } finally {
       loading.value = false;
    }
@@ -62,7 +69,7 @@ async function deletarEspecie() {
 function openConfirm(especie) {
    if (user_tipo != 0 && user_tipo != 1) {
       state.MensagemErro = "Você não tem permissão para apagar espécies.";
-      state.loader = false;
+      loading.value = false;
       state.modal = true;
       return;
    }
@@ -80,4 +87,5 @@ const tableBody = computed(() => {
       };
    });
 });
+
 </script>

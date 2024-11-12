@@ -1,7 +1,6 @@
 <template>
    <div class="flex justify-between items-center mb-2">
       <h2 class="text-2xl font-bold text-preto2">Banho e Tosa</h2>
-      <BotaoCreate :link="'/banhos/cadastrar-banho'" :titulo="'Cadastrar Banho e Tosa'" v-if="user_tipo != 4" />
    </div>
    <div class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2  gap-2">
       <div class="flex justify-start items-center">
@@ -30,6 +29,9 @@
          <input type="date" placeholder="Digite uma data:" v-model="state.date" />
          <BotaoSearchFilter @click="filtrarFichas" class="sm:ml-1" />
          <BotaoCleanFilter @click="buscarBanhos()" class=" sm:ml-1" />
+      </div>
+      <div class="flex justify-end items-center">
+         <BotaoCreate :link="'/banhos/cadastrar-banho'" :titulo="'Cadastrar Banho e Tosa'" v-if="user_tipo != 4" />
       </div>
    </div>
    <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm"
