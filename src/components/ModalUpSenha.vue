@@ -15,9 +15,10 @@
                <div>
                   <label>Nova senha</label>
                   <input type="password" placeholder="Digite sua nova senha:" required v-model="state.senha">
+                  <span class="text-vermelho2 text-xs">(É necessário pelo menos uma letra maiúscula e um caractere especial)</span>
                </div>
             </div>
-            <div class="flex justify-end space-x-4">
+            <div class="flex justify-end space-x-4 mt-4">
                <button
                   class="bg-vermelho hover:bg-vermelho2 text-branco transition duration-400 font-semibold py-2 px-4 rounded"
                   @click="cancel" title="Cancelar">
