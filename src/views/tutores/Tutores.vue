@@ -99,7 +99,7 @@ function formatarWhatsApp(whatsapp) {
 
 function openConfirm(tutor) {
    if (user_tipo != 0 && user_tipo != 1) {
-      state.MensagemErro = "Você não tem permissão para apagar serviços.";
+      state.MensagemErro = "Você não tem permissão para apagar tutores.";
       state.loader = false;
       state.modal = true;
       return;

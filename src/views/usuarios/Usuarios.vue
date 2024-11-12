@@ -37,6 +37,14 @@ const state = reactive({
    user_id_delete: null,
 });
 
+const tiposUsuarios = {
+   "0": 'Administrador',
+   "1": 'Veterinário',
+   "2": 'Técnico Veterinário',
+   "3": 'Recepcionista',
+   "4": 'Visitante',
+};
+
 async function buscarUsuarios() {
    const { response } = await services.usuarios.getAll(token);
    state.usuarios = response.data;
@@ -83,7 +91,7 @@ function formatarWhatsApp(whatsapp) {
    }
 }
 
-const tableHeaders = ['Nome', 'whatsapp', 'Email', 'Status'];
+const tableHeaders = ['Nome', 'whatsapp', 'Email', 'tipo', 'Status'];
 const tableBody = computed(() => {
    return state.usuarios.map(user => {
       return {
@@ -91,6 +99,7 @@ const tableBody = computed(() => {
          Nome: user.nome,
          whatsapp: formatarWhatsApp(user.whatsapp),
          Email: user.email,
+         tipo: tiposUsuarios[user.tipo_usuario] || 'Tipo Desconhecido',
          Status: user.status
       };
    });

@@ -37,12 +37,8 @@
             </div>
          </div>
       </div>
-      <ModalUpSenha 
-         :visible="state.visible" 
-         :email="state.email" 
-         @update:visible="state.visible = $event" 
-         @save="saveSenha" 
-      />
+      <ModalUpSenha :visible="state.visible" :email="state.email" @update:visible="state.visible = $event"
+         @save="saveSenha" />
    </main>
 </template>
 <script setup>
@@ -80,24 +76,43 @@ async function logarSistema() {
       toast.error(msg_erro, { timeout: 3000 });
       if (data_senha == null && status == 403) {
          state.visible = true;
+         return;
       }
+      state.email = null;
+      state.senha = null;
    } finally {
       loading.value = false;
    }
 }
 
 async function saveSenha({ email, senha }) {
-   console.log("Email:", email, "Senha:", senha);
+
+   // Verifica se a senha tem pelo menos 6 caracteres
    if (senha.length < 6) {
       let msg_erro = 'A senha deve ter 6 ou mais caracteres!';
       toast.error(msg_erro, { timeout: 3000 });
       return;
    }
+
+   // Verifica se a senha contém pelo menos uma letra maiúscula
+   if (!/[A-Z]/.test(senha)) {
+      let msg_erro = 'A senha deve conter pelo menos uma letra maiúscula!';
+      toast.error(msg_erro, { timeout: 3000 });
+      return;
+   }
+
+   // Verifica se a senha contém pelo menos um caractere especial
+   if (!/[!@#$%^&*(),.?":{}|<>;]/.test(senha)) {
+      let msg_erro = 'A senha deve conter pelo menos um caractere especial!';
+      toast.error(msg_erro, { timeout: 3000 });
+      return;
+   }
+
    let dados = {
       email,
       senha
    };
-   console.log('Dados para atualização:', dados); // Log para verificar os dados enviados
+
    try {
       const response = await services.usuarios.upSenha(dados);
       if (response.status === 200 || response.status === 201) {
@@ -111,6 +126,7 @@ async function saveSenha({ email, senha }) {
       loading.value = false;
    }
 }
+
 
 </script>
 

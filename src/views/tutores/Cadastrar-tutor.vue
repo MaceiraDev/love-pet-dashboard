@@ -52,10 +52,6 @@
                <input type="text" v-model="state.profissao" placeholder="Digite a profissão:" />
             </div>
             <div>
-               <label>Quantidade de Animais</label>
-               <input type="text" readonly v-model="state.qtd_animais" />
-            </div>
-            <div>
                <label>Quantidade de Animais (Casa)</label>
                <input type="text" required v-model="state.qtd_animais_casa" />
             </div>
@@ -126,7 +122,6 @@ const state = reactive({
    whatsapp: '',
    email: '',
    status: 'ATIVO',
-   qtd_animais: '',
    qtd_animais_casa: '',
    profissao: '',
    cep: '',
@@ -192,7 +187,6 @@ async function salvarTutor() {
       whatsapp: whatsappFormatado,
       email: state.email,
       qtd_animais_casa: state.qtd_animais_casa,
-      qtd_animais: state.qtd_animais,
       status: state.status,
       profissao: state.profissao,
       cep: cepFormatado,
