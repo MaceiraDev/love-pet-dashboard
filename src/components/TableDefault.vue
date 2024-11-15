@@ -17,15 +17,14 @@
                      <div class="break-words">{{ row[header] }}</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm text-branco flex space-x-2">
-                     <router-link :to="param_url_1 + '/alterar-' + param_url_2 + '/' + row.id"> 
-                           <button 
-                           type="button" 
-                           title="Alterar" v-if="numAcoes.includes(1)"
+                     <router-link :to="param_url_1 + '/alterar-' + param_url_2 + '/' + row.id">
+                        <button type="button" title="Alterar" v-if="numAcoes.includes(1)"
                            class="bg-azul1 text-branco px-4 py-2 rounded-md transition duration-500 hover:bg-azul4 hover:text-preto">
                            <i class="bi bi-pencil"></i>
                         </button>
                      </router-link>
                      <button type="button" title="Visualizar" v-if="numAcoes.includes(3)"
+                        @click="$emit('visualizar_ficha', row)"
                         class="bg-azul1 text-branco px-4 py-2 rounded-md transition duration-500 hover:bg-cinza hover:text-preto">
                         <i class="bi bi-eye"></i>
                      </button>
@@ -40,7 +39,6 @@
       </div>
    </div>
 </template>
-
 <script setup>
 import { defineProps } from 'vue';
 const props = defineProps({

@@ -14,7 +14,6 @@ async function getRandomImage() {
    const randomIndex = Math.floor(Math.random() * perfis.length);
    return perfis[randomIndex];
 }
-
 onMounted(async () => {
    randomImage.value = await getRandomImage();
 });

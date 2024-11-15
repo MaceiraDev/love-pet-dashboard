@@ -127,7 +127,6 @@ async function saveSenha({ email, senha }) {
    }
 }
 
-
 </script>
 
 <style scoped>

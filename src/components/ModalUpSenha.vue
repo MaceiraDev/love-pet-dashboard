@@ -15,7 +15,8 @@
                <div>
                   <label>Nova senha</label>
                   <input type="password" placeholder="Digite sua nova senha:" required v-model="state.senha">
-                  <span class="text-vermelho2 text-xs">(É necessário pelo menos uma letra maiúscula e um caractere especial)</span>
+                  <span class="text-vermelho2 text-xs">(É necessário pelo menos uma letra maiúscula e um caractere
+                     especial)</span>
                </div>
             </div>
             <div class="flex justify-end space-x-4 mt-4">
@@ -34,29 +35,28 @@
       </div>
    </div>
 </template>
-
 <script setup>
 import { defineProps, reactive, watch } from 'vue';
-import services from '@/services'; 
+import services from '@/services';
 import { useToast } from 'vue-toastification';
 
 const toast = useToast();
 
 const props = defineProps({
-  visible: {
-    type: Boolean,
-    required: true
-  },
-  email: {
-    type: String,
-    required: true
-  }
+   visible: {
+      type: Boolean,
+      required: true
+   },
+   email: {
+      type: String,
+      required: true
+   }
 });
 
 const state = reactive({
-  email: '', 
-  senhaAntiga: '',
-  senha: ''
+   email: '',
+   senhaAntiga: '',
+   senha: ''
 });
 
 watch(() => props.email, (newEmail) => {
@@ -79,22 +79,22 @@ const saveSenha = async () => {
 
       if (senhaCorreta) {
          emit('save', { email: state.email, senha: state.senha });
-      } 
+      }
 
    } catch (error) {
       if (error.response && error.response.status === 401) {
          let msg_erro = 'Credenciais inválidas.';
          toast.error(msg_erro, { timeout: 3000 });
-      } 
+      }
       else if (error.response && error.response.status === 422) {
          let msg_erro = 'A senha deve ter no mínimo 6 caracteres.';
          toast.error(msg_erro, { timeout: 3000 });
-      } 
+      }
       else {
          let msg_erro = error.message || 'Ocorreu um erro ao tentar atualizar a senha.';
          toast.error(msg_erro, { timeout: 3000 });
+      }
    }
-}
 };
 </script>
 

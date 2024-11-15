@@ -189,7 +189,7 @@ header {
    right: 0;
    height: 60px;
    background-color: var(--color-default);
-   z-index: 1000;
+   z-index: 45;
    display: flex;
    align-items: center;
    padding-left: 1rem;

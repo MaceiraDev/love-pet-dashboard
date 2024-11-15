@@ -38,11 +38,13 @@
          <BotaoCleanFilter @click="buscarFichas()" class=" sm:ml-1" />
       </div>
    </div>
-   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm"
-      :param_url_1="'fichas'" :param_url_2="'ficha'" />
+   <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2, 3]" @deletar="openConfirm"
+      :param_url_1="'fichas'" :param_url_2="'ficha'" @visualizar_ficha="openFicha" />
    <ModalConfirm :visible="state.visible" :texto="state.texto" @update:visible="state.visible = $event"
       @confirmar="deletarFicha" />
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
+   <ModalFichaVisu :visible="state.ficha_visible" :data="state.data_ficha" :token="token"
+      @update:visible="state.ficha_visible = $event" />
    <Loader :loading="loading" />
 </template>
 
@@ -53,6 +55,7 @@ import BotaoSearchFilter from '@/components/BotaoSearchFilter.vue';
 import Loader from '@/components/Loader.vue';
 import ModalConfirm from '@/components/ModalConfirm.vue';
 import ModalErro from '@/components/ModalErro.vue';
+import ModalFichaVisu from '@/components/ModalFichaVisu.vue';
 import DataTable from '@/components/TableDefault.vue';
 import services from '@/services';
 import { onMounted, reactive, computed, ref } from 'vue';
@@ -79,7 +82,6 @@ const state = reactive({
    especies: [],
    veterinarios: [],
    situacoes: [],
-   visible: false,
    texto: '',
    ficha_id_delete: null,
    veterinario_id: '',
@@ -87,10 +89,13 @@ const state = reactive({
    tutor_id: '',
    status: '',
    date: '',
+   visible: false,
+   ficha_visible: false,
+   data_ficha: {},
 });
 
 async function buscarFichas() {
-      state.tutor_id = '',
+   state.tutor_id = '',
       state.pet_id = '',
       state.veterinario_id = '',
       state.date = '',
@@ -117,7 +122,6 @@ async function buscarPetsTutor(tutor_id) {
    state.pets_tutor = [];
    const params = {};
    params.tutor_id = tutor_id;
-
    const { response } = await services.pets.getPetsCustom(params, token);
    state.pets_tutor = response.data;
 }
@@ -195,6 +199,25 @@ async function filtrarFichas() {
    }
 }
 
+async function buscarFicha(id) {
+   state.loader = true;
+   try {
+      const { response } = await services.fichas.getById(id, token);
+      state.data_ficha = response;
+   } catch (error) {
+      console.error('Erro ao buscar ficha:', error);
+      state.modal = true;
+      state.MensagemErro = "Erro ao carregar os dados da ficha"
+   } finally {
+      state.loader = false;
+   }
+}
+
+async function openFicha(ficha) {
+   state.ficha_visible = true;
+   await buscarFicha(ficha.id);
+}
+
 const tableHeaders = ['veterinário', 'pet', 'espécie', 'data', 'situação (consulta)', 'status'];
 const tableBody = computed(() => {
    return state.fichas.map(ficha => {
@@ -213,7 +236,7 @@ const tableBody = computed(() => {
       // Busca a situação pelo id
       const situacao = state.situacoes.find(s => s.id === ficha.situacao_id);
       const nomeSituacao = situacao ? situacao.nome : 'Desconhecido';
-      
+
       return {
          id: ficha.id,
          veterinário: nomeVeterinario,

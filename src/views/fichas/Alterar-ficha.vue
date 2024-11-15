@@ -17,8 +17,7 @@
                <label>Tutor</label>
                <select v-model="state.tutor_id" required @change="buscarPets(state.tutor_id)">
                   <option selected disabled value="">Selecione</option>
-                  <option v-for="tutor in state.tutores" :key="tutor.id" :value="tutor.id">{{ tutor.nome }}
-                     {{ tutor.sobrenome }}</option>
+                  <option v-for="tutor in state.tutores" :key="tutor.id" :value="tutor.id">{{ tutor.nome }} {{ tutor.sobrenome }}</option>
                </select>
             </div>
             <div>
@@ -34,7 +33,8 @@
             </div>
             <div>
                <label>Horário</label>
-               <input type="text" placeholder="Digite o horário:" v-model="state.horario" v-mask="'##:##'" maxlength="5" required/>
+               <input type="text" placeholder="Digite o horário:" v-model="state.horario" v-mask="'##:##'" maxlength="5"
+                  required />
             </div>
             <div>
                <label>Status</label>
@@ -58,12 +58,14 @@
                <label>Situação do Animal</label>
                <select v-model="state.situacao_id" required>
                   <option selected disabled value="">Selecione</option>
-                  <option v-for="situacao in state.situacoes" :key="situacao.id" :value="situacao.id">{{ situacao.nome }}</option>
+                  <option v-for="situacao in state.situacoes" :key="situacao.id" :value="situacao.id">{{ situacao.nome
+                     }}</option>
                </select>
             </div>
             <div>
                <label>Comportamento do Animal</label>
-               <input type="text" placeholder="Descreva o comportamento:" v-model="state.comportamento_animal" required />
+               <input type="text" placeholder="Descreva o comportamento:" v-model="state.comportamento_animal"
+                  required />
             </div>
          </div>
          <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-2 gap-4">
@@ -73,11 +75,13 @@
             </div>
             <div>
                <label>Sintomas Apresentados</label>
-               <textarea placeholder="Descreva os sintomas apresentados" rows="4" v-model="state.sintomas" required></textarea>
+               <textarea placeholder="Descreva os sintomas apresentados" rows="4" v-model="state.sintomas"
+                  required></textarea>
             </div>
             <div>
                <label>Diagnóstico Preliminar</label>
-               <textarea placeholder="Descreva o diagnóstico preliminar" rows="4" v-model="state.diagnostico_pre" required></textarea>
+               <textarea placeholder="Descreva o diagnóstico preliminar" rows="4" v-model="state.diagnostico_pre"
+                  required></textarea>
             </div>
             <div>
                <label>Diagnóstico Final</label>
@@ -114,7 +118,7 @@
          </div>
          <div class="flex justify-end gap-4 mt-4">
             <BotaoCancel :link="'/fichas'" :titulo="'Cancelar'" />
-            <BotaoSave :titulo="'Salvar'"/>
+            <BotaoSave :titulo="'Salvar'" />
          </div>
       </form>
    </div>
@@ -181,17 +185,26 @@ async function buscarFicha() {
    try {
       const { response } = await services.fichas.getById(id, token);
       Object.assign(state, response);
+
       if (response.horario) {
          state.horario = response.horario.slice(0, 5);
+      }
+
+      if (response.tutor_id) {
+         state.tutor_id = response.tutor_id;
+         await buscarPets();
+      }
+
+      if (response.pet_id) {
+         state.pet_id = response.pet_id;
       }
    } catch (error) {
       console.error('Erro ao buscar ficha:', error);
       state.modal = true;
-      state.MensagemErro = "Erro ao carregar os dados da ficha"
+      state.MensagemErro = "Erro ao carregar os dados da ficha";
    } finally {
       state.loader = false;
    }
-   
 }
 
 async function buscarVeterinarios() {
@@ -202,7 +215,6 @@ async function buscarVeterinarios() {
 async function buscarPets() {
    const params = {};
    params.tutor_id = state.tutor_id;
-
    const { response } = await services.pets.getPetsCustom(params, token);
    state.pets = response.data;
 }
@@ -216,6 +228,7 @@ async function buscarServicos() {
    const { response } = await services.servicos.getServicoByTipo('CLINICO', token);
    state.servicos = response.data;
 }
+
 async function buscarSituacoes() {
    const { response } = await services.situacao_pet.getAll(token);
    state.situacoes = response.data;
