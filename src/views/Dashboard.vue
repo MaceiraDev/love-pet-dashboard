@@ -50,8 +50,7 @@
             </table>
          </div>
          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <apexchart type="pie" width="380" :options="chartOptions" :series="series"></apexchart>
-            <apexchart type="pie" width="380" :options="chartOptions" :series="series"></apexchart>
+            <ApexChart type="pie" width="380" :options="chartOptions" :series="series" /><!-- <apexchart type="pie" width="380" :options="chartOptions" :series="series"></apexchart> -->
          </div>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-12">
@@ -89,7 +88,7 @@
 
 <script setup>
 import services from "@/services";
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref, onMounted, computed } from "vue";
 import { useStorage } from 'vue3-storage';
 
 const storage = useStorage();
@@ -99,12 +98,14 @@ const state = reactive({
    data: {
       cards: {},
       graficos: {
-         pets_por_especie: [{ especie: '' }]
+         pets_por_especie: [{ especie: '' }],
+         total_status_fichas: {},
       },
       tabelas: {
          fichas: [{}]
       },
    },
+   data_status: {},
 });
 onMounted(() => {
    getInfos();
@@ -113,15 +114,15 @@ onMounted(() => {
 async function getInfos() {
    const { response } = await services.info.getInfos(token);
    state.data = response;
-   console.log(state.data)
+   state.data_status = response.graficos.total_status_fichas;
+   console.log(state.data_status)
 }
 const chartOptions = reactive({
    chart: {
       width: 380,
       type: "pie",
    },
-   colors: ["#F26D24", "#181818"],
-   labels: ["Anúncios patrocinados", "Anúncios não patrocinados"],
+   labels: ['Fichas pendentes', 'Fichas em andamento', 'Fichas concluídas', 'Fichas canceladas'],
    responsive: [
       {
          breakpoint: 480,
@@ -136,7 +137,10 @@ const chartOptions = reactive({
       },
    ],
 });
-const series = [44, 55];
+const series = computed(() => {
+  return [state.data_status.fichas_pendentes, state.data_status.fichas_andamento];
+});
+
 </script>
 
 <style scoped>
