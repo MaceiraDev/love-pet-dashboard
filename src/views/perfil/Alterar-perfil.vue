@@ -74,9 +74,16 @@
          <label class="block font-bold text-lg">Notas Adicionais</label>
          <textarea v-model="state.notas_adicionais" rows="4" class="border rounded p-2 w-full"></textarea>
       </div>
-      <div class="flex justify-end gap-4 mt-4">
-         <BotaoCancel :link="'/perfil'" :titulo="'Cancelar'" />
-         <BotaoSave type="submit" :titulo="'Salvar'" />
+      <div class="flex justify-between gap-4 mt-4">
+         <button @click="alterarSenha" type="button"
+            class="bg-azul2 text-branco px-4 py-2 rounded hover:bg-azul3 transition duration-300">
+            Alterar Senha
+         </button>
+
+         <div class="flex gap-4">
+            <BotaoCancel :link="'/perfil'" :titulo="'Cancelar'" />
+            <BotaoSave type="submit" :titulo="'Salvar'" />
+         </div>
       </div>
    </form>
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
@@ -170,6 +177,10 @@ async function buscarUsuarioId(id) {
    } finally {
       state.loader = false;
    }
+}
+
+function alterarSenha() {
+   router.push('alterar-senha');
 }
 
 async function adicionarImagem(event) {
