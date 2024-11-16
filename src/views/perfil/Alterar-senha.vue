@@ -21,7 +21,7 @@
 
       <div class="flex gap-4">
          <BotaoCancel :link="'/perfil/alterar-perfil'" :titulo="'Cancelar'" />
-         <BotaoSave type="submit" :titulo="'Salvar'" />
+         <BotaoSave titulo="Salvar" />
       </div>
    </form>
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
@@ -35,11 +35,13 @@ import BotaoSave from '@/components/BotaoSave.vue';
 import BotaoCancel from '@/components/BotaoCancel.vue';
 import Loader from '@/components/Loader.vue';
 import ModalErro from '@/components/ModalErro.vue';
+import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 import { useStorage } from 'vue3-storage';
 
 const storage = useStorage();
 const toast = useToast();
+const router = useRouter();
 const token = storage.getStorageSync("token");
 const user_id = storage.getStorageSync("user_id");
 
@@ -73,27 +75,9 @@ async function buscarUsuarioId(id) {
 }
 
 async function atualizarSenha() {
+   const senhaValida = await validarSenha(state.email, state.senhaAntiga, state.novaSenha, state.confirmarNovaSenha);
 
-   if (state.novaSenha !== state.confirmarNovaSenha) {
-      let msg_erro = 'As senhas não coincidem!';
-      toast.error(msg_erro, { timeout: 3000 });
-      return;
-   }
-   if (state.novaSenha.length < 6) {
-      let msg_erro = 'A senha deve ter 6 ou mais caracteres!';
-      toast.error(msg_erro, { timeout: 3000 });
-      return;
-   }
-   if (!/[A-Z]/.test(state.novaSenha)) {
-      let msg_erro = 'A senha deve conter pelo menos uma letra maiúscula!';
-      toast.error(msg_erro, { timeout: 3000 });
-      return;
-   }
-   if (!/[!@#$%^&*(),.?":{}|<>;]/.test(state.novaSenha)) {
-      let msg_erro = 'A senha deve conter pelo menos um caractere especial!';
-      toast.error(msg_erro, { timeout: 3000 });
-      return;
-   }
+   if (!senhaValida) { return; }
 
    let dados = {
       email: state.email,
@@ -103,7 +87,8 @@ async function atualizarSenha() {
    try {
       const response = await services.usuarios.upSenha(dados);
       if (response.status === 200 || response.status === 201) {
-         router.push('/perfil')
+         toast.success('Senha alterada com sucesso!');
+         router.push('alterar-perfil')
       }
    } catch (error) {
       console.error("Erro na alteração do usuário:", error);
@@ -118,4 +103,46 @@ async function atualizarSenha() {
       state.loader = false;
    }
 }
+
+async function validarSenha(email, senhaAntiga, novaSenha, confirmarSenha) {
+   if (novaSenha !== confirmarSenha) {
+      toast.error('As senhas não coincidem!', { timeout: 3000 });
+      return false;
+   }
+
+   if (novaSenha == senhaAntiga) {
+      toast.error('A nova senha não pode ser a mesma que a atual!', { timeout: 3000 });
+      return false;
+   }
+
+   if (novaSenha.length < 6) {
+      toast.error('A senha deve ter 6 ou mais caracteres!', { timeout: 3000 });
+      return false;
+   }
+
+   if (!/[A-Z]/.test(novaSenha)) {
+      toast.error('A senha deve conter pelo menos uma letra maiúscula!', { timeout: 3000 });
+      return false;
+   }
+
+   if (!/[!@#$%^&*(),.?":{}|<>;]/.test(novaSenha)) {
+      toast.error('A senha deve conter pelo menos um caractere especial!', { timeout: 3000 });
+      return false;
+   }
+
+   try {
+      const response = await services.usuarios.verificaSenha(email, senhaAntiga);
+      if (response.status !== 200) {
+         toast.error('Senha antiga inválida!', { timeout: 3000 });
+         return false;
+      }
+   } catch (error) {
+      console.error("Erro ao verificar a senha antiga:", error);
+      toast.error('Senha antiga inválida!', { timeout: 3000 });
+      return false;
+   }
+
+   return true;
+}
+
 </script>
