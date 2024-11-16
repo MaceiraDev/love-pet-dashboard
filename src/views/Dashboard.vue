@@ -3,19 +3,19 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
          <div class="bg-azul2 rounded-lg p-4 flex flex-col items-center card">
             <h2 class="text-lg font-semibold text-branco">Fichas Pendentes</h2>
-            <p class="text-3xl font-bold text-limao">{{ state.data.cards.fichas_pendentes }}</p>
+            <p class="text-3xl font-bold text-limao">{{ state.data_card.fichas_pendentes }}</p>
          </div>
          <div class="bg-azul2 rounded-lg p-4 flex flex-col items-center card">
             <h2 class="text-lg font-semibold text-branco">Banhos Finalizadas</h2>
-            <p class="text-3xl font-bold text-limao">{{ state.data.cards.banhos_pendentes }}</p>
+            <p class="text-3xl font-bold text-limao">{{ state.data_card.banhos_pendentes }}</p>
          </div>
          <div class="bg-azul2 rounded-lg p-4 flex flex-col items-center card">
             <h2 class="text-lg font-semibold text-branco">Tutores Ativos</h2>
-            <p class="text-3xl font-bold text-limao">{{ state.data.cards.tutores_ativos }}</p>
+            <p class="text-3xl font-bold text-limao">{{ state.data_card.tutores_ativos }}</p>
          </div>
          <div class="bg-azul2 rounded-lg p-4 flex flex-col items-center card">
             <h2 class="text-lg font-semibold text-branco">Total de Pets</h2>
-            <p class="text-3xl font-bold text-limao">{{ state.data.cards.pets_totais }}</p>
+            <p class="text-3xl font-bold text-limao">{{ state.data_card.pets_totais }}</p>
          </div>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-12">
@@ -34,7 +34,7 @@
                </thead>
                <tbody class="bg-table2 divide-y divide-preto">
                   <tr class="border-b hover:bg-limao2 transition-colors duration-200"
-                     v-for="ficha in state.data.tabelas.fichas" :key="ficha.id">
+                     v-for="ficha in state.data_tabelas.fichas" :key="ficha.id">
                      <td class="px-4 py-2">{{ ficha.veterinario }}</td>
                      <td class="px-4 py-2">{{ ficha.pet }}</td>
                      <td class="px-4 py-2">{{ ficha.tutor }}</td>
@@ -42,7 +42,7 @@
                      <td class="px-4 py-2">{{ ficha.hora }}</td>
                      <td class="px-4 py-2">
                         <button
-                           class="bg-azul1 text-branco px-4 py-2 rounded-md transition duration-500 hover:bg-azul4 hover:text-preto ">
+                           class="bg-azul1 text-branco px-4 py-2 rounded-md transition duration-500 hover:bg-azul4 hover:text-preto " >
                            Ir para a ficha <i class="bi bi-person-walking"></i></button>
                      </td>
                   </tr>
@@ -50,7 +50,7 @@
             </table>
          </div>
          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <ApexChart type="pie" width="380" :options="chartOptions" :series="series" /><!-- <apexchart type="pie" width="380" :options="chartOptions" :series="series"></apexchart> -->
+            <VueApexCharts type="pie" width="380" :options="chartOptions" :series="series" />
          </div>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-12">
@@ -68,14 +68,14 @@
                </thead>
                <tbody class="bg-table2 divide-y divide-preto">
                   <tr class="border-b hover:bg-limao2 transition-colors duration-200"
-                     v-for="banho in state.data.tabelas.banhos	" :key="banho.id">
+                     v-for="banho in state.data_tabelas.banhos" :key="banho.id">
                      <td class="px-4 py-2">{{ banho.pet }}</td>
                      <td class="px-4 py-2">{{ banho.servico }}</td>
                      <td class="px-4 py-2">{{ banho.data }}</td>
                      <td class="px-4 py-2">{{ banho.hora }}</td>
                      <td class="px-4 py-2">
                         <button
-                           class="bg-azul1 text-branco px-4 py-2 rounded-md transition duration-500 hover:bg-azul4 hover:text-preto ">
+                           class="bg-azul1 text-branco px-4 py-2 rounded-md transition duration-500 hover:bg-azul4 hover:text-preto " >
                            Visualizar Banho <i class="bi bi-person-walking"></i></button>
                      </td>
                   </tr>
@@ -89,34 +89,33 @@
 <script setup>
 import services from "@/services";
 import { reactive, ref, onMounted, computed } from "vue";
+import VueApexCharts from "vue3-apexcharts";
 import { useStorage } from 'vue3-storage';
 
 const storage = useStorage();
 const token = storage.getStorageSync("token");
 
 const state = reactive({
-   data: {
-      cards: {},
-      graficos: {
-         pets_por_especie: [{ especie: '' }],
-         total_status_fichas: {},
-      },
-      tabelas: {
-         fichas: [{}]
-      },
-   },
    data_status: {},
+   data_card: {},
+   data_tabelas: {
+      fichas: [],
+      banhos: [],
+   },
 });
+
 onMounted(() => {
    getInfos();
 });
 
 async function getInfos() {
    const { response } = await services.info.getInfos(token);
-   state.data = response;
+   state.data = response; 
    state.data_status = response.graficos.total_status_fichas;
-   console.log(state.data_status)
+   state.data_card = response.cards;
+   state.data_tabelas = response.tabelas;
 }
+
 const chartOptions = reactive({
    chart: {
       width: 380,
@@ -137,10 +136,15 @@ const chartOptions = reactive({
       },
    ],
 });
-const series = computed(() => {
-  return [state.data_status.fichas_pendentes, state.data_status.fichas_andamento];
-});
 
+const series = computed(() => {
+   return [
+      state.data_status.fichas_pendentes || 0,
+      state.data_status.fichas_andamento || 0,
+      state.data_status.fichas_concluidas || 0,
+      state.data_status.fichas_canceladas || 0
+   ];
+});
 </script>
 
 <style scoped>
