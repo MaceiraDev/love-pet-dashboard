@@ -6,7 +6,7 @@
             <p class="text-3xl font-bold text-limao">{{ state.data_card.fichas_pendentes }}</p>
          </div>
          <div class="bg-azul2 rounded-lg p-4 flex flex-col items-center card">
-            <h2 class="text-lg font-semibold text-branco">Banhos Finalizadas</h2>
+            <h2 class="text-lg font-semibold text-branco">Banhos Pendentes</h2>
             <p class="text-3xl font-bold text-limao">{{ state.data_card.banhos_pendentes }}</p>
          </div>
          <div class="bg-azul2 rounded-lg p-4 flex flex-col items-center card">
@@ -19,8 +19,8 @@
          </div>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-12">
-         <div>
-            <h3 class="text-lg text-preto font-medium">Fichas Recentes</h3>
+         <div class="overflow-x-auto">
+            <h3 class="text-lg text-preto font-medium">Fichas Pendentes/Recentes</h3>
             <table class="min-w-full table-auto bg-table2 shadow-lg overflow-hidden divide-y-4 divide-limao">
                <thead class="bg-azul2 text-branco">
                   <tr>
@@ -41,9 +41,13 @@
                      <td class="px-4 py-2">{{ ficha.data }}</td>
                      <td class="px-4 py-2">{{ ficha.hora }}</td>
                      <td class="px-4 py-2">
-                        <button
-                           class="bg-azul1 text-branco px-4 py-2 rounded-md transition duration-500 hover:bg-azul4 hover:text-preto " >
-                           Ir para a ficha <i class="bi bi-person-walking"></i></button>
+                        <router-link :to="'/fichas/alterar-ficha/' + ficha.id">
+                           <button
+                              class="bg-azul1 text-branco px-4 py-2 rounded-md transition duration-500 hover:bg-azul4 hover:text-preto ">
+                              Ir para a ficha
+                              <i class="bi bi-person-walking"></i>
+                           </button>
+                        </router-link>
                      </td>
                   </tr>
                </tbody>
@@ -51,10 +55,13 @@
          </div>
          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <VueApexCharts type="pie" width="380" :options="chartOptions" :series="series" />
+            <div class="chart-wrapper">
+               <VueApexCharts type="pie" :options="chartOptionsTwo" :series="seriesTwo" />
+            </div>
          </div>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-12">
-         <div>
+         <div class="overflow-x-auto">
             <h3 class="text-lg text-preto font-medium">Banhos e Tosas Agendados</h3>
             <table class="min-w-full table-auto bg-table2 shadow-lg overflow-hidden divide-y-4 divide-limao">
                <thead class="bg-azul2 text-branco">
@@ -74,9 +81,12 @@
                      <td class="px-4 py-2">{{ banho.data }}</td>
                      <td class="px-4 py-2">{{ banho.hora }}</td>
                      <td class="px-4 py-2">
-                        <button
-                           class="bg-azul1 text-branco px-4 py-2 rounded-md transition duration-500 hover:bg-azul4 hover:text-preto " >
-                           Visualizar Banho <i class="bi bi-person-walking"></i></button>
+                        <router-link :to="'/banhos/alterar-banho/' + banho.id">
+                           <button
+                              class="bg-azul1 text-branco px-4 py-2 rounded-md transition duration-500 hover:bg-azul4 hover:text-preto ">
+                              Visualizar Banho
+                              <i class="bi bi-person-walking"></i></button>
+                        </router-link>
                      </td>
                   </tr>
                </tbody>
@@ -98,6 +108,7 @@ const token = storage.getStorageSync("token");
 const state = reactive({
    data_status: {},
    data_card: {},
+   pets_por_especie: [],
    data_tabelas: {
       fichas: [],
       banhos: [],
@@ -110,15 +121,15 @@ onMounted(() => {
 
 async function getInfos() {
    const { response } = await services.info.getInfos(token);
-   state.data = response; 
+   state.data = response;
    state.data_status = response.graficos.total_status_fichas;
    state.data_card = response.cards;
    state.data_tabelas = response.tabelas;
+   state.pets_por_especie = response.graficos.pets_por_especie;
 }
 
 const chartOptions = reactive({
    chart: {
-      width: 380,
       type: "pie",
    },
    labels: ['Fichas pendentes', 'Fichas em andamento', 'Fichas concluídas', 'Fichas canceladas'],
@@ -145,10 +156,40 @@ const series = computed(() => {
       state.data_status.fichas_canceladas || 0
    ];
 });
+
+const chartOptionsTwo = computed(() => ({
+   chart: {
+      type: "pie",
+   },
+   labels: state.pets_por_especie.map(item => item.especie),
+   responsive: [
+      {
+         breakpoint: 400,
+         options: {
+            chart: {
+               width: 200, // Reduz o tamanho do gráfico para telas menores
+            },
+            legend: {
+               position: "bottom", // Move a legenda para baixo
+            },
+         },
+      },
+   ],
+}));
+
+const seriesTwo = computed(() => state.pets_por_especie.map(item => item.total));
+
+
+
 </script>
 
 <style scoped>
 .card {
    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.chart-wrapper {
+   width: 300px;
+   max-width: 100%;
 }
 </style>
