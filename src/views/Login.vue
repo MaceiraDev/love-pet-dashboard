@@ -49,6 +49,7 @@ import { useStorage } from 'vue3-storage';
 import Loader from '@/components/Loader.vue';
 import { useToast } from 'vue-toastification';
 import ModalUpSenha from '@/components/ModalUpSenha.vue';
+import { validarSenha } from '@/utils/validarSenha'; 
 
 const storage = useStorage();
 const router = useRouter();
@@ -86,27 +87,9 @@ async function logarSistema() {
 }
 
 async function saveSenha({ email, senha }) {
+   const senhaValida = await validarSenha(email, senha);
 
-   // Verifica se a senha tem pelo menos 6 caracteres
-   if (senha.length < 6) {
-      let msg_erro = 'A senha deve ter 6 ou mais caracteres!';
-      toast.error(msg_erro, { timeout: 3000 });
-      return;
-   }
-
-   // Verifica se a senha contém pelo menos uma letra maiúscula
-   if (!/[A-Z]/.test(senha)) {
-      let msg_erro = 'A senha deve conter pelo menos uma letra maiúscula!';
-      toast.error(msg_erro, { timeout: 3000 });
-      return;
-   }
-
-   // Verifica se a senha contém pelo menos um caractere especial
-   if (!/[!@#$%^&*(),.?":{}|<>;]/.test(senha)) {
-      let msg_erro = 'A senha deve conter pelo menos um caractere especial!';
-      toast.error(msg_erro, { timeout: 3000 });
-      return;
-   }
+   if (!senhaValida) { return; }
 
    let dados = {
       email,

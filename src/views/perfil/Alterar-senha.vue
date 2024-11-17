@@ -76,7 +76,7 @@ async function buscarUsuarioId(id) {
 }
 
 async function atualizarSenha() {
-   const senhaValida = await validarSenha(state.email, state.senhaAntiga, state.novaSenha, state.confirmarNovaSenha);
+   const senhaValida = await validarSenha(state.email, state.novaSenha, state.senhaAntiga, state.confirmarNovaSenha);
 
    if (!senhaValida) { return; }
 

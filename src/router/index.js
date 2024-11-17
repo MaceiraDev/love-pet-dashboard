@@ -167,6 +167,11 @@ const routes = [
             path: 'perfil/alterar-senha',
             name: 'alterar-senha',
             component: () => import('../views/perfil/Alterar-senha.vue')
+         },
+         {
+            path: 'financeiro',
+            name: 'financeiro',
+            component: () => import('../views/Financeiro.vue')
          }
       ]
    },

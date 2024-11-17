@@ -3,17 +3,7 @@ import { useToast } from 'vue-toastification';
 
 const toast = useToast();
 
-export async function validarSenha(email, senhaAntiga, novaSenha, confirmarSenha) {
-   if (novaSenha !== confirmarSenha) {
-      toast.error('As senhas não coincidem!', { timeout: 3000 });
-      return false;
-   }
-
-   if (novaSenha == senhaAntiga) {
-      toast.error('A nova senha não pode ser a mesma que a atual!', { timeout: 3000 });
-      return false;
-   }
-
+export async function validarSenha(email, novaSenha, senhaAntiga = null, confirmarSenha = null) {
    if (novaSenha.length < 6) {
       toast.error('A senha deve ter 6 ou mais caracteres!', { timeout: 3000 });
       return false;
@@ -29,15 +19,27 @@ export async function validarSenha(email, senhaAntiga, novaSenha, confirmarSenha
       return false;
    }
 
-   try {
-      const response = await services.usuarios.verificaSenha(email, senhaAntiga);
-      if (response.status !== 200) {
+   if (senhaAntiga) {
+      if (novaSenha === senhaAntiga) {
+         toast.error('A nova senha não pode ser a mesma que a atual!', { timeout: 3000 });
+         return false;
+      }
+
+      try {
+         const response = await services.usuarios.verificaSenha(email, senhaAntiga);
+         if (response.status !== 200) {
+            toast.error('Senha antiga inválida!', { timeout: 3000 });
+            return false;
+         }
+      } catch (error) {
+         console.error("Erro ao verificar a senha antiga:", error);
          toast.error('Senha antiga inválida!', { timeout: 3000 });
          return false;
       }
-   } catch (error) {
-      console.error("Erro ao verificar a senha antiga:", error);
-      toast.error('Senha antiga inválida!', { timeout: 3000 });
+   }
+
+   if (confirmarSenha !== null && novaSenha !== confirmarSenha) {
+      toast.error('As senhas não coincidem!', { timeout: 3000 });
       return false;
    }
 
