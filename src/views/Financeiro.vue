@@ -1,16 +1,20 @@
 <template>
    <div class="dashboard-container flex flex-col items-center space-y-8">
       <!-- Cards para Total Clínico e Estético -->
-      <div class="flex space-x-4 justify-center w-full">
-         <div class="bg-azul2 rounded-lg p-4 flex flex-col items-center card w-1/3">
-            <h2 class="text-lg font-semibold text-branco">Total Clínico</h2>
-            <p class="text-3xl font-bold text-limao">R${{ state.clinicoTotal }}</p>
-         </div>
-         <div class="bg-azul2 rounded-lg p-4 flex flex-col items-center card w-1/3">
-            <h2 class="text-lg font-semibold text-branco">Total Estético</h2>
-            <p class="text-3xl font-bold text-limao">R${{ state.esteticoTotal }}</p>
+      <div class="flex flex-col items-center space-y-4 w-full">
+         <h1 class="text-xl font-bold text-preto">Relatório de Totais Clínico e Estético do Último Mês</h1>
+         <div class="flex space-x-4 justify-center w-full">
+            <div class="bg-azul2 rounded-lg p-4 flex flex-col items-center card w-1/3">
+               <h2 class="text-lg font-semibold text-branco">Total Clínico</h2>
+               <p class="text-3xl font-bold text-limao">R${{ state.clinicoTotal }}</p>
+            </div>
+            <div class="bg-azul2 rounded-lg p-4 flex flex-col items-center card w-1/3">
+               <h2 class="text-lg font-semibold text-branco">Total Estético</h2>
+               <p class="text-3xl font-bold text-limao">R${{ state.esteticoTotal }}</p>
+            </div>
          </div>
       </div>
+
       <!-- Layout Flex para Gráfico e Tabela -->
       <div class="flex space-x-4 w-full">
          <!-- Gráfico de Receita Mensal -->
