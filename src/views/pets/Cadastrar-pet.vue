@@ -8,7 +8,8 @@
                <label>Tutor</label>
                <select required v-model="state.tutor_id">
                   <option selected disabled value="">Selecione</option>
-                  <option v-for="tutor in state.tutores" :value="tutor.id">{{ tutor.nome }}</option>
+                  <option v-for="tutor in state.tutores" :value="tutor.id">{{ tutor.nome }} {{ tutor.sobrenome }}
+                  </option>
                </select>
             </div>
             <div>
