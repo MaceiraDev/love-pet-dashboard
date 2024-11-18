@@ -72,7 +72,7 @@
                </li>
                <li v-if="user_tipo == 0 || user_tipo == 1">
                   <router-link to="/financeiro" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
-                     :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/usuarios' }">
+                     :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/financeiro' }">
                      <i class="bi bi-currency-dollar"></i> Financeiro
                   </router-link>
                </li>
