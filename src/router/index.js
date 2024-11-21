@@ -10,6 +10,11 @@ const routes = [
       component: () => import('../views/Login.vue')
    },
    {
+      path: '/recuperar-senha/:token',
+      name: 'recuperar-senha',
+      component: () => import('../views/Recuperar-senha.vue')
+   },
+   {
       path: '/',
       component: LayoutDefault,
       children: [
@@ -198,6 +203,11 @@ router.beforeEach(async (to, from, next) => {
       return;
    }
 
+   if (to.name === 'recuperar-senha') {
+      next();  // Permite o acesso sem verificação de token
+      return;
+   }
+   
    try {
       const result = await services.auth.verificaToken(token);
       const tipo_usuario = result.response.tipo_usuario;

@@ -3,7 +3,7 @@ import { useToast } from 'vue-toastification';
 
 const toast = useToast();
 
-export async function validarSenha(email, novaSenha, senhaAntiga = null, confirmarSenha = null) {
+export async function validarSenha(email = null, novaSenha, senhaAntiga = null, confirmarSenha = null) {
    if (novaSenha.length < 6) {
       toast.error('A senha deve ter 6 ou mais caracteres!', { timeout: 3000 });
       return false;

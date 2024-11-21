@@ -40,4 +40,14 @@ export default HTTPCLIENT => ({
       const response = await HTTPCLIENT.get('/users/tipo/vet', { headers });
       return { response: response.data }
    },
+   sendEmail: async (dados) => {
+      const headers = { "Accept": "application/json" };
+      const response = await HTTPCLIENT.post('/enviar-mail', { email: dados.email }, { headers });
+      return { data: response.data, status: response.status };
+   },
+   redefinirSenha: async (dados) => {
+      const headers = { "Accept": "application/json" };
+      const response = await HTTPCLIENT.post('/password/reset', dados, { headers });
+      return { data: response.data, status: response.status };
+   },
 }) 

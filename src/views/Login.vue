@@ -32,11 +32,16 @@
                         <span class="label-char" style="--index: 4">a</span>
                      </label>
                   </div>
+                  <div class="flex justify-center">
+                     <a @click.prevent="abrirModalEmail" href="#" class="text-limao hover:text-limao2 underline">Esqueci minha senha</a>
+                  </div>
                   <button type="submit" :disabled="loading">Entrar</button>
                </form>
             </div>
          </div>
       </div>
+      <ModalSendEmail :visible="state.visibleEmail" @update:visible="state.visibleEmail = $event"
+         @send="enviarEmail" />
       <ModalUpSenha :visible="state.visible" :email="state.email" @update:visible="state.visible = $event"
          @save="saveSenha" />
    </main>
@@ -50,6 +55,7 @@ import Loader from '@/components/Loader.vue';
 import { useToast } from 'vue-toastification';
 import ModalUpSenha from '@/components/ModalUpSenha.vue';
 import { validarSenha } from '@/utils/validarSenha'; 
+import ModalSendEmail from '@/components/ModalSendEmail.vue';
 
 const storage = useStorage();
 const router = useRouter();
@@ -60,6 +66,7 @@ const state = reactive({
    email: null,
    senha: null,
    visible: false,
+   visibleEmail: false,
 });
 
 async function logarSistema() {
@@ -110,6 +117,21 @@ async function saveSenha({ email, senha }) {
    }
 }
 
+function abrirModalEmail() {
+   state.visibleEmail = true;
+}
+
+async function enviarEmail(email) {
+   try {
+      const response = await services.usuarios.sendEmail({ email });
+      if (response.status === 200) {
+         toast.success("Instruções de recuperação de senha enviadas para o seu e-mail.", { timeout: 3000 });
+         state.visibleEmail = false;
+      }
+   } catch (e) {
+      toast.error("Erro ao enviar e-mail de recuperação. Tente novamente.", { timeout: 3000 });
+   }
+}
 </script>
 
 <style scoped>
