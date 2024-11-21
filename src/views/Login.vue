@@ -31,17 +31,18 @@
                         <span class="label-char" style="--index: 3">h</span>
                         <span class="label-char" style="--index: 4">a</span>
                      </label>
+                     <div class="flex justify-center">
+                        <a @click.prevent="abrirModalEmail" href="#"
+                           class="text-limao hover:text-limao2 underline">Esqueci minha senha</a>
+                     </div>
                   </div>
-                  <div class="flex justify-center">
-                     <a @click.prevent="abrirModalEmail" href="#" class="text-limao hover:text-limao2 underline">Esqueci minha senha</a>
-                  </div>
+
                   <button type="submit" :disabled="loading">Entrar</button>
                </form>
             </div>
          </div>
       </div>
-      <ModalSendEmail :visible="state.visibleEmail" @update:visible="state.visibleEmail = $event"
-         @send="enviarEmail" />
+      <ModalSendEmail :visible="state.visibleEmail" @update:visible="state.visibleEmail = $event" @send="enviarEmail" />
       <ModalUpSenha :visible="state.visible" :email="state.email" @update:visible="state.visible = $event"
          @save="saveSenha" />
    </main>
@@ -54,7 +55,7 @@ import { useStorage } from 'vue3-storage';
 import Loader from '@/components/Loader.vue';
 import { useToast } from 'vue-toastification';
 import ModalUpSenha from '@/components/ModalUpSenha.vue';
-import { validarSenha } from '@/utils/validarSenha'; 
+import { validarSenha } from '@/utils/validarSenha';
 import ModalSendEmail from '@/components/ModalSendEmail.vue';
 
 const storage = useStorage();
