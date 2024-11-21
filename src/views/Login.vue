@@ -72,6 +72,7 @@ const state = reactive({
 
 async function logarSistema() {
    loading.value = true;
+   console.log(state.email, state.senha)
    try {
       const data = await services.login.login(state.email, state.senha);
       if (data) {
