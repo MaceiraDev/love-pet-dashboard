@@ -45,3 +45,27 @@ export async function validarSenha(email = null, novaSenha, senhaAntiga = null, 
 
    return true;
 }
+
+export function validPassword(novaSenha, confirmarSenha) {
+   if (novaSenha.length < 6) {
+      toast.error('A senha deve ter 6 ou mais caracteres!', { timeout: 3000 });
+      return false;
+   }
+
+   if (!/[A-Z]/.test(novaSenha)) {
+      toast.error('A senha deve conter pelo menos uma letra maiúscula!', { timeout: 3000 });
+      return false;
+   }
+
+   if (!/[!@#$%^&*(),.?":{}|<>;]/.test(novaSenha)) {
+      toast.error('A senha deve conter pelo menos um caractere especial!', { timeout: 3000 });
+      return false;
+   }
+
+   if (confirmarSenha !== null && novaSenha !== confirmarSenha) {
+      toast.error('As senhas não coincidem!', { timeout: 3000 });
+      return false;
+   }
+
+   return true;
+}

@@ -6,7 +6,7 @@
             <div class="mb-4">
                <label for="email" class="block text-preto2 font-semibold mb-2">E-mail</label>
                <input v-model="email" id="email" type="email" required placeholder="Digite seu e-mail"
-                  class="w-full p-2 border border-preto2 rounded text-preto2 focus:outline-none focus:border-azul4 focus:ring focus:ring-azul4 focus:ring-opacity-50">
+                  class="w-full p-2 border border-preto2 rounded text-preto2 focus:outline-none focus:border-limao focus:ring focus:ring-limao focus:ring-opacity-50">
             </div>
             <div class="flex justify-end space-x-4">
                <button type="button" @click="cancel"
