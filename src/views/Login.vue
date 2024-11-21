@@ -32,19 +32,16 @@
                         <span class="label-char" style="--index: 4">a</span>
                      </label>
                      <div class="flex justify-center">
-                        <a @click.prevent="abrirModalEmail" href="#"
-                           class="text-limao hover:text-limao2 underline">Esqueci minha senha</a>
+                        <a @click.prevent="abrirModalEmail" class="text-limao hover:text-limao2 underline cursor-pointer">Esqueci minha senha</a>
                      </div>
                   </div>
-
                   <button type="submit" :disabled="loading">Entrar</button>
                </form>
             </div>
          </div>
       </div>
       <ModalSendEmail :visible="state.visibleEmail" @update:visible="state.visibleEmail = $event" @send="enviarEmail" />
-      <ModalUpSenha :visible="state.visible" :email="state.email" @update:visible="state.visible = $event"
-         @save="saveSenha" />
+      <ModalUpSenha :visible="state.visible" :email="state.email" @update:visible="state.visible = $event" @save="saveSenha" />
    </main>
 </template>
 <script setup>
