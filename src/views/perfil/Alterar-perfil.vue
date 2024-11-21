@@ -79,7 +79,6 @@
             class="bg-azul2 text-branco px-4 py-2 rounded hover:bg-azul3 transition duration-300">
             Alterar Senha
          </button>
-
          <div class="flex gap-4">
             <BotaoCancel :link="'/perfil'" :titulo="'Cancelar'" />
             <BotaoSave type="submit" :titulo="'Salvar'" />

@@ -32,7 +32,8 @@
                         <span class="label-char" style="--index: 4">a</span>
                      </label>
                      <div class="flex justify-center">
-                        <a @click.prevent="abrirModalEmail" class="text-limao hover:text-limao2 underline cursor-pointer">Esqueci minha senha</a>
+                        <a @click.prevent="abrirModalEmail"
+                           class="text-limao hover:text-limao2 underline cursor-pointer">Esqueci minha senha</a>
                      </div>
                   </div>
                   <button type="submit" :disabled="loading">Entrar</button>
@@ -41,7 +42,8 @@
          </div>
       </div>
       <ModalSendEmail :visible="state.visibleEmail" @update:visible="state.visibleEmail = $event" @send="enviarEmail" />
-      <ModalUpSenha :visible="state.visible" :email="state.email" @update:visible="state.visible = $event" @save="saveSenha" />
+      <ModalUpSenha :visible="state.visible" :email="state.email" @update:visible="state.visible = $event"
+         @save="saveSenha" />
    </main>
 </template>
 <script setup>
@@ -69,7 +71,6 @@ const state = reactive({
 
 async function logarSistema() {
    loading.value = true;
-   console.log(state.email, state.senha)
    try {
       const data = await services.login.login(state.email, state.senha);
       if (data) {
@@ -94,18 +95,16 @@ async function logarSistema() {
 
 async function saveSenha({ email, senha }) {
    const senhaValida = await validarSenha(email, senha);
-
    if (!senhaValida) { return; }
-
    let dados = {
       email,
       senha
    };
-
    try {
       const response = await services.usuarios.upSenha(dados);
       if (response.status === 200 || response.status === 201) {
          state.visible = false;
+         state.senha = "";
       }
    } catch (e) {
       console.log('Erro:', e.response.data); // Log para verificar o erro retornado
@@ -121,18 +120,22 @@ function abrirModalEmail() {
 }
 
 async function enviarEmail(email) {
+   loading.value = true;
    try {
       const response = await services.usuarios.sendEmail({ email });
       if (response.status === 200) {
-         toast.success("Instruções de recuperação de senha enviadas para o seu e-mail.", { timeout: 3000 });
+         toast.success("Instruções de recuperação de senha enviadas por e-mail.", { timeout: 3000 });
          state.visibleEmail = false;
+         loading.value = false;
       }
    } catch (e) {
       toast.error("Erro ao enviar e-mail de recuperação. Tente novamente.", { timeout: 3000 });
+      loading.value = false;
+   } finally {
+      loading.value = false;
    }
 }
 </script>
-
 <style scoped>
 @import url("../assets/base.css");
 

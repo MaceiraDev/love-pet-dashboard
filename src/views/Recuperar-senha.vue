@@ -30,6 +30,7 @@
          <p class="text-center text-gray-700">Link de redefinição de senha inválido ou expirado.</p>
       </div>
    </div>
+   <Loader :loading="state.loader" />
 </template>
 <script setup>
 import services from '@/services';
@@ -37,6 +38,7 @@ import { reactive, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { validPassword } from '@/utils/validarSenha';
 import { useToast } from 'vue-toastification';
+import Loader from '@/components/Loader.vue';
 
 
 const router = useRouter();
@@ -47,33 +49,53 @@ const state = reactive({
    password: "",
    passwordConfirmation: "",
    token: "",
+   loader: false,
 })
 
 onMounted(() => {
    state.token = route.params.token;
 });
 
+async function delay(ms) {
+   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function alterarSenha() {
+   state.loader = true;
    const novaSenha = state.password;
    const confirmarSenha = state.passwordConfirmation;
 
    const senhaValida = validPassword(novaSenha, confirmarSenha);
-   if (!senhaValida) { return; }
+   if (!senhaValida) {
+      state.loader = false;
+      state.password = "";
+      state.passwordConfirmation = "";
+      return;
+   }
 
    let dados = {};
-
    dados.password = state.password;
    dados.password_confirmation = state.passwordConfirmation;
    dados.token = state.token;
 
    try {
-      const data = await services.usuarios.redefinirSenha(dados);
-      router.push("/login")
+      const response = await services.usuarios.redefinirSenha(dados);
+      if (response.status === 200) {
+         toast.success("Senha redefinida com sucesso!", { timeout: 3000 });
+         await delay(1000);
+         state.password = "";
+         state.passwordConfirmation = "";
+         router.push("/login");
+      }
    } catch (error) {
+      state.loader = false;
       console.log(error.response.data.message)
       const message = error.response.data.message
+      state.password = "";
+      state.passwordConfirmation = "";
       toast.error(message, { timeout: 3000 });
-
+   } finally {
+      state.loader = false;
    }
 }
 

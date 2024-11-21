@@ -1,7 +1,7 @@
 <template>
    <div v-if="visible" class="fixed inset-0 bg-preto bg-opacity-50 flex justify-center items-center z-50">
       <div class="bg-background p-6 rounded-lg shadow-lg max-w-xl w-full">
-         <h2 class="text-xl font-semibold mb-4 flex justify-center">Atualizar Senha para o Primeiro Acesso</h2>
+         <h2 class="text-xl font-semibold mb-4 flex justify-center">Atualizar Senha <i class="bi bi-exclamation-triangle"></i></h2>
          <form @submit.prevent="saveSenha">
             <div>
                <div>
@@ -126,5 +126,8 @@ input[type="email"]::placeholder,
 input[type="password"]::placeholder {
    color: #888;
    font-style: italic;
+}
+i{
+   margin-left: 10px;
 }
 </style>

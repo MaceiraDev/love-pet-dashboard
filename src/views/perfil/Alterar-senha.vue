@@ -19,7 +19,7 @@
          <input type="password" v-model="state.confirmarNovaSenha" class="border rounded p-2 w-full" required />
       </div>
 
-      <div class="flex gap-4">
+      <div class="flex justify-end gap-4">
          <BotaoCancel :link="'/perfil/alterar-perfil'" :titulo="'Cancelar'" />
          <BotaoSave titulo="Salvar" />
       </div>
