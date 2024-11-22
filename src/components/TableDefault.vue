@@ -12,7 +12,7 @@
                </tr>
             </thead>
             <tbody class="bg-table2 divide-y divide-preto">
-               <tr v-for="(row, index) in data" :key="index" class="hover:bg-limao2 transition-colors duration-200">
+               <tr v-for="(row, index) in paginatedData" :key="index" class="hover:bg-limao2 transition-colors duration-200">
                   <td v-for="header in headers" :key="header" class="px-6 py-4 whitespace-nowrap text-md text-preto2">
                      <div class="break-words">{{ row[header] }}</div>
                   </td>
@@ -36,11 +36,47 @@
                </tr>
             </tbody>
          </table>
+         <!-- Pagination -->
+         <nav class="mt-4" aria-label="Page navigation">
+            <ul class="flex justify-center space-x-1">
+              <!-- Botão "Previous" -->
+              <li>
+                <button 
+                  @click="previousPage" 
+                  :disabled="currentPage === 1" 
+                  :class="['px-4 py-2 border rounded', currentPage === 1 ? 'cursor-not-allowed bg-azul3 text-branco' : 'bg-azul1 text-branco hover:bg-azul4 transition duration-300']">
+                  <i class="bi bi-chevron-left"></i>
+                </button>
+              </li>
+          
+              <!-- Páginas -->
+              <li v-for="page in totalPages" :key="page">
+                <button 
+                  @click="goToPage(page)" 
+                  :class="['px-4 py-2 border rounded', currentPage === page ? 'bg-limao text-preto hover:bg-limao2 transition duration-300'  : 'bg-azul1 text-branco' ]">
+                  {{ page }}
+                </button>
+              </li>
+          
+              <!-- Botão "Next" -->
+              <li>
+                <button 
+                  @click="nextPage" 
+                  :disabled="currentPage === totalPages" 
+                  :class="['px-4 py-2 border rounded', currentPage === totalPages ? 'cursor-not-allowed bg-azul3 text-branco' : 'bg-azul1 text-branco hover:bg-azul4 transition duration-300']">
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+              </li>
+            </ul>
+          </nav>          
       </div>
    </div>
 </template>
+
 <script setup>
+import { ref, computed } from 'vue';
 import { defineProps } from 'vue';
+
 const props = defineProps({
    headers: {
       type: Array,
@@ -63,6 +99,41 @@ const props = defineProps({
       required: true
    }
 });
+
+const itemsPerPage = 30; // Limite de itens por página
+const currentPage = ref(1); // Página atual
+
+// Cálculo do total de páginas
+const totalPages = computed(() => {
+   return Math.ceil(props.data.length / itemsPerPage);
+});
+
+// Dados paginados com base na página atual
+const paginatedData = computed(() => {
+   const start = (currentPage.value - 1) * itemsPerPage;
+   const end = start + itemsPerPage;
+   return props.data.slice(start, end);
+});
+
+// Funções para navegação entre páginas
+const nextPage = () => {
+   if (currentPage.value < totalPages.value) {
+      currentPage.value++;
+   }
+};
+
+const previousPage = () => {
+   if (currentPage.value > 1) {
+      currentPage.value--;
+   }
+};
+
+// Função para ir a uma página específica
+const goToPage = (page) => {
+   if (page >= 1 && page <= totalPages.value) {
+      currentPage.value = page;
+   }
+};
 </script>
 
 <style scoped>

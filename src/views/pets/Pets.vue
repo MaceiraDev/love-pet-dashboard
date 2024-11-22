@@ -101,7 +101,6 @@ async function buscarPets() {
    } catch (error) {
       console.log(error);
    } finally {
-      await delay(2000);
       loading.value = false;
    }
 }
@@ -111,10 +110,6 @@ async function buscarEspecies() {
    state.especies = response.data;
 }
 
-//delay para o loader
-async function delay(ms) {
-   return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 //filtros
 async function buscarRacasByEspecie(especie_id) {

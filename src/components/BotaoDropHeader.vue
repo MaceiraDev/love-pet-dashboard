@@ -13,10 +13,13 @@
          </a>
          <div class="submenu">
             <div class="submenu-item">
-               <RouterLink to="/" class="submenu-link"> Email </RouterLink>
+               <a href="mailto:lv.vetsystem.company@gmail.com" class="submenu-link"> Email </a>
             </div>
             <div class="submenu-item">
-               <RouterLink to="/" class="submenu-link"> WhatsApp </RouterLink>
+               <a href="https://wa.me/5544984318126" target="_blank" class="submenu-link"> WhatsApp </a>
+            </div>
+            <div class="submenu-item">
+               <a href="https://www.instagram.com/vitorinacio16" target="_blank" class="submenu-link"> Instagram </a>
             </div>
          </div>
       </div>
@@ -128,7 +131,6 @@
 
 .submenu .submenu-item {
    width: 100%;
-   transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
    cursor: pointer;
 }
 
@@ -138,7 +140,6 @@
    width: 100%;
    position: relative;
    text-align: center;
-   transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
    color: var(--color-default3);
    font-weight: 600;
 }

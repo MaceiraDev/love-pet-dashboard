@@ -41,7 +41,7 @@
                </li>
                <li>
                   <router-link to="/banhos" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
-                     :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/banho' }">
+                     :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/banhos' }">
                      <i class="bi bi-scissors"></i> Banho e tosa
                   </router-link>
                </li>
