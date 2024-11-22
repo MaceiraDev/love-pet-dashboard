@@ -3,7 +3,7 @@
       <h1 class=" text-2xl font-bold text-preto2">Alterar Ficha</h1>
       <hr class="bg-azul2 h-0.5 mt-2 mb-4" />
       <Loader v-if="state.loader" />
-      <ModalErro v-if="state.modal" :mensagem="state.MensagemErro" />
+      <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
       <form @submit.prevent="alterarFicha">
          <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 gap-4">
             <div>
@@ -17,7 +17,8 @@
                <label>Tutor</label>
                <select v-model="state.tutor_id" required @change="buscarPets(state.tutor_id)">
                   <option selected disabled value="">Selecione</option>
-                  <option v-for="tutor in state.tutores" :key="tutor.id" :value="tutor.id">{{ tutor.nome }} {{ tutor.sobrenome }}</option>
+                  <option v-for="tutor in state.tutores" :key="tutor.id" :value="tutor.id">{{ tutor.nome }} {{
+                     tutor.sobrenome }}</option>
                </select>
             </div>
             <div>
@@ -238,8 +239,7 @@ async function alterarFicha() {
    state.loader = true;
 
    if (user_tipo == 4) {
-      console.log(user_tipo);
-      state.MensagemErro = "Você não tem permissão para atualizar pets.";
+      state.MensagemErro = "Você não tem permissão para atualizar fichas.";
       state.loader = false;
       state.modal = true;
       return;

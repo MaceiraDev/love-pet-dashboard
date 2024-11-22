@@ -29,6 +29,6 @@ const props = defineProps({
 const emit = defineEmits(['update:visible']);
 
 const close = () => {
-   emit('update:visible', false); // Fecha o modal
+   emit('update:visible', false);
 };
 </script>

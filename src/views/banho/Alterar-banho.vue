@@ -25,7 +25,8 @@
             </div>
             <div>
                <label>Horário</label>
-               <input type="text" placeholder="Digite o horário:" v-model="state.horario" v-mask="'##:##'" maxlength="5" required />
+               <input type="text" placeholder="Digite o horário:" v-model="state.horario" v-mask="'##:##'" maxlength="5"
+                  required />
             </div>
             <div>
                <label>Status</label>
@@ -52,12 +53,12 @@
          </div>
          <div class="flex justify-end gap-4 mt-4">
             <BotaoCancel :link="'/banhos'" :titulo="'Cancelar'" />
-            <BotaoSave type="submit" :titulo="'Salvar'" @click="" />
+            <BotaoSave type="submit" :titulo="'Salvar'" />
          </div>
       </form>
    </div>
    <Loader v-if="state.loader" />
-   <ModalErro v-if="state.modal" :mensagem="state.MensagemErro" />
+   <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event"/>
 </template>
 
 <script setup>
@@ -142,6 +143,7 @@ async function buscarServicos() {
 async function upBanho() {
    state.loader = true;
    if (user_tipo >= 4) {
+      console.log('aqqq')
       state.MensagemErro = "Você não tem permissão para cadastrar banhos.";
       state.loader = false;
       state.modal = true;

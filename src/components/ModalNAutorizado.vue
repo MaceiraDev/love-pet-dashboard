@@ -3,8 +3,7 @@
       <div class="bg-background p-6 rounded-lg shadow-lg max-w-md w-full">
          <p class="text-xl font-semibold mb-4">{{ texto }}</p>
          <div class="flex justify-end">
-            <button
-               class="bg-vermelho hover:bg-vermelho2 transition duration-400 text-branco font-semibold py-2 px-4 rounded"
+            <button class="bg-vermelho hover:bg-vermelho2 transition duration-400 text-branco font-semibold py-2 px-4 rounded"
                @click="close">
                Ok
             </button>
@@ -33,12 +32,10 @@ const props = defineProps({
       required: true
    }
 });
-
 const emit = defineEmits(['update:visible']);
-
 const close = async () => {
-   emit('update:visible', false); // Fecha o modal
-   await nextTick(); // Aguarda o fechamento do modal
-   router.push("/tutores")
+   emit('update:visible', false);
+   await nextTick();
+   router.push(props.url);
 };
 </script>

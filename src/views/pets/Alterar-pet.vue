@@ -131,6 +131,7 @@
    </div>
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
    <Loader :loading="state.loader" />
+   <ModalNAutorizado :visible="state.modal_autorizacao" :texto="state.MensagemErro" :url="'/pets'" @update:visible="state.modal_autorizacao = $event" />
 </template>
 
 <script setup>
@@ -142,6 +143,7 @@ import BotaoSave from '@/components/BotaoSave.vue';
 import BotaoCancel from '@/components/BotaoCancel.vue';
 import ModalErro from '@/components/ModalErro.vue';
 import Loader from '@/components/Loader.vue';
+import ModalNAutorizado from '@/components/ModalNAutorizado.vue';
 
 const storage = useStorage();
 const token = storage.getStorageSync("token");
@@ -185,6 +187,7 @@ const state = reactive({
    imagem: {},
    loader: false,
    modal: false,
+   modal_autorizacao: false,
    MensagemErro: '',
    data_ultima_consulta: '',
 });
@@ -199,9 +202,15 @@ async function buscarPet(id) {
       }
       buscarRacasByEspecie(state.especie_id)
    } catch (error) {
-      console.error('Erro ao buscar pet:', error);
-      state.modal = true;
-      state.MensagemErro = 'Erro ao carregar os dados do pet.';
+      const status_err = error.status;
+      if (status_err == 401) {
+         state.modal_autorizacao = true;
+         state.MensagemErro = error.response.data.error;
+      } else {
+         console.error('Erro ao buscar tutor:', error);
+         state.modal = true;
+         state.MensagemErro = "Erro ao carregar os dados do tutor.";
+      }
    } finally {
       state.loader = false;
    }
@@ -243,13 +252,11 @@ async function atualizarPet() {
    state.loader = true;
 
    if (user_tipo == 4) {
-      console.log(user_tipo);
       state.MensagemErro = "Você não tem permissão para atualizar pets.";
       state.loader = false;
       state.modal = true;
       return;
    }
-
 
    let formData = new FormData();
    formData.append("id", state.id);

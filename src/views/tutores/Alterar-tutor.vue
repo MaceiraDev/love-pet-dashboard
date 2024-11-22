@@ -14,7 +14,8 @@
             </div>
             <div>
                <label>Data de Nascimento</label>
-               <input type="text" v-model="state.data_nascimento" required placeholder="Digite uma data:" v-mask-date.br />
+               <input type="text" v-model="state.data_nascimento" required placeholder="Digite uma data:"
+                  v-mask-date.br />
             </div>
             <div>
                <label>Gênero</label>
@@ -96,7 +97,8 @@
       </form>
    </div>
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
-   <ModalNAutorizado :visible="state.modal" :texto="state.MensagemErro" :url="'/tutores'" @update:visible="state.modal = $event" />
+   <ModalNAutorizado :visible="state.modal_autorizacao" :texto="state.MensagemErro" :url="'/tutores'"
+      @update:visible="state.modal_autorizacao = $event" />
    <Loader :loading="state.loader" />
 </template>
 
@@ -139,6 +141,7 @@ const state = reactive({
    notas_adicionais: '',
    loader: false,
    modal: false,
+   modal_autorizacao: false,
    MensagemErro: "",
 });
 
@@ -173,9 +176,15 @@ async function buscarTutor(id) {
       state.estado_uf = response.estado_uf;
       state.notas_adicionais = response.notas_adicionais;
    } catch (error) {
-      console.error('Erro ao buscar tutor:', error);
-      state.modal = true;
-      state.MensagemErro = "Erro ao carregar os dados do tutor.";
+      const status_err = error.status;
+      if (status_err == 401) {
+         state.modal_autorizacao = true;
+         state.MensagemErro = error.response.data.error;
+      } else {
+         console.error('Erro ao buscar tutor:', error);
+         state.modal = true;
+         state.MensagemErro = "Erro ao carregar os dados do tutor.";
+      }
    } finally {
       state.loader = false;
    }
