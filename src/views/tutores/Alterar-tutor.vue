@@ -96,6 +96,7 @@
       </form>
    </div>
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
+   <ModalNAutorizado :visible="state.modal" :texto="state.MensagemErro" :url="'/tutores'" @update:visible="state.modal = $event" />
    <Loader :loading="state.loader" />
 </template>
 
@@ -105,6 +106,7 @@ import BotaoSave from '@/components/BotaoSave.vue';
 import BotaoCancel from '@/components/BotaoCancel.vue';
 import Loader from '@/components/Loader.vue';
 import ModalErro from '@/components/ModalErro.vue';
+import ModalNAutorizado from '@/components/ModalNAutorizado.vue';
 import { useStorage } from 'vue3-storage';
 import { useRoute, useRouter } from 'vue-router';
 import services from '@/services';
