@@ -143,7 +143,6 @@ async function buscarServicos() {
 async function upBanho() {
    state.loader = true;
    if (user_tipo >= 4) {
-      console.log('aqqq')
       state.MensagemErro = "Você não tem permissão para cadastrar banhos.";
       state.loader = false;
       state.modal = true;

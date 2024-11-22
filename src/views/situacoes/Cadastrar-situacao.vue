@@ -50,7 +50,6 @@ async function novaSit() {
    state.loader = true;
 
    if (user_tipo != 0 && user_tipo != 1 && user_tipo != 2) {
-      console.log(user_tipo)
       state.MensagemErro = "Você não tem permissão para cadastrar novos serviços.";
       state.loader = false;
       state.modal = true;

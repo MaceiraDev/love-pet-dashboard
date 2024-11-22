@@ -20,6 +20,7 @@
       </form>
    </div>
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
+   <ModalNAutorizado :visible="state.modal_autorizacao" :texto="state.MensagemErro" :url="'/situacoes-pet'" @update:visible="state.modal_autorizacao = $event" />
    <Loader :loading="state.loader" />
 </template>
 
@@ -29,6 +30,7 @@ import BotaoSave from '@/components/BotaoSave.vue';
 import BotaoCancel from '@/components/BotaoCancel.vue';
 import Loader from '@/components/Loader.vue';
 import ModalErro from '@/components/ModalErro.vue';
+import ModalNAutorizado from '@/components/ModalNAutorizado.vue';
 import { useStorage } from 'vue3-storage';
 import { useRoute, useRouter } from 'vue-router';
 import services from '@/services';
@@ -44,6 +46,7 @@ const state = reactive({
    notas_adicionais: '',
    loader: false,
    modal: false,
+   modal_autorizacao: false,
    MensagemErro: "",
 });
 
@@ -61,9 +64,15 @@ async function buscarSit(id) {
       state.nome = response.nome;
       state.notas_adicionais = response.notas_adicionais;
    } catch (error) {
-      console.error('Erro ao buscar serviço:', error);
-      state.modal = true;
-      state.MensagemErro = "Erro ao carregar os dados da situação.";
+      const status_err = error.status;
+      if (status_err == 401) {
+         state.modal_autorizacao = true;
+         state.MensagemErro = error.response.data.error;
+      } else {
+         console.error('Erro ao buscar serviço:', error);
+         state.modal = true;
+         state.MensagemErro = "Erro ao carregar os dados da situação.";
+      }
    } finally {
       state.loader = false;
    }
@@ -72,7 +81,6 @@ async function buscarSit(id) {
 async function upSit() {
 
    if (user_tipo != 0 && user_tipo != 1 && user_tipo != 2) {
-      console.log(user_tipo)
       state.MensagemErro = "Você não tem permissão para editar esta situação.";
       state.loader = false;
       state.modal = true;

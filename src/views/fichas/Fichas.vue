@@ -1,7 +1,7 @@
 <template>
    <div class="flex justify-between items-center mb-2">
       <h2 class=" text-2xl   font-bold  text-preto2">Fichas</h2>
-      <BotaoCreate :link="'/fichas/cadastrar-ficha'" :titulo="'Cadastrar Ficha'" />
+      <BotaoCreate :link="'/fichas/cadastrar-ficha'" :titulo="'Cadastrar Ficha'" v-if="user_tipo != 4" />
    </div>
    <div class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2  gap-2">
       <div class="flex justify-start items-center">

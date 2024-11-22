@@ -230,7 +230,6 @@ async function upUsuario() {
    state.loader = true;
 
    if (user_tipo != 0 && user_tipo != 1) {
-      console.log(user_tipo);
       state.MensagemErro = "Você não tem permissão para atualizar usuários.";
       state.loader = false;
       state.modal = true;

@@ -1,7 +1,7 @@
 <template>
    <div class="flex justify-between items-center mb-2">
       <h2 class="text-2xl font-bold text-preto2">Situações Pet</h2>
-      <BotaoCreate :link="'/situacoes-pet/cadastrar-situacao'" :titulo="'Cadastrar Situação'" />
+      <BotaoCreate :link="'/situacoes-pet/cadastrar-situacao'" :titulo="'Cadastrar Situação'" v-if="user_tipo != 4" />
    </div>
    <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm"
       :param_url_1="'situacoes-pet'" :param_url_2="'situacao'" />

@@ -16,6 +16,8 @@
       </form>
    </div>
    <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
+   <ModalNAutorizado :visible="state.modal_autorizacao" :texto="state.MensagemErro" :url="'/especies'"
+      @update:visible="state.modal_autorizacao = $event" />
    <Loader :loading="state.loader" />
 </template>
 
@@ -28,6 +30,7 @@ import BotaoSave from '@/components/BotaoSave.vue';
 import BotaoCancel from '@/components/BotaoCancel.vue';
 import Loader from '@/components/Loader.vue';
 import ModalErro from '@/components/ModalErro.vue';
+import ModalNAutorizado from '@/components/ModalNAutorizado.vue';
 
 const storage = useStorage();
 const token = storage.getStorageSync("token");
@@ -40,6 +43,7 @@ const state = reactive({
    nome: '',
    loader: false,
    modal: false,
+   modal_autorizacao: false,
    MensagemErro: '',
 });
 
@@ -57,9 +61,15 @@ async function buscarEspecie(id) {
       state.id = response.id;
       state.nome = response.nome;
    } catch (error) {
-      console.error('Erro ao buscar espécie:', error);
-      state.MensagemErro = 'Erro ao carregar os dados da espécie.';
-      state.modal = true;
+      const status_err = error.status;
+      if (status_err == 401) {
+         state.modal_autorizacao = true;
+         state.MensagemErro = error.response.data.error;
+      } else {
+         console.error('Erro ao buscar espécie:', error);
+         state.MensagemErro = 'Erro ao carregar os dados da espécie.';
+         state.modal = true;
+      }
    } finally {
       state.loader = false;
    }

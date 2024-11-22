@@ -22,7 +22,7 @@
          <BotaoCleanFilter @click="buscarPets()" class=" sm:ml-1" />
       </div>
       <div class="flex justify-end items-center">
-         <BotaoCreate :link="'/pets/cadastrar-pet'" :titulo="'Cadastrar Pet'" />
+         <BotaoCreate :link="'/pets/cadastrar-pet'" :titulo="'Cadastrar Pet'" v-if="user_tipo != 4" />
       </div>
    </div>
    <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm" :param_url_1="'pets'"
