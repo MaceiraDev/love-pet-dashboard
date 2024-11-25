@@ -37,5 +37,9 @@ export default HTTPCLIENT => ({
       const response = await HTTPCLIENT.get(url, { headers });
       return { response: response.data };
    },
-
+   generatePdf: async (id, token) => {
+      const headers = { "Authorization": "Bearer " + token, "Accept": "application/json" };
+      const response = await HTTPCLIENT.get('/fichas/gerar-pdf/' + id, { headers, responseType: 'blob' });
+      return { data: response.data };
+   }
 })

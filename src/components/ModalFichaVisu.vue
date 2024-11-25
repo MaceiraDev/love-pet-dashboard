@@ -1,7 +1,10 @@
 <template>
     <div v-if="visible" class="fixed inset-0 bg-preto bg-opacity-50 flex justify-center items-center z-50 snap-x">
       <div class="bg-background p-6 rounded-lg shadow-lg max-w-7xl w-full overflow-y-auto max-h-screen md:max-h">
-         <h2 class="text-2xl font-bold mb-4 text-azul3 border-b-2 border-b-azul3">Detalhes da Ficha</h2>
+         <div class="border-b-2 border-b-azul3 flex justify-between items-center">
+            <h2 class="text-2xl font-bold mb-4 text-azul3">Detalhes da Ficha</h2> 
+           <button @click="gerarPDF(data.id)" class="bg-azul1 text-branco py-2 px-4 rounded hover:bg-azul3 transition duration-300"> Gerar PDF <i class="bi bi-file-earmark-pdf"></i></button>
+         </div>
          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                <h3 class="text-azul1 font-semibold text-lg mb-2">Informações Gerais</h3>
@@ -50,6 +53,7 @@
 <script setup>
 import { defineProps, ref, onMounted, watch, nextTick } from 'vue';
 import services from '@/services';
+
 
 const props = defineProps({
    visible: {
@@ -153,4 +157,21 @@ async function buscarServico(id) {
       console.error('Erro ao buscar serviço:', error);
    }
 }
+
+async function gerarPDF(id) {
+   try {
+      const response = await services.fichas.generatePdf(id, props.token);
+      const sanitizedNomePet = pet.value.nome.replace(/[^a-zA-Z0-9_-]/g, '_');
+      const nomeArquivo = `ficha_pet_${sanitizedNomePet}.pdf`;
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+      link.download = nomeArquivo;
+      link.click();
+      URL.revokeObjectURL(link.href);
+   } catch (error) {
+      console.error('Erro ao gerar PDF:', error);
+   }
+}
+
+
 </script>
