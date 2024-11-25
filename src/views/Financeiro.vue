@@ -1,30 +1,43 @@
 <template>
-   <div class="dashboard-container flex flex-col items-center space-y-8">
-      <!-- Cards para Total Clínico e Estético -->
-      <div class="flex flex-col items-center space-y-4 w-full">
-         <h1 class="text-xl font-bold text-preto">Relatório de Totais Clínico e Estético do Último Mês</h1>
-         <div class="flex space-x-4 justify-center w-full">
-            <div class="bg-azul2 rounded-lg p-4 flex flex-col items-center card w-1/3">
-               <h2 class="text-lg font-semibold text-branco">Total Clínico</h2>
-               <p class="text-3xl font-bold text-limao">R${{ state.clinicoTotal }}</p>
+   <div class="dashboard-container flex flex-col space-y-6 items-center">
+      <!-- Relatório de Totais -->
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full">
+         <div class="flex flex-col items-center space-y-4">
+            <h1 class="text-xl font-bold text-preto text-center">
+               Relatório de Totais Clínico e Estético do Último Mês
+            </h1>
+            <div class="flex space-x-4 justify-center w-full">
+               <div class="bg-azul2 rounded-lg shadow-lg p-6 flex flex-col items-center card">
+                  <h2 class="text-lg font-semibold text-branco">Total Clínico</h2>
+                  <p class="text-3xl font-bold text-limao">R${{ state.clinicoTotal }}</p>
+               </div>
+               <div class="bg-azul2 rounded-lg shadow-lg p-6 flex flex-col items-center card">
+                  <h2 class="text-lg font-semibold text-branco">Total Estético</h2>
+                  <p class="text-3xl font-bold text-limao">R${{ state.esteticoTotal }}</p>
+               </div>
             </div>
-            <div class="bg-azul2 rounded-lg p-4 flex flex-col items-center card w-1/3">
-               <h2 class="text-lg font-semibold text-branco">Total Estético</h2>
-               <p class="text-3xl font-bold text-limao">R${{ state.esteticoTotal }}</p>
+         </div>
+         <div class="flex flex-col items-center space-y-4">
+            <h1 class="text-xl font-bold text-preto text-center">
+               Porcentual comparado ao último Mês
+            </h1>
+            <div class="rounded-lg shadow-lg p-6 flex flex-col items-center card"
+               :class="state.porcentual >= 0 ? 'bg-azul2 border-green-500' : 'bg-vermelho border-red-500'">
+               <i class="material-icons" :class="state.porcentual >= 0 ? 'material-icons-up' : 'material-icons-down'">
+                  {{ state.porcentual >= 0 ? 'trending_up' : 'trending_down' }}
+               </i>
+               <p class="text-3xl font-bold text-limao"> {{ state.porcentual }}%
+               </p>
             </div>
          </div>
       </div>
-
-      <!-- Layout Flex para Gráfico e Tabela -->
-      <div class="flex space-x-4 w-full">
-         <!-- Gráfico de Receita Mensal -->
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 w-full">
          <div class="flex-1">
             <VueApexCharts type="bar" :options="chartOptionsReceitas" :series="seriesReceitas" width="100%" />
          </div>
-         <!-- Tabela de Clientes Frequentes -->
          <div class="overflow-x-auto flex-1">
-            <h3 class="text-lg text-preto font-medium">Clientes Frequentes</h3>
-            <table class="min-w-full table-auto bg-table2 shadow-lg overflow-hidden divide-y-4 divide-limao">
+            <h3 class="text-lg text-preto font-medium mb-4">Clientes Frequentes</h3>
+            <table class="min-w-full table-auto bg-table2 shadow-lg overflow-hidden divide-y divide-limao">
                <thead class="bg-azul2 text-branco">
                   <tr>
                      <th class="px-4 py-2 text-left">NOME</th>
@@ -45,6 +58,7 @@
       </div>
    </div>
 </template>
+
 <script setup>
 import services from "@/services";
 import { reactive, onMounted, computed } from "vue";
@@ -57,6 +71,7 @@ const token = storage.getStorageSync("token");
 const state = reactive({
    clinicoTotal: '',
    esteticoTotal: '',
+   porcentual: '',
    receitaMensal: {},
    clientes_frequentes: []
 });
@@ -71,9 +86,9 @@ async function getInfos() {
    state.esteticoTotal = response.total_valor_estetico_mes;
    state.receitaMensal = response.receitaMensal;
    state.clientes_frequentes = response.clientes_frequentes;
+   state.porcentual = response.porcentual;
 }
 
-// Configuração do gráfico de receita mensal (bar chart)
 const chartOptionsReceitas = reactive({
    chart: {
       type: "bar",
@@ -126,11 +141,6 @@ const seriesReceitas = computed(() => {
       }
    ];
 });
-
-const clientesFrequentes = computed(() => {
-   return state.clientesFrequentes.map(ficha => ficha[Object.keys(ficha)[0]]);
-
-});
 </script>
 
 <style scoped>
@@ -140,12 +150,18 @@ const clientesFrequentes = computed(() => {
 }
 
 .card {
+   width: 100%;
    max-width: 300px;
-   flex: 1;
-   min-width: 250px;
+   min-height: 120px;
 }
 
-.table-auto {
-   width: 100%;
+.material-icons-up {
+   color: rgb(0, 231, 0);
+   font-size: 2rem;
+}
+
+.material-icons-down {
+   color: red;
+   font-size: 2rem;
 }
 </style>
