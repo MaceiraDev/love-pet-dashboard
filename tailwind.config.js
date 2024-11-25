@@ -20,6 +20,8 @@ export default {
          branco: '#fff',
          vermelho: '#F44336',
          vermelho2: '#9d3226',
+         vermelho3: '#6c1919',
+         verde: '#0f440f',
       }
    },
    plugins: [],

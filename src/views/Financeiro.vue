@@ -22,7 +22,7 @@
                Porcentual comparado ao último Mês
             </h1>
             <div class="rounded-lg shadow-lg p-6 flex flex-col items-center card"
-               :class="state.porcentual >= 0 ? 'bg-azul2 border-green-500' : 'bg-vermelho border-red-500'">
+               :class="state.porcentual >= 0 ? 'bg-verde border-green-500' : 'bg-vermelho3 border-red-500'">
                <i class="material-icons" :class="state.porcentual >= 0 ? 'material-icons-up' : 'material-icons-down'">
                   {{ state.porcentual >= 0 ? 'trending_up' : 'trending_down' }}
                </i>
