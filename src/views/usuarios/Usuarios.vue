@@ -24,6 +24,7 @@ import { useStorage } from 'vue3-storage';
 const storage = useStorage();
 const token = storage.getStorageSync("token");
 const user_tipo = storage.getStorageSync("tipo_usuario");
+const user_id = storage.getStorageSync("user_id")
 const loading = ref(false);
 
 onMounted(() => {
@@ -65,6 +66,13 @@ function openConfirm(user) {
 async function deleteUser() {
    loading.value = true;
    try {
+      if (user_id == state.user_id_delete) {
+         state.MensagemErro = "Você não pode se deletar"
+         loading.value = false;
+         state.modal = true;
+         return;
+      }
+
       if (state.user_id_delete) {
          await services.usuarios.delete(state.user_id_delete, token);
          buscarUsuarios();
