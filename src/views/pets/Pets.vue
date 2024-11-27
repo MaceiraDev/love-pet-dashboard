@@ -174,7 +174,7 @@ function openConfirm(pet) {
 
 
 //corpo da tabela
-const tableHeaders = ['nome', 'tutor', 'situação', 'cor', 'raça', 'espécie'];
+const tableHeaders = ['nome', 'tutor', 'situação', 'cor', 'raça', 'espécie', 'data ultima consulta'];
 const tableBody = computed(() => {
    return state.pets.map(pet => {
       const tutor = state.tutores.find(tutor => tutor.id === pet.tutor_id);
@@ -189,6 +189,7 @@ const tableBody = computed(() => {
          cor: pet.cor,
          raça: raca ? raca.nome : 'Raça não encontrada',
          espécie: especie ? especie.nome : 'Espécie não encontrada',
+         'data ultima consulta': pet.data_ultima_consulta ? pet.data_ultima_consulta : 'Data não encontrada',
       };
    });
 });

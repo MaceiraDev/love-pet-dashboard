@@ -95,7 +95,10 @@
             </div>
             <div v-if="state.data_ultima_consulta != null">
                <label>Data Última Consulta</label>
-               <input type="text" placeholder="" v-mask-date.br v-model="state.data_ultima_consulta" readonly>
+               <router-link :to="'/fichas/alterar-ficha/' + state.id_ultima_ficha">
+                  <input type="text" class="cursor-pointer" v-mask-date.br v-model="state.data_ultima_consulta" readonly />
+               </router-link>
+
             </div>
 
             <div v-if="!state.imagem.imagem">
@@ -190,6 +193,7 @@ const state = reactive({
    modal_autorizacao: false,
    MensagemErro: '',
    data_ultima_consulta: '',
+   id_ultima_ficha: '',
 });
 
 async function buscarPet(id) {
