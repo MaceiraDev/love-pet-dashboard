@@ -3,7 +3,7 @@
       <h2 class=" text-2xl   font-bold  text-preto2">Fichas</h2>
       <BotaoCreate :link="'/fichas/cadastrar-ficha'" :titulo="'Cadastrar Ficha'" v-if="user_tipo != 4" />
    </div>
-   <div class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2  gap-2">
+   <div class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2  gap-2">
       <div class="flex justify-start items-center">
          <select v-model="state.veterinario_id">
             <option selected disabled value="">Selecione um veterinário</option>
@@ -218,7 +218,7 @@ async function openFicha(ficha) {
    await buscarFicha(ficha.id);
 }
 
-const tableHeaders = ['veterinário', 'pet', 'espécie', 'data', 'situação (consulta)', 'status'];
+const tableHeaders = ['veterinário', 'serviço', 'pet', 'espécie', 'data', 'situação (consulta)', 'status'];
 const tableBody = computed(() => {
    return state.fichas.map(ficha => {
       // Busca o pet pelo id
@@ -240,6 +240,7 @@ const tableBody = computed(() => {
       return {
          id: ficha.id,
          veterinário: nomeVeterinario,
+         serviço: ficha.servico_nome,
          pet: nomePet,
          espécie: nomeEspecie,
          data: ficha.data,

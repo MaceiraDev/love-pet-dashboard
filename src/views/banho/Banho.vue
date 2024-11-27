@@ -1,8 +1,11 @@
 <template>
    <div class="flex justify-between items-center mb-2">
       <h2 class="text-2xl font-bold text-preto2">Banho e Tosa</h2>
+      <div class="flex justify-end items-center">
+         <BotaoCreate :link="'/banhos/cadastrar-banho'" :titulo="'Cadastrar Banho e Tosa'" v-if="user_tipo != 4" />
+      </div>
    </div>
-   <div class="grid grid-cols-1 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2  gap-2">
+   <div class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2  gap-2">
       <div class="flex justify-start items-center">
          <select v-model="state.tutor_id" @change="buscarPetsTutor(state.tutor_id)">
             <option selected disabled value="">Selecione um Tutor</option>
@@ -27,11 +30,8 @@
       </div>
       <div class="flex justify-start items-center">
          <input type="date" placeholder="Digite uma data:" v-model="state.date" />
-         <BotaoSearchFilter @click="filtrarFichas" class="sm:ml-1" />
+         <BotaoSearchFilter @click="filtrarBanhos" class="sm:ml-1" />
          <BotaoCleanFilter @click="buscarBanhos()" class=" sm:ml-1" />
-      </div>
-      <div class="flex justify-end items-center">
-         <BotaoCreate :link="'/banhos/cadastrar-banho'" :titulo="'Cadastrar Banho e Tosa'" v-if="user_tipo != 4" />
       </div>
    </div>
    <DataTable :headers="tableHeaders" :data="tableBody" :numAcoes="[1, 2]" @deletar="openConfirm"
@@ -151,17 +151,14 @@ function openConfirm(banho) {
    state.banho_delete_id = banho.id;
 }
 
-async function filtrarFichas() {
+async function filtrarBanhos() {
    loading.value = true;
    try {
-      // Construir os parâmetros dinamicamente com base nos valores selecionados
       const params = {};
-      //verfica se o valor existe se sim add ele como param
       if (state.pet_id) params.pet_id = state.pet_id;
       if (state.status) params.status = state.status;
       if (state.tutor_id) params.tutor_id = state.tutor_id;
       if (state.date) params.data = state.date;
-      // Chamar a função de busca passando os parâmetros
       const { response } = await services.banhos.getBanhosCustom(token, params);
       state.banhos = response.data;
    } catch (error) {
@@ -177,13 +174,10 @@ const tableBody = computed(() => {
    return state.banhos.map(banho => {
       const pet = state.pets.find(p => p.id === banho.pet_id);
       const nomePet = pet ? pet.nome : 'Desconhecido';
-
       const tuto = state.tutores.find(t => t.id === banho.tutor_id);
       const tutorNome = tuto ? tuto.nome : 'Desconhecido';
-
       const servico = state.servicos.find(s => s.id === banho.servico_id);
       const servicoNome = servico ? servico.nome : 'Desconhecido';
-
       return {
          id: banho.id,
          pet: nomePet,

@@ -13,7 +13,6 @@
    color: #1a1b1c;
 }
 
-/* Cor de fundo do input */
 .layout-default input[type="text"]:focus,
 .layout-default input[type="email"]:focus,
 .layout-default input[type="password"]:focus,
@@ -23,7 +22,6 @@
    outline: none;
 }
 
-/* Placeholder estilizado */
 .layout-default input[type="text"]::placeholder,
 .layout-default input[type="email"]::placeholder,
 .layout-default input[type="password"]::placeholder,
@@ -63,13 +61,11 @@
    outline: none;
 }
 
-/* Select desabilitado */
 .layout-default select:disabled {
    background-color: #f2f2f2;
    cursor: not-allowed;
 }
 
-/* Select com erro */
 .layout-default select.error {
    border-color: #e74c3c;
    box-shadow: 0 0 8px rgba(231, 76, 60, 0.5);
@@ -87,7 +83,6 @@
    color: #1a1b1c;
 }
 
-/* Cor de fundo do textarea */
 .layout-default textarea:focus {
    border-color: #4A90E2;
    box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);

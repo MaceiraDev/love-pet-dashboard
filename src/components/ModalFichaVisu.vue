@@ -24,7 +24,8 @@
          </div>
          <div class="mt-4">
             <h3 class="text-azul1 font-semibold text-lg mb-2">Detalhes do Atendimento</h3>
-            <p><span class="font-semibold text-lg">Serviço:</span> {{ servico.nome || 'Carregando...' }}</p>
+            <p><span class="font-semibold text-lg">Serviço:</span> {{ data.servico_nome || 'Carregando...' }}</p>
+            <p><span class="font-semibold text-lg">Valor:</span> {{ data.servico_valor || 'Carregando...' }}</p>
             <p><span class="font-semibold text-lg">Motivo da Consulta:</span> {{ data.motivo }}</p>
             <p><span class="font-semibold text-lg">Sintomas:</span> {{ data.sintomas }}</p>
             <p><span class="font-semibold text-lg">Diagnóstico Preliminar:</span> {{ data.diagnostico_pre }}</p>
@@ -75,7 +76,8 @@ const props = defineProps({
          data: "",
          horario: "",
          status: "",
-         servico_id: null,
+         servico_nome: null,
+         servico_valor: null,
          situacao_id: null,
          comportamento_animal: "",
          motivo: "",
@@ -98,7 +100,6 @@ const veterinario = ref({});
 const pet = ref({});
 const tutor = ref({});
 const situacao = ref({});
-const servico = ref({});
 
 const close = () => {
    emit('update:visible', false);
@@ -109,7 +110,6 @@ watch(() => props.data, async (newData) => {
    if (newData.pet_id) await buscarPet(newData.pet_id);
    if (newData.tutor_id) await buscarTutor(newData.tutor_id);
    if (newData.situacao_id) await buscarSituacao(newData.situacao_id);
-   if (newData.servico_id) await buscarServico(newData.servico_id);
 }, { immediate: true });
 
 async function buscarVeterinario(id) {
@@ -146,15 +146,6 @@ async function buscarSituacao(id) {
       situacao.value = response;
    } catch (error) {
       console.error('Erro ao buscar situação do pet:', error);
-   }
-}
-
-async function buscarServico(id) {
-   try {
-      const { response } = await services.servicos.getById(id, props.token);
-      servico.value = response;
-   } catch (error) {
-      console.error('Erro ao buscar serviço:', error);
    }
 }
 

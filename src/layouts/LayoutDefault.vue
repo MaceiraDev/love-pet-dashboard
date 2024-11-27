@@ -13,71 +13,81 @@
                </div>
             </div>
          </div>
-         <div class="flex-grow">
+         <div class="content p-2">
             <ul class="mt-4">
                <li>
-                  <router-link to="/" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  <router-link to="/"
+                     class="block py-2 px-4 rounded text-branco hover:text-limao hover:bg-azul1 duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/' }">
                      <i class="bi bi-globe-americas"></i> Dashboard
                   </router-link>
                </li>
                <li>
-                  <router-link to="/fichas" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  <router-link to="/fichas"
+                     class="block py-2 px-4 rounded text-branco hover:text-limao hover:bg-azul1 duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/fichas' }">
                      <i class="bi bi-clipboard2-fill"></i> Fichas
                   </router-link>
                </li>
                <li>
-                  <router-link to="/pets" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  <router-link to="/pets"
+                     class="block py-2 px-4 rounded text-branco hover:text-limao hover:bg-azul1 duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/pets' }">
                      <i class="material-icons">pets</i> Pets
                   </router-link>
                </li>
                <li>
-                  <router-link to="/tutores" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  <router-link to="/tutores"
+                     class="block py-2 px-4 rounded text-branco hover:text-limao hover:bg-azul1 duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/tutores' }">
                      <i class="bi bi-person-raised-hand"></i> Tutores
                   </router-link>
                </li>
                <li>
-                  <router-link to="/banhos" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  <router-link to="/banhos"
+                     class="block py-2 px-4 rounded text-branco hover:text-limao hover:bg-azul1 duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/banhos' }">
                      <i class="bi bi-scissors"></i> Banho e tosa
                   </router-link>
                </li>
                <li v-if="user_tipo != 4">
-                  <router-link to="/servicos" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  <router-link to="/servicos"
+                     class="block py-2 px-4 rounded text-branco hover:text-limao hover:bg-azul1 duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/servicos' }">
-                     <i class="bi bi-easel-fill"></i> Serviços
+                     <i class="bi bi-currency-dollar"></i> Serviços
                   </router-link>
                </li>
                <li>
                   <router-link to="/situacoes-pet"
-                     class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                     class="block py-2 px-4 rounded text-branco hover:text-limao hover:bg-azul1 duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/situacoes-pet' }">
                      <i class="bi bi-thermometer-low"></i> Situações Pet
                   </router-link>
                </li>
                <li>
-                  <router-link to="/especies" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  <router-link to="/especies"
+                     class="block py-2 px-4 rounded text-branco hover:text-limao hover:bg-azul1 duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/especies' }">
                      <i class="bi bi-1-circle"></i> Espécies
                   </router-link>
                </li>
                <li>
-                  <router-link to="/racas" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  <router-link to="/racas"
+                     class="block py-2 px-4 rounded text-branco hover:text-limao hover:bg-azul1 duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/racas' }">
                      <i class="bi bi-2-circle"></i> Raças
                   </router-link>
                </li>
                <li v-if="user_tipo == 0 || user_tipo == 1">
-                  <router-link to="/financeiro" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  <router-link to="/financeiro"
+                     class="block py-2 px-4 rounded text-branco hover:text-limao hover:bg-azul1 duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/financeiro' }">
-                     <i class="bi bi-currency-dollar"></i> Financeiro
+                     <i class="bi bi-graph-up"></i> Financeiro
                   </router-link>
                </li>
                <li v-if="user_tipo == 0 || user_tipo == 1">
-                  <router-link to="/usuarios" class="block py-2 px-4 rounded text-branco hover:text-limao duration-100"
+                  <router-link to="/usuarios"
+                     class="block py-2 px-4 rounded text-branco hover:text-limao hover:bg-azul1 duration-100"
                      :class="{ 'bg-azul3 text-limao font-bold shadow-sm': $route.path === '/usuarios' }">
                      <i class="bi bi-people-fill"></i> Usuários
                   </router-link>
@@ -107,7 +117,7 @@
                <BotaoDropHeader />
             </div>
          </header>
-         <main class="flex-grow layout-main">
+         <main class="flex-grow">
             <router-view class="layout-router-view" />
          </main>
       </div>
@@ -115,6 +125,7 @@
    <ModalLogout :visible="state.modal" @update:visible="state.modal = $event" @confirmar="handleConfirmLogout" />
    <Loader :loading="loading" />
 </template>
+
 <script setup>
 import { ref, reactive, onMounted, onBeforeMount } from 'vue';
 import ModalLogout from '@/components/ModalLogout.vue';
@@ -177,16 +188,18 @@ function handleConfirmLogout() {
    }, 1000);
 }
 </script>
+
 <style scoped>
 @import url('./../assets/base.css');
 
 main {
    margin-top: 60px;
-   padding-left: 17rem;
    padding: 1rem;
    flex-grow: 1;
    overflow-y: auto;
+   padding-left: 17rem;
 }
+
 
 header {
    position: fixed;
@@ -209,12 +222,8 @@ aside {
    top: 0;
    left: 0;
    width: 16rem;
-   height: 100vh;
+   height: 100%;
    overflow-y: auto;
-}
-
-.layout-main {
-   padding-left: 17rem;
 }
 
 .layout-default {
@@ -371,5 +380,14 @@ a {
    aside {
       width: 14rem;
    }
+}
+
+@media (max-width: 1254px) and (min-width: 1024px) {
+   main {
+      padding-left: 17rem;
+      width: calc(100vw - 0rem);
+   }
+
+
 }
 </style>

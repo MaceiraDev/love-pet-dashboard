@@ -6,7 +6,7 @@
       <div class="flex justify-between items-center">
          <input type="text" v-model="state.nome_pet" class="border rounded p-2 w-full" placeholder="Buscar pet:" />
       </div>
-      <div>
+      <div class="flex justify-start items-center">
          <select required v-model="state.especie_id"
             @change="buscarRacasByEspecie(state.especie_id)">
             <option selected disabled value="">Selecione uma epécie</option>
