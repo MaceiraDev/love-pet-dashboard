@@ -26,17 +26,20 @@
                   <button @click="toggleMenu" class="hamburger-icon ml-auto">
                      <span class="material-icons">menu</span>
                   </button>
-                  <div v-if="state.menu_aberto" class="absolute right-0 mt-2 w-48 bg-azul2 rounded-lg shadow-lg p-4 z-10 text-branco">
+                  <div v-if="state.menu_aberto"
+                     class="absolute right-0 mt-2 w-48 bg-azul2 rounded-lg shadow-lg p-4 z-10 text-branco">
                      <div class="flex flex-col space-y-2 mb-2">
                         <p>Comparar</p>
                         <select v-model="state.mes_1" class="month-dropdown">
                            <option value="" selected disabled hidden>Selecione</option>
-                           <option v-for="month in months" :key="month" :value="month"> {{ monthNames[month - 1] }} </option>
+                           <option v-for="month in months" :key="month" :value="month"> {{ monthNames[month - 1] }}
+                           </option>
                         </select>
                         <p>Em relação à</p>
                         <select v-model="state.mes_2" class="month-dropdown">
                            <option value="" selected disabled hidden>Selecione</option>
-                           <option v-for="month in months" :key="month" :value="month"> {{ monthNames[month - 1] }} </option>
+                           <option v-for="month in months" :key="month" :value="month"> {{ monthNames[month - 1] }}
+                           </option>
                         </select>
                      </div>
                      <BotaoCleanFilter @click="fecharEBuscar()" class=" sm:ml-1" />
@@ -147,20 +150,19 @@ const chartOptionsReceitas = reactive({
 
 const seriesReceitas = computed(() => {
    const receitaMensal = [
-      state.receitaMensal["1"] || 0,
-      state.receitaMensal["2"] || 0,
-      state.receitaMensal["3"] || 0,
-      state.receitaMensal["4"] || 0,
-      state.receitaMensal["5"] || 0,
-      state.receitaMensal["6"] || 0,
-      state.receitaMensal["7"] || 0,
-      state.receitaMensal["8"] || 0,
-      state.receitaMensal["9"] || 0,
-      state.receitaMensal["10"] || 0,
-      state.receitaMensal["11"] || 0,
-      state.receitaMensal["12"] || 0
-   ];
-
+      state.receitaMensal["1"] || "0.00",
+      state.receitaMensal["2"] || "0.00",
+      state.receitaMensal["3"] || "0.00",
+      state.receitaMensal["4"] || "0.00",
+      state.receitaMensal["5"] || "0.00",
+      state.receitaMensal["6"] || "0.00",
+      state.receitaMensal["7"] || "0.00",
+      state.receitaMensal["8"] || "0.00",
+      state.receitaMensal["9"] || "0.00",
+      state.receitaMensal["10"] || "0.00",
+      state.receitaMensal["11"] || "0.00",
+      state.receitaMensal["12"] || "0.00"
+   ]
    return [
       {
          name: "Receita Mensal",
@@ -168,6 +170,7 @@ const seriesReceitas = computed(() => {
       }
    ];
 });
+
 
 const months = Array.from({ length: 12 }, (_, i) => i + 1);  // Array de meses (1 a 12)
 const monthNames = [
@@ -189,7 +192,7 @@ async function filtrarPorcentagem() {
       state.menu_aberto = false;
    } catch (error) {
       console.log(error);
-   } 
+   }
 }
 
 function fecharEBuscar() {
