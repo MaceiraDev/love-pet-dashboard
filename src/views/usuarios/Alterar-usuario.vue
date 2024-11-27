@@ -86,9 +86,9 @@
                   <option value="INATIVO">Inativo</option>
                </select>
             </div>
-            <div>
+            <div v-if="state.tipo_usuario === '1'">
                <label>N° de pets sobre seus cuidados</label>
-               <input type="text" v-model="state.n_pets" />
+               <input type="text" disabled v-model="state.n_pets" />
             </div>
             <div v-if="!state.imagem.imagem">
                <label class="form-label">Imagem de Perfil</label>

@@ -61,7 +61,7 @@
             <input type="text" v-model="state.data_nascimento" v-mask-date.br required
                class="border rounded p-2 w-full bg-gray-200" />
          </div>
-         <div>
+         <div v-if="user_tipo === '1'">
             <label class="block font-bold text-lg">Número de Pets</label>
             <input type="text" v-model="state.n_pets" readonly class="border rounded p-2 w-full" />
          </div>
