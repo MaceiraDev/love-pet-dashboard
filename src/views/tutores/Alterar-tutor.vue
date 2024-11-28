@@ -53,7 +53,7 @@
                <input type="text" v-model="state.profissao" placeholder="Digite a profissão:" />
             </div>
             <div v-if="state.qtd_animais != null">
-               <label>Quantidade de Animais</label>
+               <label>Quantidade de Animais (Clínica)</label>
                <input type="text" readonly v-model="state.qtd_animais" />
             </div>
             <div>

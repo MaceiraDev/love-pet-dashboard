@@ -110,7 +110,6 @@ async function buscarEspecies() {
    state.especies = response.data;
 }
 
-
 //filtros
 async function buscarRacasByEspecie(especie_id) {
    state.racas_filtro = [];
@@ -189,7 +188,7 @@ const tableBody = computed(() => {
          cor: pet.cor,
          raça: raca ? raca.nome : 'Raça não encontrada',
          espécie: especie ? especie.nome : 'Espécie não encontrada',
-         'data ultima consulta': pet.data_ultima_consulta ? pet.data_ultima_consulta : 'Data não encontrada',
+         'data ultima consulta': pet.data_ultima_consulta ? pet.data_ultima_consulta : 'Nenhum data',
       };
    });
 });
