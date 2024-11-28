@@ -41,5 +41,10 @@ export default HTTPCLIENT => ({
       const headers = { "Authorization": "Bearer " + token, "Accept": "application/json" };
       const response = await HTTPCLIENT.get('/fichas/gerar-pdf/' + id, { headers, responseType: 'blob' });
       return { data: response.data };
-   }
+   },
+   getFichasByVetId: async (vet_id, token) => {
+      const headers = { "Authorization": "Bearer " + token, "Accept": "application/json"};
+      const response = await HTTPCLIENT.get('/fichas/fichas-pendentes/' + vet_id, { headers });
+      return { response: response.data }
+   },
 })

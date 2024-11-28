@@ -29,11 +29,11 @@ const props = defineProps({
 const emit = defineEmits(['update:visible', 'confirm']);
 
 const cancel = () => {
-   emit('update:visible', false); // Fecha o modal
+   emit('update:visible', false);
 };
 
 const confirmarLogout = () => {
-   emit('confirmar'); // Emite um evento personalizado para confirmar o logout
-   emit('update:visible', false); // Fecha o modal
+   emit('confirmar'); 
+   emit('update:visible', false); 
 };
 </script>

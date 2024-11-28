@@ -19,7 +19,6 @@
          </div>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 2xl:grid-cols-2 gap-4 mt-12">
-         <!-- Fichas Pendentes Table -->
          <div class="overflow-x-auto">
             <h3 class="text-lg text-preto font-medium">Fichas Pendentes/Recentes</h3>
             <table class="min-w-full table-auto bg-table2 shadow-lg overflow-hidden divide-y-4 divide-limao">
@@ -27,6 +26,7 @@
                   <tr>
                      <th class="px-4 py-2 text-left">VET</th>
                      <th class="px-4 py-2 text-left">PET</th>
+                     <th class="px-4 py-2 text-left">SERVIÇO</th>
                      <th class="px-4 py-2 text-left">TUTOR</th>
                      <th class="px-4 py-2 text-left">DATA</th>
                      <th class="px-4 py-2 text-left">HORA</th>
@@ -38,14 +38,15 @@
                      v-for="ficha in state.data_tabelas.fichas" :key="ficha.id">
                      <td class="px-4 py-2">{{ ficha.veterinario }}</td>
                      <td class="px-4 py-2">{{ ficha.pet }}</td>
+                     <td class="px-4 py-2">{{ ficha.servico }}</td>
                      <td class="px-4 py-2">{{ ficha.tutor }}</td>
                      <td class="px-4 py-2">{{ ficha.data }}</td>
                      <td class="px-4 py-2">{{ ficha.hora }}</td>
                      <td class="px-4 py-2">
                         <router-link :to="'/fichas/alterar-ficha/' + ficha.id">
                            <button
+                              title="Ir para a ficha"
                               class="bg-azul1 text-branco px-4 py-2 rounded-md transition duration-500 hover:bg-azul4 hover:text-preto">
-                              Ir para a ficha
                               <i class="bi bi-person-walking"></i>
                            </button>
                         </router-link>
@@ -54,8 +55,6 @@
                </tbody>
             </table>
          </div>
-
-         <!-- Banhos e Tosas Agendados Table -->
          <div class="overflow-x-auto">
             <h3 class="text-lg text-preto font-medium">Banhos e Tosas Agendados</h3>
             <table class="min-w-full table-auto bg-table2 shadow-lg overflow-hidden divide-y-4 divide-limao">
@@ -78,8 +77,8 @@
                      <td class="px-4 py-2">
                         <router-link :to="'/banhos/alterar-banho/' + banho.id">
                            <button
+                              title="Visualizar Banho"
                               class="bg-azul1 text-branco px-4 py-2 rounded-md transition duration-500 hover:bg-azul4 hover:text-preto ">
-                              Visualizar Banho
                               <i class="bi bi-droplet"></i>
                            </button>
                         </router-link>

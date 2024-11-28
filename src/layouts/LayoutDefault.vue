@@ -97,13 +97,12 @@
       </aside>
       <div class="lg:flex-1 lg:flex lg:flex-col">
          <header class="flex justify-between items-center p-2">
-            <router-link to="/perfil">
+            <router-link to="/perfil" class="flex items-center">
                <img :src="user_image" alt="Imagem Perfil"
                   class="w-12 h-12 rounded-full object-cover border-2 border-azul2 hover:border-limao transition-all duration-300"
                   v-if="user_image != ''">
-               <NoPerfil
-                  class="w-12 h-12 rounded-full object-cover border-2 border-azul2 hover:border-limao transition-all duration-300"
-                  v-else />
+               <NoPerfil v-else
+                  class="w-12 h-12 rounded-full object-cover border-2 border-azul2 hover:border-limao transition-all duration-300" />
             </router-link>
             <div class="flex items-center">
                <label class="burger" typeof="button" for="burger">
@@ -114,6 +113,7 @@
                      <span></span>
                   </button>
                </label>
+               <BotaoFichaNot :fichas="state.fichas_pendentes" @click="openNot" v-if="user_tipo === '1'"  />
                <BotaoDropHeader />
             </div>
          </header>
@@ -123,6 +123,8 @@
       </div>
    </div>
    <ModalLogout :visible="state.modal" @update:visible="state.modal = $event" @confirmar="handleConfirmLogout" />
+   <ModalNotFichaPendentes :visible="state.modal_not" :fichas="state.fichas_pendentes"
+      @update:visible="state.modal_not = $event" v-if="user_tipo === '1'" />
    <Loader :loading="loading" />
 </template>
 
@@ -134,15 +136,21 @@ import { useRouter } from 'vue-router';
 import { useStorage } from 'vue3-storage';
 import BotaoDropHeader from '@/components/BotaoDropHeader.vue';
 import NoPerfil from '@/components/NoPerfil.vue';
+import BotaoFichaNot from '@/components/BotaoFichaNot.vue';
+import services from '@/services';
+import ModalNotFichaPendentes from '@/components/ModalNotFichaPendentes.vue';
 
 const storage = useStorage();
+const token = storage.getStorageSync("token");
 const user_nome = storage.getStorageSync("nome");
 const user_tipo = storage.getStorageSync("tipo_usuario");
 const user_image = storage.getStorageSync("imagem");
 const router = useRouter();
 const state = reactive({
    modal: false,
+   modal_not: false,
    asideVisible: false,
+   fichas_pendentes: [],
 });
 const loading = ref(false);
 
@@ -159,8 +167,11 @@ function handleClickOutside(event) {
    }
 }
 
-
 onMounted(() => {
+   if (user_tipo === "1") {
+      const user_id = storage.getStorageSync("user_id");
+      fetchFichas(user_id)
+   }
    checkScreenSize();
    window.addEventListener('resize', checkScreenSize);
    document.addEventListener('click', handleClickOutside);
@@ -179,11 +190,29 @@ function deslogar() {
 function toggleAside() {
    state.asideVisible = !state.asideVisible;
 }
+
 function handleConfirmLogout() {
    loading.value = true;
    setTimeout(() => {
       storage.removeStorageSync("token");
       router.push("/login");
+      loading.value = false;
+   }, 1000);
+}
+
+async function fetchFichas(user_id) {
+   try {
+      const { response } = await services.fichas.getFichasByVetId(user_id, token);
+      state.fichas_pendentes = response;
+   } catch (error) {
+      console.log(error)
+   }
+}
+
+function openNot() {
+   loading.value = true;
+   setTimeout(() => {
+      state.modal_not = true;
       loading.value = false;
    }, 1000);
 }
@@ -299,6 +328,7 @@ a {
    background: transparent;
    cursor: pointer;
    display: none;
+   margin-right: 10px;
 }
 
 .burger input {
