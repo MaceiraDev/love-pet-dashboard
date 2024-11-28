@@ -70,7 +70,8 @@ async function novoServico() {
       return;
    }
 
-   const valorLimpo = parseFloat(state.valor.replace(',', '.')) || 0;
+   const valorComPontosRemovidos = state.valor.replace(/\./g, '');
+   const valorLimpo = parseFloat(valorComPontosRemovidos.replace(',', '.')) || 0;
 
    let dados = {
       nome: state.nome,

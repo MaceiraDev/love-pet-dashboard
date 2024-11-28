@@ -51,15 +51,15 @@
             </div>
             <div>
                <label>Peso (kg)</label>
-               <input type="text" placeholder="Digite o peso:" v-model="state.peso">
+               <input type="text" placeholder="Digite o peso:" v-model="state.peso" v-mask-decimal.br="2">
             </div>
             <div>
                <label>Comprimento (cm)</label>
-               <input type="text" placeholder="Digite o comprimento:" v-model="state.comprimento">
+               <input type="text" placeholder="Digite o comprimento:" v-model="state.comprimento" v-mask-decimal.br="2">
             </div>
             <div>
                <label>Largura (cm)</label>
-               <input type="text" placeholder="Digite a largura:" v-model="state.largura">
+               <input type="text" placeholder="Digite a largura:" v-model="state.largura" v-mask-decimal.br="2">
             </div>
             <div>
                <label>Cor</label>
@@ -262,6 +262,10 @@ async function atualizarPet() {
       return;
    }
 
+   state.peso = formatarNumero(state.peso);
+   state.comprimento = formatarNumero(state.comprimento);
+   state.largura = formatarNumero(state.largura);
+
    let formData = new FormData();
    formData.append("id", state.id);
    formData.append("nome", state.nome);
@@ -308,6 +312,13 @@ async function atualizarPet() {
    } finally {
       state.loader = false;
    }
+}
+
+function formatarNumero(numero) {
+   const valorComPontosRemovidos = numero.replace(/\./g, '');
+   const valorFormatado = parseFloat(valorComPontosRemovidos.replace(',', '.')) || 0;
+
+   return valorFormatado;
 }
 </script>
 

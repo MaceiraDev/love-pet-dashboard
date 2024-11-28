@@ -126,7 +126,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, watch } from 'vue';
 import BotaoSave from '@/components/BotaoSave.vue';
 import BotaoCancel from '@/components/BotaoCancel.vue';
 import ModalErro from '@/components/ModalErro.vue';
@@ -178,6 +178,10 @@ onMounted(() => {
    buscarTutores();
    buscarServicos();
    buscarSituacoes();
+});
+
+watch(() => route.params.id, () => {
+   buscarFicha(); 
 });
 
 async function buscarFicha() {

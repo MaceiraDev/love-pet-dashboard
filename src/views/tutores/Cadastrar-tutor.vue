@@ -136,12 +136,20 @@ const state = reactive({
 async function buscaCEP(cep) {
    try {
       const data = await services.cep.bucarCEP(cep);
+
+      if (data.response.erro === "true") {
+         state.MensagemErro = "CEP não encontrado. Verifique o número e tente novamente.";
+         state.modal = true;
+         return;
+      }
       state.logradouro = data.response.logradouro;
       state.bairro = data.response.bairro;
       state.cidade = data.response.localidade;
       state.estado_uf = data.response.uf;
    }
    catch (e) {
+      state.MensagemErro = "Erro ao buscar o CEP. Tente novamente mais tarde.";
+      state.modal = true;
       console.log(e);
    }
 }
