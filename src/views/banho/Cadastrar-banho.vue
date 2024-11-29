@@ -53,12 +53,12 @@
          </div>
          <div class="flex justify-end gap-4 mt-4">
             <BotaoCancel :link="'/banhos'" :titulo="'Cancelar'" />
-            <BotaoSave type="submit" :titulo="'Salvar'" @click="" />
+            <BotaoSave type="submit" :titulo="'Salvar'" />
          </div>
       </form>
    </div>
-   <Loader v-if="state.loader" />
-   <ModalErro v-if="state.modal" :mensagem="state.MensagemErro" />
+   <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
+   <Loader :loading="state.loader" />
 </template>
 
 <script setup>
@@ -117,6 +117,15 @@ async function salvarBanho() {
       state.MensagemErro = "Você não tem permissão para cadastrar banhos.";
       state.loader = false;
       state.modal = true;
+      return;
+   }
+
+   const dataRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+
+   if (!dataRegex.test(state.data)) {
+      state.MensagemErro = "Data inválida. Use o formato DD/MM/AAAA.";
+      state.modal = true;
+      state.loader = false;
       return;
    }
 

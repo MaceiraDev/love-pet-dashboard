@@ -57,8 +57,8 @@
          </div>
       </form>
    </div>
-   <Loader v-if="state.loader" />
-   <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event"/>
+   <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
+   <Loader :loading="state.loader" />
 </template>
 
 <script setup>
@@ -146,6 +146,15 @@ async function upBanho() {
       state.MensagemErro = "Você não tem permissão para cadastrar banhos.";
       state.loader = false;
       state.modal = true;
+      return;
+   }
+
+   const dataRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+
+   if (!dataRegex.test(state.data)) {
+      state.MensagemErro = "Data inválida. Use o formato DD/MM/AAAA.";
+      state.modal = true;
+      state.loader = false;
       return;
    }
 

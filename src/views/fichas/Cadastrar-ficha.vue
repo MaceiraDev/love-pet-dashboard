@@ -2,8 +2,8 @@
    <div class="bg-background border-solid border-2 border-preto2 rounded shadow-lg shadow-preto2-500/50 p-4">
       <h1 class=" text-2xl font-bold  text-preto2">Cadastrar Ficha</h1>
       <hr class="bg-azul2 h-0.5 mt-2 mb-4" />
-      <Loader v-if="state.loader" />
-      <ModalErro v-if="state.modal" :mensagem="state.MensagemErro" />
+      <Loader :loading="state.loader" />
+      <ModalErro :visible="state.modal" :texto="state.MensagemErro" @update:visible="state.modal = $event" />
       <form @submit.prevent="salvarFicha">
          <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 gap-4">
             <div>
@@ -205,6 +205,16 @@ async function buscarSituacoes() {
 
 async function salvarFicha() {
    state.loader = true;
+
+   const dataRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+
+   if (!dataRegex.test(state.data)) {
+      state.MensagemErro = "Data inválida. Use o formato DD/MM/AAAA.";
+      state.modal = true;
+      state.loader = false;
+      return;
+   }
+
 
    let formData = new FormData();
    formData.append("veterinario_id", state.veterinario_id);
