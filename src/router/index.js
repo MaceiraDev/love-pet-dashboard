@@ -204,10 +204,10 @@ router.beforeEach(async (to, from, next) => {
    }
 
    if (to.name === 'recuperar-senha') {
-      next();  // Permite o acesso sem verificação de token
+      next();
       return;
    }
-   
+
    try {
       const result = await services.auth.verificaToken(token);
       const tipo_usuario = result.response.tipo_usuario;
@@ -219,20 +219,52 @@ router.beforeEach(async (to, from, next) => {
          storage.setStorageSync("imagem", result.response.imagem);
          storage.setStorageSync("tipo_usuario", tipo_usuario);
 
-         // Verifica se a rota é /usuarios ou /financeiro e bloqueia para usuários diferentes de 0 e 1
-         if ((to.path.startsWith('/usuarios') || to.path.startsWith('/financeiro')) && (tipo_usuario != 0 && tipo_usuario != 1)) {
+         // Define rotas bloqueadas para tipo_usuario 4
+         const rotas_block = [
+            '/fichas/cadastrar-ficha',
+            '/fichas/alterar-ficha',
+            '/banhos/cadastrar-banho',
+            '/banhos/alterar-banho',
+            '/tutores/cadastrar-tutor',
+            '/tutores/alterar-tutor',
+            '/pets/alterar-pet',
+            '/pets/cadastrar-pet',
+            '/situacoes-pet/cadastrar-situacao',
+            '/situacoes-pet/alterar-situacao',
+            '/especies/cadastrar-especie',
+            '/especies/alterar-especie',
+            '/racas/cadastrar-raca',
+            '/racas/alterar-raca',
+            '/servicos'
+         ];
+
+         const rotas_block_recep = [
+            '/situacoes-pet/cadastrar-situacao',
+            '/situacoes-pet/alterar-situacao',
+            '/servicos/cadastrar-servico',
+            '/servicos/alterar-servico',
+         ];
+
+         // Verifica se o tipo_usuario é 4 e se a rota está na lista de bloqueadas
+         if (tipo_usuario == 4 && rotas_block.some(rota => to.path.startsWith(rota))) {
             next('/');
          }
-         // Verifica se a rota é /servicos e bloqueia para usuários diferentes de 0, 1, 2, 3
-         else if (to.path.startsWith('/servicos') && (tipo_usuario != 0 && tipo_usuario != 1 && tipo_usuario != 2 && tipo_usuario != 3)) {
+         
+         if ((tipo_usuario == 3 || tipo_usuario == 2) && rotas_block_recep.some(rota => to.path.startsWith(rota))) {
             next('/');
          }
+
+         else if ((to.path.startsWith('/usuarios') || to.path.startsWith('/financeiro')) && (tipo_usuario != 0 && tipo_usuario != 1)) {
+            next('/');
+         }
+
          else {
             next();
          }
       } else {
          next('/login');
       }
+
    } catch (error) {
       next('/login');
    }
