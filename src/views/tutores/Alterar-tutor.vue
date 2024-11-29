@@ -58,7 +58,7 @@
             </div>
             <div>
                <label>Quantidade de Animais (Casa)</label>
-               <input type="text" required v-model="state.qtd_animais_casa" />
+               <input type="text" required v-model="state.qtd_animais_casa" v-mask="'000'" />
             </div>
             <div>
                <label>CEP</label>
@@ -71,7 +71,7 @@
             </div>
             <div>
                <label>Número</label>
-               <input type="text" required v-model="state.numero" placeholder="Digite o número:" />
+               <input type="text" required v-model="state.numero" placeholder="Digite o número:"  v-mask="'0000'" />
             </div>
             <div>
                <label>Bairro</label>
@@ -195,6 +195,15 @@ async function upTutor() {
       state.MensagemErro = "Você não tem permissão para editar tutores.";
       state.loader = false;
       state.modal = true;
+      return;
+   }
+
+   const dataRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+
+   if (!dataRegex.test(state.data_nascimento)) {
+      state.MensagemErro = "Data inválida. Use o formato DD/MM/AAAA.";
+      state.modal = true;
+      state.loader = false;
       return;
    }
 

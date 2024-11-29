@@ -53,11 +53,11 @@
             </div>
             <div>
                <label>Quantidade de Animais (Casa)</label>
-               <input type="text" required v-model="state.qtd_animais_casa" />
+               <input type="text" required v-model="state.qtd_animais_casa" v-mask="'000'" />
             </div>
             <div>
                <label>CEP</label>
-               <input type="text" required v-model="state.cep" placeholder="Digite o CEP:" @blur="buscaCEP(state.cep)"
+               <input type="text" required v-model="state.cep" placeholder="Digite o CEP:" @change="buscaCEP(state.cep)"
                   v-mask="'00000-000'" />
             </div>
             <div>
@@ -66,7 +66,7 @@
             </div>
             <div>
                <label>Número</label>
-               <input type="text" required v-model="state.numero" placeholder="Digite o número:" />
+               <input type="text" required v-model="state.numero" placeholder="Digite o número:" v-mask="'0000'" />
             </div>
             <div>
                <label>Bairro</label>
@@ -78,7 +78,7 @@
             </div>
             <div>
                <label>Estado (UF)</label>
-               <input type="text" required v-model="state.estado_uf" placeholder="Digite a cidade:" />
+               <input type="text" required v-model="state.estado_uf" placeholder="Digite a cidade:" v-mask="'SS'" />
             </div>
          </div>
          <div>
@@ -177,6 +177,15 @@ async function salvarTutor() {
       state.MensagemErro = "Você não tem permissão para cadastrar tutores.";
       state.loader = false;
       state.modal = true;
+      return;
+   }
+
+   const dataRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+
+   if (!dataRegex.test(state.data_nascimento)) {
+      state.MensagemErro = "Data inválida. Use o formato DD/MM/AAAA.";
+      state.modal = true;
+      state.loader = false;
       return;
    }
 

@@ -50,7 +50,7 @@
             </div>
             <div>
                <label>Data de Nascimento</label>
-               <input type="text" placeholder="Digite uma data:" v-mask-date-br required
+               <input type="text" placeholder="Digite uma data:"  v-mask-date.br required
                   v-model="state.data_nascimento">
             </div>
             <div>
@@ -233,6 +233,15 @@ async function upUsuario() {
       state.MensagemErro = "Você não tem permissão para atualizar usuários.";
       state.loader = false;
       state.modal = true;
+      return;
+   }
+
+   const dataRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+
+   if (!dataRegex.test(state.data_nascimento)) {
+      state.MensagemErro = "Data inválida. Use o formato DD/MM/AAAA.";
+      state.modal = true;
+      state.loader = false;
       return;
    }
 
