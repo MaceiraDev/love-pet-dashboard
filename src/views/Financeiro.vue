@@ -20,7 +20,7 @@
          <div class="flex flex-col items-center space-y-4">
             <div class="flex items-center w-full justify-between">
                <h1 class="text-xl font-bold text-preto text-center flex-grow">
-                  Porcentual comparado ao último Mês
+                  Percentual comparado ao último Mês
                </h1>
                <div class="relative">
                   <button @click="toggleMenu" class="hamburger-icon ml-auto">
@@ -61,7 +61,7 @@
             <VueApexCharts type="bar" :options="chartOptionsReceitas" :series="seriesReceitas" width="100%" />
          </div>
          <div class="overflow-x-auto flex-1">
-            <h3 class="text-lg text-preto font-medium mb-4">Clientes Frequentes</h3>
+            <h3 class="text-lg text-preto font-medium mb-4">Clientes Frequentes (Último Mês)</h3>
             <table class="min-w-full table-auto bg-table2 shadow-lg overflow-hidden divide-y divide-limao">
                <thead class="bg-azul2 text-branco">
                   <tr>

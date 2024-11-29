@@ -1,6 +1,6 @@
 <template>
    <div v-if="visible" class="fixed inset-0 bg-preto bg-opacity-50 flex justify-center items-center z-50">
-      <div class="bg-background p-6 rounded-lg shadow-lg max-w-md w-full">
+      <div class="bg-background p-6 rounded-lg shadow-lg max-w-xl w-full">
          <p class="text-xl font-semibold mb-4">{{ texto }}</p>
          <div class="flex justify-end">
             <button

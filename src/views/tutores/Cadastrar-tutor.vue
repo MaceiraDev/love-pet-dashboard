@@ -19,6 +19,7 @@
             <div>
                <label>Gênero</label>
                <select required v-model="state.sexo">
+                  <option value="" selected disabled>Selecione</option>
                   <option value="MASCULINO">Masculino</option>
                   <option value="FEMININO">Feminino</option>
                   <option value="OUTROS">Outros</option>
