@@ -245,27 +245,30 @@ router.beforeEach(async (to, from, next) => {
             '/servicos/alterar-servico',
          ];
 
-         // Verifica se o tipo_usuario é 4 e se a rota está na lista de bloqueadas
+         const ultima_rota_valida = storage.getStorageSync("ultima_rota_valida") || '/';
+
          if (tipo_usuario == 4 && rotas_block.some(rota => to.path.startsWith(rota))) {
-            next('/');
-         }
-         
-         if ((tipo_usuario == 3 || tipo_usuario == 2) && rotas_block_recep.some(rota => to.path.startsWith(rota))) {
-            next('/');
-         }
+            next(ultima_rota_valida); 
+         } 
+
+         else if ((tipo_usuario == 3 || tipo_usuario == 2) && rotas_block_recep.some(rota => to.path.startsWith(rota))) {
+            next(ultima_rota_valida); 
+         } 
 
          else if ((to.path.startsWith('/usuarios') || to.path.startsWith('/financeiro')) && (tipo_usuario != 0 && tipo_usuario != 1)) {
-            next('/');
-         }
+            next(ultima_rota_valida); 
+         } 
 
          else {
+            storage.setStorageSync("ultima_rota_valida", to.fullPath);
             next();
          }
       } else {
+         storage.setStorageSync("ultima_rota_valida", from.fullPath);
          next('/login');
       }
-
    } catch (error) {
+      storage.setStorageSync("ultima_rota_valida", from.fullPath);
       next('/login');
    }
 });

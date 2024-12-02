@@ -48,7 +48,7 @@
 </template>
 <script setup>
 import services from '@/services';
-import { reactive, ref } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStorage } from 'vue3-storage';
 import Loader from '@/components/Loader.vue';
@@ -67,6 +67,13 @@ const state = reactive({
    senha: null,
    visible: false,
    visibleEmail: false,
+});
+
+onMounted(() => {
+   const token = storage.getStorageSync("token");
+   if (token) {
+      router.push("/"); // Redireciona para o dashboard se o token existir
+   }
 });
 
 async function logarSistema() {
