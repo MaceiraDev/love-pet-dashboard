@@ -60,7 +60,7 @@ Este projeto foi desenvolvido como Trabalho de Conclusão de Curso (TCC) para o 
 Leonardo Maceira Santos e Vitor Inácio Izidório.  
 
 **Orientador:**  
-Alex Pereira Morgado.
+Alex Morgado Pereira.
 
 ---
 
@@ -88,6 +88,19 @@ Alex Pereira Morgado.
 📸 **Instagram:**  
 - [@vitorinacio16](https://www.instagram.com/vitorinacio16)  
 
+---
+
+## 🖥 Como Rodar o Projeto
+
+Siga os passos abaixo para rodar o projeto localmente:
+
+1. **Instale as dependências:**
+   ```bash
+     npm install
+  
+2. **Inicie o servidor de desenvolvimento:**
+   ```bash
+   npm run dev
 ---
 
 Obrigado por conferir este repositório! 💻🎉
