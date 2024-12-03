@@ -132,7 +132,7 @@
    <Loader :loading="state.loader" />
 </template>
 <script setup>
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 import BotaoSave from '@/components/BotaoSave.vue';
 import BotaoCancel from '@/components/BotaoCancel.vue';
 import services from '@/services';
@@ -256,9 +256,6 @@ async function novoUsuario() {
       state.loader = false;
    }
 }
-
-
-
 </script>
 <style scoped>
 .radio-button-container {

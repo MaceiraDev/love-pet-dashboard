@@ -6,23 +6,24 @@
          <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3 gap-4">
             <div>
                <label>Nome</label>
-               <input type="text" placeholder="Digite o nome do serviço" required v-model="state.nome" />
+               <input type="text" placeholder="Digite o nome do serviço:" required v-model="state.nome" />
             </div>
             <div>
                <label>Tipo de Serviço</label>
                <select required v-model="state.tipo_servico">
+                  <option selected disabled value="">Selecione</option>
                   <option value="CLINICO">Clínico</option>
                   <option value="ESTETICO">Estético</option>
                </select>
             </div>
             <div>
                <label>Valor</label>
-               <input type="text" placeholder="Digite o valor" required v-model="state.valor" v-mask-decimal.br="2" />
+               <input type="text" placeholder="Digite o valor:" required v-model="state.valor" v-mask-decimal.br="2" />
             </div>
          </div>
          <div>
             <label>Notas Adicionais</label>
-            <textarea placeholder="Digite notas adicionais" rows="4" v-model="state.notas_adicionais"></textarea>
+            <textarea placeholder="Digite notas adicionais:" rows="4" v-model="state.notas_adicionais"></textarea>
          </div>
          <div class="flex justify-end gap-4 mt-4">
             <BotaoCancel :link="'/servicos'" :titulo="'Cancelar'" />

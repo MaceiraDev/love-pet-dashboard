@@ -1,6 +1,6 @@
 <template>
    <div class="bg-background border-solid border-2 border-preto2 rounded shadow-lg shadow-preto2-500/50 p-4">
-      <h1 class=" text-2xl font-bold  text-preto2">Cadastrar Usuário</h1>
+      <h1 class=" text-2xl font-bold  text-preto2">Alterar Usuário</h1>
       <hr class="bg-azul2 h-0.5 mt-2 mb-4" />
       <form @submit.prevent="upUsuario">
          <div class="div_radios">

@@ -105,15 +105,15 @@
                   class="w-12 h-12 rounded-full object-cover border-2 border-azul2 hover:border-limao transition-all duration-300" />
             </router-link>
             <div class="flex items-center">
-               <label class="burger" typeof="button" for="burger">
-                  <button type="button" @click="toggleAside()">
-                     <input type="checkbox" id="burger">
-                     <span></span>
-                     <span></span>
-                     <span></span>
-                  </button>
+
+               <label class="burger" for="burger">
+                  <input type="checkbox" id="burger" class="hidden" @change="toggleAside"
+                     :checked="state.asideVisible" />
+                  <span></span>
+                  <span></span>
+                  <span></span>
                </label>
-               <BotaoFichaNot :fichas="state.fichas_pendentes" @click="openNot" v-if="user_tipo === '1'"  />
+               <BotaoFichaNot :fichas="state.fichas_pendentes" @click="openNot" v-if="user_tipo === '1'" />
                <BotaoDropHeader />
             </div>
          </header>

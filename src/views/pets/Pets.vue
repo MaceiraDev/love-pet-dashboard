@@ -7,8 +7,7 @@
          <input type="text" v-model="state.nome_pet" class="border rounded p-2 w-full" placeholder="Buscar pet:" />
       </div>
       <div class="flex justify-start items-center">
-         <select required v-model="state.especie_id"
-            @change="buscarRacasByEspecie(state.especie_id)">
+         <select required v-model="state.especie_id" @change="buscarRacasByEspecie(state.especie_id)">
             <option selected disabled value="">Selecione uma epécie</option>
             <option v-for="especie in state.especies" :value="especie.id">{{ especie.nome }}</option>
          </select>
@@ -124,7 +123,7 @@ async function filtrarPets() {
    try {
       const params = {};
 
-      if (state.nome) params.nome = state.nome;
+      if (state.nome_pet) params.nome = state.nome_pet;
       if (state.especie_id) params.especie_id = state.especie_id;
       if (state.raca_id) params.raca_id = state.raca_id;
 
@@ -138,7 +137,6 @@ async function filtrarPets() {
    }
 }
 
-//confirmação e delete de pet
 async function deletarPet() {
    loading.value = true;
    try {
@@ -172,7 +170,6 @@ function openConfirm(pet) {
 }
 
 
-//corpo da tabela
 const tableHeaders = ['nome', 'tutor', 'situação', 'cor', 'raça', 'espécie', 'data ultima consulta'];
 const tableBody = computed(() => {
    return state.pets.map(pet => {

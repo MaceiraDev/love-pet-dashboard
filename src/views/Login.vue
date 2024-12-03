@@ -227,7 +227,6 @@ async function enviarEmail(email) {
    width: 50%;
 }
 
-/* From Uiverse.io by xueyuantan */
 button {
    width: 100%;
    height: 3em;
